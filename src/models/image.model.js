@@ -1,5 +1,5 @@
-import { DataTypes, Model } from "sequelize"
-import { sequelize } from "../config/db/mysql.db"
+const { DataTypes, Model } = require("sequelize")
+const { sequelize } = require("../config/db/mssql.db")
 
 class Image extends Model { }
 
@@ -20,9 +20,10 @@ Image.init(
         }
     },
     {
+        timestamps: false,
         sequelize,
         modelName: 'Image'
     }
 )
 
-export default Image
+module.exports = Image

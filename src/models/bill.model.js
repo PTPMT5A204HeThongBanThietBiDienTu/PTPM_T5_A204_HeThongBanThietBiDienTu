@@ -1,5 +1,6 @@
-import { DataTypes, Model } from "sequelize"
-import { sequelize } from "../config/db/mysql.db"
+const { DataTypes, Model } = require("sequelize")
+const { sequelize } = require("../config/db/mssql.db")
+const BillStatus = require("./BillStatus")
 
 class Bill extends Model { }
 
@@ -14,27 +15,21 @@ Bill.init(
             type: DataTypes.UUID,
             allowNull: false
         },
-        sumPrice: {
-            type: DataTypes.DOUBLE,
-            defaultValue: 0
-        },
-        sumDiscount: {
-            type: DataTypes.DOUBLE,
-            defaultValue: 0
-        },
         total: {
             type: DataTypes.DOUBLE,
             defaultValue: 0
         },
         status: {
-            type: DataTypes.INTEGER,
-            defaultValue: 0
+            type: DataTypes.ENUM,
+            values: Object.values(BillStatus),
+            defaultValue: BillStatus.UNPAID
         }
     },
     {
+        timestamps: false,
         sequelize,
         modelName: 'Bill'
     }
 )
 
-export default Bill
+module.exports = Bill

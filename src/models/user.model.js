@@ -1,5 +1,6 @@
-import { DataTypes, Model } from "sequelize"
-import { sequelize } from "../config/db/mysql.db"
+const { DataTypes, Model } = require("sequelize")
+const { sequelize } = require("../config/db/mssql.db")
+const bcrypt = require("bcrypt")
 
 class User extends Model { }
 
@@ -35,9 +36,22 @@ User.init(
         }
     },
     {
+        timestamps: false,
         sequelize,
-        modelName: 'User'
+        modelName: 'User',
+        hooks: {
+            beforeCreate(user) {
+                const salt = bcrypt.genSaltSync()
+                user.password = bcrypt.hashSync(user.password, salt)
+            },
+            beforeUpdate(user) {
+                if (user.changed('password')) {
+                    const salt = bcrypt.genSaltSync()
+                    user.password = bcrypt.hashSync(user.password, salt)
+                }
+            }
+        }
     }
 )
 
-export default User
+module.exports = User

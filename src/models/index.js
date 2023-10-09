@@ -1,20 +1,23 @@
-import { sequelize } from "../config/db/mysql.db"
-import Role from "./role.model"
-import User from "./user.model"
-import Category from "./category.model"
-import Product from "./product.model"
-import Image from "./image.model"
-import Cart from "./cart.model"
-import Bill from "./bill.model"
-import Voucher from "./voucher.model"
-import BillProduct from "./billproduct.model"
-import BillVoucher from "./billvoucher.model"
+const { sequelize } = require("../config/db/mssql.db")
+const Role = require("./role.model")
+const User = require("./user.model")
+const Category = require("./category.model")
+const Product = require("./product.model")
+const Image = require("./image.model")
+const Specification = require("./specification.model")
+const Cart = require("./cart.model")
+const Bill = require("./bill.model")
+const BillProduct = require("./billproduct.model")
+const Brand = require('./brand.model')
+const Screen = require('./screen.model')
+const Permission = require("./permission.model")
 
 //--------------------------------- FOREIGN KEY ON TABLE USER -------------------------------------//
 //--relationship between Role and User--//
 Role.hasMany(User, {
     foreignKey: 'roleId',
-    as: 'user'
+    as: 'user',
+    onDelete: 'NO ACTION'
 })
 
 User.belongsTo(Role, {
@@ -26,7 +29,8 @@ User.belongsTo(Role, {
 //--relationship between Category and Product--//
 Category.hasMany(Product, {
     foreignKey: 'catId',
-    as: 'product'
+    as: 'product',
+    onDelete: 'NO ACTION'
 })
 
 Product.belongsTo(Category, {
@@ -34,14 +38,40 @@ Product.belongsTo(Category, {
     as: 'category'
 })
 
+//--relationship between Brand and Product--//
+Brand.hasMany(Product, {
+    foreignKey: 'braId',
+    as: 'product',
+    onDelete: 'NO ACTION'
+})
+
+Product.belongsTo(Brand, {
+    foreignKey: 'braId',
+    as: 'brand'
+})
+
 //--------------------------------- FOREIGN KEY ON TABLE IMAGE -------------------------------------//
 //--relationship between Product and Image--//
 Product.hasMany(Image, {
     foreignKey: 'proId',
-    as: 'image'
+    as: 'image',
+    onDelete: 'NO ACTION'
 })
 
 Image.belongsTo(Product, {
+    foreignKey: 'proId',
+    as: 'product'
+})
+
+//--------------------------------- FOREIGN KEY ON TABLE SPECIFICATION -------------------------------------//
+//--relationship between Product and Specification--//
+Product.hasMany(Specification, {
+    foreignKey: 'proId',
+    as: 'specification',
+    onDelete: 'NO ACTION'
+})
+
+Specification.belongsTo(Product, {
     foreignKey: 'proId',
     as: 'product'
 })
@@ -50,7 +80,8 @@ Image.belongsTo(Product, {
 //--relationship between Product and Cart--//
 Product.hasMany(Cart, {
     foreignKey: 'proId',
-    as: 'cart'
+    as: 'cart',
+    onDelete: 'NO ACTION'
 })
 
 Cart.belongsTo(Product, {
@@ -61,7 +92,8 @@ Cart.belongsTo(Product, {
 //--relationship between User and Cart--//
 User.hasOne(Cart, {
     foreignKey: 'userId',
-    as: 'cart'
+    as: 'cart',
+    onDelete: 'NO ACTION'
 })
 
 Cart.belongsTo(User, {
@@ -73,7 +105,8 @@ Cart.belongsTo(User, {
 //--relationship between User and Bill--//
 User.hasMany(Bill, {
     foreignKey: 'userId',
-    as: 'bill'
+    as: 'bill',
+    onDelete: 'NO ACTION'
 })
 
 Bill.belongsTo(User, {
@@ -85,7 +118,8 @@ Bill.belongsTo(User, {
 //--relationship between Bill and BillProduct--//
 Bill.hasMany(BillProduct, {
     foreignKey: 'billId',
-    as: 'billproduct'
+    as: 'billproduct',
+    onDelete: 'NO ACTION'
 })
 
 BillProduct.belongsTo(Bill, {
@@ -96,7 +130,8 @@ BillProduct.belongsTo(Bill, {
 //--relationship between Product and BillProduct--//
 Product.hasMany(BillProduct, {
     foreignKey: 'proId',
-    as: 'billproduct'
+    as: 'billproduct',
+    onDelete: 'NO ACTION'
 })
 
 BillProduct.belongsTo(Product, {
@@ -104,29 +139,30 @@ BillProduct.belongsTo(Product, {
     as: 'product'
 })
 
-//--------------------------------- FOREIGN KEY ON TABLE BILLVOUCHER -------------------------------------//
-//--relationship between Bill and BillVoucher--//
-Bill.hasMany(BillVoucher, {
-    foreignKey: 'billId',
-    as: 'billvoucher'
+//--------------------------------- FOREIGN KEY ON TABLE PERMISSION -------------------------------------//
+//--relationship between Role and Permission--//
+Role.hasMany(Permission, {
+    foreignKey: 'roleId',
+    as: 'permission',
+    onDelete: 'NO ACTION'
 })
 
-BillVoucher.belongsTo(Bill, {
-    foreignKey: 'billId',
-    as: 'bill'
+Permission.belongsTo(Role, {
+    foreignKey: 'roleId',
+    as: 'role'
 })
 
-//--relationship between Voucher and BillVoucher--//
-Voucher.hasMany(BillVoucher, {
-    foreignKey: 'vouId',
-    as: 'billvoucher'
+//--relationship between Screen and Permission--//
+Screen.hasMany(Permission, {
+    foreignKey: 'screenId',
+    as: 'permission',
+    onDelete: 'NO ACTION'
 })
 
-BillVoucher.belongsTo(Voucher, {
-    foreignKey: 'vouId',
-    as: 'voucher'
+Permission.belongsTo(Screen, {
+    foreignKey: 'screenId',
+    as: 'screen'
 })
-
 
 //====================//====================//====================//====================//====================
 
@@ -144,12 +180,12 @@ module.exports = {
     Role,
     User,
     Category,
+    Brand,
     Product,
     Image,
+    Specification,
     Cart,
     Bill,
-    Voucher,
     BillProduct,
-    BillVoucher,
     createAllTable
 }

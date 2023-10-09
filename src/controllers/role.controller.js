@@ -1,39 +1,37 @@
-import { Role } from "../models/index"
+const { Role } = require("../models/index")
 
-const getAll = (req, res, next) => {
-    Role.findAll()
-        .then(roles => res.status(200).json({
-            success: true,
-            data: roles
-        }))
-        .catch(err => next(err))
+const getAll = async (req, res, next) => {
+    const roles = await Role.findAll()
+
+    return res.status(200).json({
+        success: true,
+        data: roles
+    })
 }
 
-const getById = (req, res, next) => {
-    Role.findByPk(req.params.id)
-        .then(role => {
-            if (!role) {
-                return res.status(400).json({
-                    success: false,
-                    message: 'Invalid ID'
-                })
-            }
-
-            return res.status(200).json({
-                success: true,
-                data: role
-            })
+const getById = async (req, res, next) => {
+    const role = await Role.findByPk(req.params.id)
+    if (!role) {
+        return res.status(400).json({
+            success: false,
+            message: 'Invalid ID'
         })
-        .catch(err => next(err))
+    }
+
+    return res.status(200).json({
+        success: true,
+        data: role
+    })
 }
 
-const create = (req, res, next) => {
-    Role.create(req.body)
-        .then(role => res.status(201).json({
-            success: true,
-            data: role
-        }))
-        .catch(err => next(err))
+const create = async (req, res, next) => {
+    Reflect.deleteProperty(req.body, 'id')
+    const role = await Role.create(req.body)
+
+    return res.status(201).json({
+        success: true,
+        data: role
+    })
 }
 
 const update = async (req, res, next) => {
@@ -45,9 +43,8 @@ const update = async (req, res, next) => {
         })
     }
 
-    Role.update(req.body, { where: { id: req.params.id } })
-        .then(() => getById(req, res, next))
-        .catch(err => next(err))
+    const result = await Role.update(req.body, { where: { id: req.params.id } })
+    return getById(req, res, next)
 }
 
 const remove = async (req, res, next) => {
@@ -59,11 +56,10 @@ const remove = async (req, res, next) => {
         })
     }
 
-    Role.destroy({ where: { id: req.params.id } })
-        .then(() => res.status(200).json({
-            success: true
-        }))
-        .catch(err => next(err))
+    const result = await Role.destroy({ where: { id: req.params.id } })
+    return res.status(200).json({
+        success: true
+    })
 }
 
 module.exports = {

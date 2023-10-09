@@ -1,5 +1,5 @@
-import { DataTypes, Model } from "sequelize"
-import { sequelize } from "../config/db/mysql.db"
+const { DataTypes, Model } = require("sequelize")
+const { sequelize } = require("../config/db/mssql.db")
 
 class Role extends Model { }
 
@@ -17,9 +17,10 @@ Role.init(
         }
     },
     {
+        timestamps: false,
         sequelize,
         modelName: 'Role'
     }
 )
 
-export default Role
+module.exports = Role

@@ -1,5 +1,5 @@
-import { DataTypes, Model } from "sequelize"
-import { sequelize } from "../config/db/mysql.db"
+const { DataTypes, Model } = require("sequelize")
+const { sequelize } = require("../config/db/mssql.db")
 
 class Product extends Model { }
 
@@ -16,21 +16,33 @@ Product.init(
         },
         price: {
             type: DataTypes.DOUBLE,
-            allowNull: false,
-            defaultValue: 0
+            allowNull: false
+        },
+        quantity: {
+            type: DataTypes.INTEGER,
+            allowNull: false
         },
         description: {
             type: DataTypes.TEXT
         },
+        img: {
+            type: DataTypes.STRING,
+            allowNull: false
+        },
         catId: {
+            type: DataTypes.UUID,
+            allowNull: false
+        },
+        braId: {
             type: DataTypes.UUID,
             allowNull: false
         }
     },
     {
+        timestamps: false,
         sequelize,
         modelName: 'Product'
     }
 )
 
-export default Product
+module.exports = Product

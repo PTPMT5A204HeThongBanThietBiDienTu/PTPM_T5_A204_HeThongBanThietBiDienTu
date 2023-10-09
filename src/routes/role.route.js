@@ -1,20 +1,21 @@
-import { Router } from "express"
-import {
+const { Router } = require("express")
+const {
     getAll,
     getById,
     create,
     update,
     remove
-} from "../controllers/role.controller"
-import { validateBody } from "../middlewares/validate.middleware"
-import { validateRole } from "../utils/validations"
+} = require("../controllers/role.controller")
+const { validateBody } = require("../middlewares/validate.middleware")
+const { validateRole } = require("../utils/validations")
+const { asyncHandle } = require("../middlewares/errorHandle.middleware")
 
 const router = Router()
 
-router.get('/', getAll)
-router.get('/:id', getById)
-router.post('/create', create)
-router.patch('/:id', validateBody(validateRole), update)
-router.delete('/:id', remove)
+router.get('/', asyncHandle(getAll))
+router.get('/:id', asyncHandle(getById))
+router.post('/create', validateBody(validateRole), asyncHandle(create))
+router.patch('/:id', validateBody(validateRole), asyncHandle(update))
+router.delete('/:id', asyncHandle(remove))
 
-export default router
+module.exports = router

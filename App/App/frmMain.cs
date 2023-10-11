@@ -10,11 +10,18 @@ using System.Windows.Forms;
 
 namespace App
 {
-    public partial class Form1 : Form
+    public partial class frmMain : Form
     {
-        public Form1()
+        public frmMain()
         {
             InitializeComponent();
+        }
+
+        private void frmMain_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            frmLogin frm = new frmLogin();
+            this.Hide();
+            frm.ShowDialog();
         }
     }
 }

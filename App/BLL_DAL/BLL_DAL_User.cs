@@ -31,5 +31,11 @@ namespace BLL_DAL
             User user = qlbh.Users.Where(u => u.email == email).FirstOrDefault();
             return user;
         }
+
+        public List<User> getAllByRoleId(string roleId)
+        {
+            List<User> users = qlbh.Users.Where(u => u.roleId == roleId).ToList<User>();
+            return users;
+        }
     }
 }

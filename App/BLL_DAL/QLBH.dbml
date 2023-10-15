@@ -20,6 +20,7 @@
       <Column Name="phone" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
       <Column Name="password" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
       <Column Name="roleId" Type="System.String" DbType="Char(36) NOT NULL" CanBeNull="false" />
+      <Column Name="is_Active" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
       <Association Name="User_Bill" Member="Bills" ThisKey="id" OtherKey="userId" Type="Bill" />
       <Association Name="User_Cart" Member="Carts" ThisKey="id" OtherKey="userId" Type="Cart" />
       <Association Name="Role_User" Member="Role" ThisKey="roleId" OtherKey="id" Type="Role" IsForeignKey="true" />
@@ -72,7 +73,7 @@
       <Column Name="id" Type="System.String" DbType="Char(36) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
       <Column Name="roleId" Type="System.String" DbType="Char(36) NOT NULL" CanBeNull="false" />
       <Column Name="screenId" Type="System.String" DbType="Char(36) NOT NULL" CanBeNull="false" />
-      <Column Name="is_Permission" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="is_Permission" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
       <Association Name="Role_Permission" Member="Role" ThisKey="roleId" OtherKey="id" Type="Role" IsForeignKey="true" />
       <Association Name="Screen_Permission" Member="Screen" ThisKey="screenId" OtherKey="id" Type="Screen" IsForeignKey="true" />
     </Type>

@@ -455,6 +455,8 @@ namespace BLL_DAL
 		
 		private string _roleId;
 		
+		private System.Nullable<bool> _is_Active;
+		
 		private EntitySet<Bill> _Bills;
 		
 		private EntitySet<Cart> _Carts;
@@ -479,6 +481,8 @@ namespace BLL_DAL
     partial void OnpasswordChanged();
     partial void OnroleIdChanging(string value);
     partial void OnroleIdChanged();
+    partial void Onis_ActiveChanging(System.Nullable<bool> value);
+    partial void Onis_ActiveChanged();
     #endregion
 		
 		public User()
@@ -629,6 +633,26 @@ namespace BLL_DAL
 					this._roleId = value;
 					this.SendPropertyChanged("roleId");
 					this.OnroleIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_is_Active", DbType="Bit")]
+		public System.Nullable<bool> is_Active
+		{
+			get
+			{
+				return this._is_Active;
+			}
+			set
+			{
+				if ((this._is_Active != value))
+				{
+					this.Onis_ActiveChanging(value);
+					this.SendPropertyChanging();
+					this._is_Active = value;
+					this.SendPropertyChanged("is_Active");
+					this.Onis_ActiveChanged();
 				}
 			}
 		}
@@ -1548,7 +1572,7 @@ namespace BLL_DAL
 		
 		private string _screenId;
 		
-		private System.Nullable<bool> _is_Permission;
+		private bool _is_Permission;
 		
 		private EntityRef<Role> _Role;
 		
@@ -1564,7 +1588,7 @@ namespace BLL_DAL
     partial void OnroleIdChanged();
     partial void OnscreenIdChanging(string value);
     partial void OnscreenIdChanged();
-    partial void Onis_PermissionChanging(System.Nullable<bool> value);
+    partial void Onis_PermissionChanging(bool value);
     partial void Onis_PermissionChanged();
     #endregion
 		
@@ -1643,8 +1667,8 @@ namespace BLL_DAL
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_is_Permission", DbType="Bit")]
-		public System.Nullable<bool> is_Permission
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_is_Permission", DbType="Bit NOT NULL")]
+		public bool is_Permission
 		{
 			get
 			{

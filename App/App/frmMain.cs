@@ -23,5 +23,10 @@ namespace App
             this.Hide();
             frm.ShowDialog();
         }
+
+        private void permissionToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            
+        }
     }
 }

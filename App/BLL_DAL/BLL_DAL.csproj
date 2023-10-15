@@ -58,7 +58,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BLL_DAL_Brand.cs" />
     <Compile Include="BLL_DAL_Permission.cs" />
+    <Compile Include="BLL_DAL_Product.cs" />
     <Compile Include="BLL_DAL_Role.cs" />
     <Compile Include="BLL_DAL_User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

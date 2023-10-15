@@ -22,14 +22,14 @@ namespace App
             InitializeComponent();
 
             this.StartPosition = FormStartPosition.CenterScreen;
-            Guid myuuid = Guid.NewGuid();
-            string myuuidAsString = myuuid.ToString();
-            Console.WriteLine("Your UUID is: " + myuuidAsString);
         }
 
         private void frmRole_Load(object sender, EventArgs e)
         {
             loadDataGridView();
+
+            txtRoleId.Text = dtgvRole.CurrentRow.Cells[0].Value.ToString();
+            txtRoleName.Text = dtgvRole.CurrentRow.Cells[1].Value.ToString();
         }
 
         private void loadDataGridView()
@@ -150,6 +150,9 @@ namespace App
                 {
                     MessageBox.Show("Xóa thành công");
                     loadDataGridView();
+
+                    txtRoleId.Text = string.Empty;
+                    txtRoleName.Text = string.Empty;
                 }
             }
         }

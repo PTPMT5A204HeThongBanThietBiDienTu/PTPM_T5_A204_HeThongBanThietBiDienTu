@@ -59,6 +59,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BLL_DAL_Brand.cs" />
+    <Compile Include="BLL_DAL_Category.cs" />
     <Compile Include="BLL_DAL_Permission.cs" />
     <Compile Include="BLL_DAL_Product.cs" />
     <Compile Include="BLL_DAL_Role.cs" />

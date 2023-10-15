@@ -76,6 +76,9 @@ namespace App
             {
                 MessageBox.Show("Thêm thành công");
                 loadDataGridView();
+
+                txtRoleId.Text = string.Empty;
+                txtRoleName.Text = string.Empty;
             }    
         }
 

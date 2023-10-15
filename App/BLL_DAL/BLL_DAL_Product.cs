@@ -17,5 +17,11 @@ namespace BLL_DAL
             List<Product> products = qlbh.Products.Where(p => p.braId == id).ToList<Product>();
             return products;
         }
+
+        public List<Product> getAllByCatId(string id)
+        {
+            List<Product> products = qlbh.Products.Where(p => p.catId == id).ToList<Product>();
+            return products;
+        }
     }
 }

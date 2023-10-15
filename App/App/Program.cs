@@ -18,7 +18,7 @@ namespace App
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new frmBrand());
+            Application.Run(new frmCategory());
         }
     }
 }

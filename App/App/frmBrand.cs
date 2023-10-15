@@ -75,6 +75,9 @@ namespace App
             {
                 MessageBox.Show("Thêm thành công");
                 loadDataGridView();
+
+                txtBrandId.Text = string.Empty;
+                txtBrandName.Text = string.Empty;
             }
         }
 

@@ -43,7 +43,7 @@ namespace App
             // dtgvBrand
             // 
             this.dtgvBrand.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dtgvBrand.Location = new System.Drawing.Point(20, 184);
+            this.dtgvBrand.Location = new System.Drawing.Point(60, 221);
             this.dtgvBrand.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
             this.dtgvBrand.MultiSelect = false;
             this.dtgvBrand.Name = "dtgvBrand";
@@ -57,7 +57,7 @@ namespace App
             // btnUpdate
             // 
             this.btnUpdate.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnUpdate.Location = new System.Drawing.Point(380, 132);
+            this.btnUpdate.Location = new System.Drawing.Point(420, 169);
             this.btnUpdate.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
             this.btnUpdate.Name = "btnUpdate";
             this.btnUpdate.Size = new System.Drawing.Size(119, 35);
@@ -69,7 +69,7 @@ namespace App
             // btnDelete
             // 
             this.btnDelete.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnDelete.Location = new System.Drawing.Point(213, 132);
+            this.btnDelete.Location = new System.Drawing.Point(253, 169);
             this.btnDelete.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(119, 35);
@@ -81,7 +81,7 @@ namespace App
             // btnAdd
             // 
             this.btnAdd.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnAdd.Location = new System.Drawing.Point(50, 132);
+            this.btnAdd.Location = new System.Drawing.Point(90, 169);
             this.btnAdd.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
             this.btnAdd.Name = "btnAdd";
             this.btnAdd.Size = new System.Drawing.Size(119, 35);
@@ -93,7 +93,7 @@ namespace App
             // txtBrandName
             // 
             this.txtBrandName.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtBrandName.Location = new System.Drawing.Point(191, 75);
+            this.txtBrandName.Location = new System.Drawing.Point(231, 112);
             this.txtBrandName.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
             this.txtBrandName.Name = "txtBrandName";
             this.txtBrandName.Size = new System.Drawing.Size(335, 39);
@@ -102,7 +102,7 @@ namespace App
             // txtBrandId
             // 
             this.txtBrandId.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtBrandId.Location = new System.Drawing.Point(191, 15);
+            this.txtBrandId.Location = new System.Drawing.Point(231, 52);
             this.txtBrandId.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
             this.txtBrandId.Name = "txtBrandId";
             this.txtBrandId.ReadOnly = true;
@@ -113,7 +113,7 @@ namespace App
             // 
             this.lblBrandName.AutoSize = true;
             this.lblBrandName.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblBrandName.Location = new System.Drawing.Point(14, 78);
+            this.lblBrandName.Location = new System.Drawing.Point(54, 115);
             this.lblBrandName.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.lblBrandName.Name = "lblBrandName";
             this.lblBrandName.Size = new System.Drawing.Size(221, 32);
@@ -124,7 +124,7 @@ namespace App
             // 
             this.lblBrandId.AutoSize = true;
             this.lblBrandId.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblBrandId.Location = new System.Drawing.Point(14, 22);
+            this.lblBrandId.Location = new System.Drawing.Point(54, 59);
             this.lblBrandId.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.lblBrandId.Name = "lblBrandId";
             this.lblBrandId.Size = new System.Drawing.Size(211, 32);
@@ -135,7 +135,7 @@ namespace App
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(14F, 29F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(553, 420);
+            this.ClientSize = new System.Drawing.Size(621, 478);
             this.Controls.Add(this.dtgvBrand);
             this.Controls.Add(this.btnUpdate);
             this.Controls.Add(this.btnDelete);
@@ -148,6 +148,7 @@ namespace App
             this.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
             this.Name = "frmBrand";
             this.Text = "Thương hiệu";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmBrand_FormClosed);
             this.Load += new System.EventHandler(this.frmBrand_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dtgvBrand)).EndInit();
             this.ResumeLayout(false);

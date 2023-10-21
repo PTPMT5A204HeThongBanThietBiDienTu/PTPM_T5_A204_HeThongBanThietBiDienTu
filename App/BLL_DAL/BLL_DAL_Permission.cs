@@ -15,6 +15,14 @@ namespace BLL_DAL
         public List<Permission> getAllByRoleId(string id)
         {
             List<Permission> pers = qlbh.Permissions.Where(p => p.roleId == id).ToList<Permission>();
+
+            return pers;
+        }
+
+        public List<Permission> getAll()
+        {
+            List<Permission> pers = qlbh.Permissions.Select(p=>p).ToList<Permission>();
+
             return pers;
         }
     }

@@ -43,7 +43,7 @@ namespace App
             // dtgvCategory
             // 
             this.dtgvCategory.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dtgvCategory.Location = new System.Drawing.Point(20, 182);
+            this.dtgvCategory.Location = new System.Drawing.Point(69, 218);
             this.dtgvCategory.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
             this.dtgvCategory.MultiSelect = false;
             this.dtgvCategory.Name = "dtgvCategory";
@@ -57,7 +57,7 @@ namespace App
             // btnUpdate
             // 
             this.btnUpdate.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnUpdate.Location = new System.Drawing.Point(380, 130);
+            this.btnUpdate.Location = new System.Drawing.Point(429, 166);
             this.btnUpdate.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
             this.btnUpdate.Name = "btnUpdate";
             this.btnUpdate.Size = new System.Drawing.Size(119, 35);
@@ -69,7 +69,7 @@ namespace App
             // btnDelete
             // 
             this.btnDelete.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnDelete.Location = new System.Drawing.Point(213, 130);
+            this.btnDelete.Location = new System.Drawing.Point(262, 166);
             this.btnDelete.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(119, 35);
@@ -81,7 +81,7 @@ namespace App
             // btnAdd
             // 
             this.btnAdd.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnAdd.Location = new System.Drawing.Point(50, 130);
+            this.btnAdd.Location = new System.Drawing.Point(99, 166);
             this.btnAdd.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
             this.btnAdd.Name = "btnAdd";
             this.btnAdd.Size = new System.Drawing.Size(119, 35);
@@ -93,7 +93,7 @@ namespace App
             // txtCatName
             // 
             this.txtCatName.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtCatName.Location = new System.Drawing.Point(191, 73);
+            this.txtCatName.Location = new System.Drawing.Point(240, 109);
             this.txtCatName.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
             this.txtCatName.Name = "txtCatName";
             this.txtCatName.Size = new System.Drawing.Size(335, 39);
@@ -102,7 +102,7 @@ namespace App
             // txtCatId
             // 
             this.txtCatId.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtCatId.Location = new System.Drawing.Point(191, 13);
+            this.txtCatId.Location = new System.Drawing.Point(240, 49);
             this.txtCatId.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
             this.txtCatId.Name = "txtCatId";
             this.txtCatId.ReadOnly = true;
@@ -113,7 +113,7 @@ namespace App
             // 
             this.lblCatName.AutoSize = true;
             this.lblCatName.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblCatName.Location = new System.Drawing.Point(14, 76);
+            this.lblCatName.Location = new System.Drawing.Point(63, 112);
             this.lblCatName.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.lblCatName.Name = "lblCatName";
             this.lblCatName.Size = new System.Drawing.Size(195, 32);
@@ -124,7 +124,7 @@ namespace App
             // 
             this.lblCatId.AutoSize = true;
             this.lblCatId.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblCatId.Location = new System.Drawing.Point(14, 20);
+            this.lblCatId.Location = new System.Drawing.Point(63, 56);
             this.lblCatId.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.lblCatId.Name = "lblCatId";
             this.lblCatId.Size = new System.Drawing.Size(185, 32);
@@ -135,7 +135,7 @@ namespace App
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(14F, 29F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(546, 414);
+            this.ClientSize = new System.Drawing.Size(642, 490);
             this.Controls.Add(this.dtgvCategory);
             this.Controls.Add(this.btnUpdate);
             this.Controls.Add(this.btnDelete);
@@ -148,6 +148,7 @@ namespace App
             this.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
             this.Name = "frmCategory";
             this.Text = "Danh mục sản phẩm";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmCategory_FormClosed);
             this.Load += new System.EventHandler(this.frmCategory_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dtgvCategory)).EndInit();
             this.ResumeLayout(false);

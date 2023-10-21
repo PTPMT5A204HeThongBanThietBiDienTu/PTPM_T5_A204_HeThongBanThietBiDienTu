@@ -151,5 +151,12 @@ namespace App
                 }
             }
         }
+
+        private void frmBrand_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            frmMain frm = new frmMain();
+            this.Hide();
+            frm.ShowDialog();
+        }
     }
 }

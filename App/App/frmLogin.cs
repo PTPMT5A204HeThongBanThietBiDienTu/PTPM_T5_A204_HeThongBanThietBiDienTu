@@ -17,11 +17,18 @@ namespace App
         public frmLogin()
         {
             InitializeComponent();
+
+            this.StartPosition = FormStartPosition.CenterScreen;
         }
 
         private void btnLogin_Click(object sender, EventArgs e)
         {
-            if(txtPassword.Text == string.Empty)
+            handleLogin();
+        }
+
+        private void handleLogin()
+        {
+            if (txtPassword.Text == string.Empty)
             {
                 MessageBox.Show("Vui lòng nhập mật khẩu");
                 txtPassword.Focus();
@@ -34,9 +41,9 @@ namespace App
                 MessageBox.Show("Email không tồn tại");
                 txtEmail.Focus();
                 return;
-            }  
+            }
 
-            if(result == 0)
+            if (result == 0)
             {
                 MessageBox.Show("Mật khẩu không chính xác");
                 txtPassword.Focus();
@@ -52,6 +59,12 @@ namespace App
         private void frmLogin_FormClosing(object sender, FormClosingEventArgs e)
         {
             Environment.Exit(0);
+        }
+
+        private void txtPassword_KeyDown(object sender, KeyEventArgs e)
+        {
+            if(e.KeyCode == Keys.Enter)
+                handleLogin();
         }
     }
 }

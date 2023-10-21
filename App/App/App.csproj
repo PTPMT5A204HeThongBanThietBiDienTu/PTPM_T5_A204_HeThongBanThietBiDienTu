@@ -71,6 +71,12 @@
     <Compile Include="frmBrand.Designer.cs">
       <DependentUpon>frmBrand.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmCart.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmCart.Designer.cs">
+      <DependentUpon>frmCart.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmCategory.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -89,6 +95,18 @@
     <Compile Include="frmMain.Designer.cs">
       <DependentUpon>frmMain.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmPermission.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmPermission.Designer.cs">
+      <DependentUpon>frmPermission.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmProductSale.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmProductSale.Designer.cs">
+      <DependentUpon>frmProductSale.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmRole.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -100,6 +118,9 @@
     <EmbeddedResource Include="frmBrand.resx">
       <DependentUpon>frmBrand.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="frmCart.resx">
+      <DependentUpon>frmCart.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmCategory.resx">
       <DependentUpon>frmCategory.cs</DependentUpon>
     </EmbeddedResource>
@@ -108,6 +129,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmMain.resx">
       <DependentUpon>frmMain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmPermission.resx">
+      <DependentUpon>frmPermission.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmProductSale.resx">
+      <DependentUpon>frmProductSale.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmRole.resx">
       <DependentUpon>frmRole.cs</DependentUpon>

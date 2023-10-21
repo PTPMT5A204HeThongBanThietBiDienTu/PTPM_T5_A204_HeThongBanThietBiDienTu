@@ -11,6 +11,10 @@ const BillProduct = require("./billproduct.model")
 const Brand = require('./brand.model')
 const Screen = require('./screen.model')
 const Permission = require("./permission.model")
+const Order = require("./order.model")
+const OrderDetail = require("./orderdetail.model")
+const Receipt = require("./receipt.model")
+const ReceiptDetail = require('./receiptdetail.model')
 
 //--------------------------------- FOREIGN KEY ON TABLE USER -------------------------------------//
 //--relationship between Role and User--//
@@ -163,6 +167,95 @@ Permission.belongsTo(Screen, {
     foreignKey: 'screenId',
     as: 'screen'
 })
+
+//--------------------------------- FOREIGN KEY ON TABLE ORDER -------------------------------------//
+//--relationship between User and Order--//
+User.hasMany(Order, {
+    foreignKey: 'userId',
+    as: 'order',
+    onDelete: 'NO ACTION'
+})
+
+Order.belongsTo(User, {
+    foreignKey: 'userId',
+    as: 'user'
+})
+
+//--------------------------------- FOREIGN KEY ON TABLE ORDERDETAIL -------------------------------------//
+//--relationship between Order and OrderDetail--//
+Order.hasMany(OrderDetail, {
+    foreignKey: 'orderId',
+    as: 'orderdetail',
+    onDelete: 'NO ACTION'
+})
+
+OrderDetail.belongsTo(Order, {
+    foreignKey: 'orderId',
+    as: 'order'
+})
+
+//--relationship between Product and OrderDetail--//
+Product.hasMany(OrderDetail, {
+    foreignKey: 'proId',
+    as: 'orderdetail',
+    onDelete: 'NO ACTION'
+})
+
+OrderDetail.belongsTo(Product, {
+    foreignKey: 'proId',
+    as: 'product'
+})
+
+//--------------------------------- FOREIGN KEY ON TABLE RECEIPT -------------------------------------//
+//--relationship between User and Receipt--//
+User.hasMany(Receipt, {
+    foreignKey: 'userId',
+    as: 'receipt',
+    onDelete: 'NO ACTION'
+})
+
+Receipt.belongsTo(User, {
+    foreignKey: 'userId',
+    as: 'user'
+})
+
+//--relationship between Order and Receipt--//
+Order.hasMany(Receipt, {
+    foreignKey: 'orderId',
+    as: 'receipt',
+    onDelete: 'NO ACTION'
+})
+
+Receipt.belongsTo(Order, {
+    foreignKey: 'orderId',
+    as: 'order'
+})
+
+//--------------------------------- FOREIGN KEY ON TABLE RECEIPTDETAIL -------------------------------------//
+//--relationship between Receipt and ReceiptDetail--//
+Receipt.hasMany(ReceiptDetail, {
+    foreignKey: 'receiptId',
+    as: 'receiptdetail',
+    onDelete: 'NO ACTION'
+})
+
+ReceiptDetail.belongsTo(Receipt, {
+    foreignKey: 'receiptId',
+    as: 'receipt'
+})
+
+//--relationship between Product and ReceiptDetail--//
+Product.hasMany(ReceiptDetail, {
+    foreignKey: 'proId',
+    as: 'receiptdetail',
+    onDelete: 'NO ACTION'
+})
+
+ReceiptDetail.belongsTo(Product, {
+    foreignKey: 'proId',
+    as: 'product'
+})
+
 
 //====================//====================//====================//====================//====================
 

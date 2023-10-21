@@ -30,6 +30,13 @@ const login = async (req, res, next) => {
         })
     }
 
+    if (!user.is_Active) {
+        return res.status(404).json({
+            success: false,
+            message: 'Your account is locked'
+        })
+    }
+
     const validPW = bcrypt.compareSync(req.body.password, user.password)
     if (!validPW) {
         return res.status(400).json({

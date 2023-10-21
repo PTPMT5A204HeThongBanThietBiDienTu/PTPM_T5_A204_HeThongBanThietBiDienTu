@@ -33,6 +33,11 @@ User.init(
         roleId: {
             type: DataTypes.UUID,
             allowNull: false
+        },
+        is_Active: {
+            type: DataTypes.BOOLEAN,
+            defaultValue: true,
+            allowNull: false
         }
     },
     {

@@ -1,34 +1,32 @@
 const { DataTypes, Model } = require("sequelize")
 const { sequelize } = require("../config/db/mssql.db")
 
-class Permission extends Model { }
+class Order extends Model { }
 
-Permission.init(
+Order.init(
     {
         id: {
             type: DataTypes.UUID,
             primaryKey: true,
             defaultValue: DataTypes.UUIDV4
         },
-        roleId: {
+        userId: {
             type: DataTypes.UUID,
             allowNull: false
         },
-        screenId: {
-            type: DataTypes.UUID,
-            allowNull: false
+        createdAt: {
+            type: DataTypes.DATE
         },
-        is_Permission: {
-            type: DataTypes.BOOLEAN,
-            defaultValue: true,
-            allowNull: false
+        status: {
+            type: DataTypes.STRING,
+            defaultValue: 'Đợi'
         }
     },
     {
         timestamps: false,
         sequelize,
-        modelName: 'Permission'
+        modelName: 'Order'
     }
 )
 
-module.exports = Permission
+module.exports = Order

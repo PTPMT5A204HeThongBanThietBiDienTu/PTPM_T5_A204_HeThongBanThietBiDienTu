@@ -23,6 +23,9 @@ Bill.init(
             type: DataTypes.ENUM,
             values: Object.values(BillStatus),
             defaultValue: BillStatus.UNPAID
+        },
+        createdAt: {
+            type: DataTypes.DATE
         }
     },
     {

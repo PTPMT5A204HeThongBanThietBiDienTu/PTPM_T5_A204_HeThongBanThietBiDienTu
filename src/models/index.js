@@ -15,6 +15,7 @@ const Order = require("./order.model")
 const OrderDetail = require("./orderdetail.model")
 const Receipt = require("./receipt.model")
 const ReceiptDetail = require('./receiptdetail.model')
+const Customer = require('./customer.model')
 
 //--------------------------------- FOREIGN KEY ON TABLE USER -------------------------------------//
 //--relationship between Role and User--//
@@ -116,6 +117,18 @@ User.hasMany(Bill, {
 Bill.belongsTo(User, {
     foreignKey: 'userId',
     as: 'user'
+})
+
+//--relationship between Customer and Bill--//
+Customer.hasMany(Bill, {
+    foreignKey: 'cusId',
+    as: 'bill',
+    onDelete: 'NO ACTION'
+})
+
+Bill.belongsTo(Customer, {
+    foreignKey: 'cusId',
+    as: 'customer'
 })
 
 //--------------------------------- FOREIGN KEY ON TABLE BILLPRODUCT -------------------------------------//

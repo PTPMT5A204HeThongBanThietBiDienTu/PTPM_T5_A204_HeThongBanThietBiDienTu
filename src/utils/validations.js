@@ -54,7 +54,6 @@ const validateRegister = (data) => {
     return dataSchema.validate(data)
 }
 
-
 const validateLogin = (data) => {
     const dataSchema = joi.object({
         email: joi.string().email().required(),

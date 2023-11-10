@@ -10,7 +10,7 @@ Screen.init(
             primaryKey: true,
             defaultValue: DataTypes.UUIDV4
         },
-        name: {
+        screenName: {
             type: DataTypes.STRING,
             allowNull: false,
             unique: true

@@ -6,7 +6,8 @@ const {
   getById,
   create,
   update,
-  remove
+  remove,
+  search
 } = require("../controllers/product.controller")
 const { validateUpload } = require("../middlewares/handleUpload.middleware")
 const { validateBody } = require("../middlewares/validate.middleware")
@@ -22,5 +23,6 @@ router.get('/getByBraId/:id', asyncHandle(getAllByBraId))
 router.post('/create', validateUpload, validateBody(validateProduct), asyncHandle(create))
 router.patch('/:id', validateBody(validateProduct), asyncHandle(update))
 router.delete('/:id', asyncHandle(remove))
+router.post('/search', asyncHandle(search))
 
 module.exports = router

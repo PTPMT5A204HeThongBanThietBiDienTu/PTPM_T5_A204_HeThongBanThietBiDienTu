@@ -1,4 +1,5 @@
 const fs = require("fs")
+const { QueryTypes } = require('sequelize')
 const { Product, Category, Brand } = require("../models/index")
 
 const getAll = async (req, res, next) => {
@@ -202,6 +203,23 @@ const remove = async (req, res, next) => {
     })
 }
 
+const search = async (req, res, next) => {
+    let queryStr = `select p.id, p.name, p.price, p.quantity, p.description, p.img, p.catId, p.braId 
+                    from Products p 
+                    left join Categories c on p.catId = c.id
+                    left join Brands b on p.braId = b.id
+                    where p.name like :content or c.name like :content or b.name like :content`
+    const products = await Product.sequelize.query(queryStr, {
+        replacements: { content: '%' + req.body.content + '%' },
+        type: QueryTypes.SELECT
+    })
+
+    return res.status(200).json({
+        success: true,
+        data: products
+    })
+}
+
 module.exports = {
     getAll,
     getAllByCatId,
@@ -209,5 +227,6 @@ module.exports = {
     getById,
     create,
     update,
-    remove
+    remove,
+    search
 }

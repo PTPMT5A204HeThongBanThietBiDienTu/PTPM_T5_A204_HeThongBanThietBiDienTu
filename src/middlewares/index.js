@@ -6,7 +6,7 @@ const sessionStore = require('../config/mysqlstore.db')
 
 const useMiddleware = (app) => {
     app.use(cors({
-        origin: '*',
+        origin: 'http://localhost:3000',
         methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
         credentials: true
     }))

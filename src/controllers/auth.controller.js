@@ -80,7 +80,7 @@ const logout = async (req, res, next) => {
 const refreshToken = async (req, res, next) => {
     let token = req.session.userToken?.refreshToken
     if (!token) {
-        return res.status(404).jsonn({
+        return res.status(404).json({
             success: false,
             message: 'refresh token not found'
         })

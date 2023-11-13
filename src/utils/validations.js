@@ -49,7 +49,9 @@ const validateRegister = (data) => {
     const dataSchema = joi.object({
         name: joi.string().required(),
         email: joi.string().email().required(),
-        password: joi.string().length(5).required()
+        password: joi.string().length(5).required(),
+        address: joi.string(),
+        phone: joi.string().length(10).pattern(/^[0-9]+$/).messages({ 'string.pattern.base': 'Phone number must have 10 digits' })
     })
     return dataSchema.validate(data)
 }

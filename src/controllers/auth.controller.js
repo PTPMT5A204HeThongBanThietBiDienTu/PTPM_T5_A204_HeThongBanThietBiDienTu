@@ -9,6 +9,7 @@ const register = async (req, res, next) => {
     const user = await User.create(req.body)
 
     return res.status(201).json({
+        success: true,
         message: 'Register success'
     })
 }
@@ -56,6 +57,7 @@ const login = async (req, res, next) => {
     req.session.userToken = userToken
 
     return res.status(200).json({
+        success: true,
         message: 'Login success'
     })
 }
@@ -70,6 +72,7 @@ const logout = async (req, res, next) => {
     res.clearCookie('CellphoneS_API', { path: '/' })
 
     return res.status(200).json({
+        success: true,
         message: 'Logout success'
     })
 }
@@ -110,6 +113,7 @@ const refreshToken = async (req, res, next) => {
     req.session.userToken = userToken
 
     return res.status(200).json({
+        success: true,
         message: 'Refresh token success'
     })
 }

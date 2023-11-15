@@ -59,7 +59,13 @@ const create = async (req, res, next) => {
         })
     }
 
-    const proInCart = await Cart.findOne({ where: { proId: product.id } })
+    const proInCart = await Cart.findOne({
+        where: {
+            proId: product.id,
+            userId: user.id
+        }
+    })
+
     if (!proInCart) {
         const cart = await Cart.create({
             userId: user.id,
@@ -67,14 +73,25 @@ const create = async (req, res, next) => {
         })
     }
     else {
+        if (proInCart.quantity == 3) {
+            return res.status(400).json({
+                success: false,
+                message: 'Quantity has reached the limit'
+            })
+        }
         await Cart.update(
             { quantity: proInCart.quantity + 1 },
-            { where: { id: proInCart.id } }
+            {
+                where: {
+                    id: proInCart.id,
+                    userId: user.id
+                }
+            }
         )
     }
 
     const newCart = await Cart.findOne({
-        where: { proId: product.id },
+        where: { proId: product.id, userId: user.id },
         include: [{
             model: Product,
             as: 'product',
@@ -94,6 +111,13 @@ const update = async (req, res, next) => {
         return res.status(400).json({
             success: false,
             message: 'Invalid cartId'
+        })
+    }
+
+    if (req.body.quantity > 3) {
+        return res.status(400).json({
+            success: false,
+            message: 'Quantity has reached the limit'
         })
     }
 

@@ -91,10 +91,13 @@ const validateBill = (data) => {
     const objectSchema = joi.object({
         proId: joi.string().required(),
         quantity: joi.number().min(1).required(),
-        price: joi.number().required()
+        price: joi.number().required(),
     })
 
     const dataSchema = joi.object({
+        name: joi.string().required(),
+        address: joi.string().required(),
+        phone: joi.string().length(10).pattern(/^[0-9]+$/).messages({ 'string.pattern.base': 'Phone number must have 10 digits' }).required(),
         products: joi.array().items(objectSchema).required()
     })
     return dataSchema.validate(data)

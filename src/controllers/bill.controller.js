@@ -1,4 +1,4 @@
-const { Bill, Product, BillProduct } = require("../models/index")
+const { Bill, Product, BillProduct, Customer } = require("../models/index")
 const JWTService = require("../services/jwt.service")
 const BillStatus = require("../models/BillStatus")
 
@@ -21,7 +21,14 @@ const create = async (req, res, next) => {
     }
 
     const { data } = JWTService.decodeAccessToken(req.session.userToken.accessToken)
-    const bill = await Bill.create({ userId: data.id })
+    let customer = {
+        name: req.body.name,
+        phone: req.body.phone,
+        address: req.body.address
+    }
+
+    const cusNew = await Customer.create(customer)
+    const bill = await Bill.create({ userId: data.id, cusId: cusNew.id })
 
     let total = bill.total
     for (let product of req.body.products) {
@@ -46,9 +53,14 @@ const create = async (req, res, next) => {
         await BillProduct.create(billPro)
     }
 
-    await Bill.update({ total: total, status: BillStatus.PAID }, { where: { id: bill.id } })
+    await Bill.update({ total: total }, { where: { id: bill.id } })
 
-    const billNew = await Bill.findByPk(bill.id)
+    const billNew = await Bill.findByPk(bill.id, {
+        include: {
+            model: Customer,
+            as: 'customer',
+        }
+    })
 
     return res.status(200).json({
         success: true,

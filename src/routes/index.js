@@ -9,6 +9,7 @@ const authRouter = require("./auth.route")
 const billRouter = require("./bill.route")
 const billProRouter = require("./billproduct.route")
 const imageRouter = require("./image.route")
+const { createProxyMiddleware } = require("http-proxy-middleware")
 
 const useRouter = (app) => {
     app.use('/api/v1/role', roleRouter)
@@ -22,6 +23,13 @@ const useRouter = (app) => {
     app.use('/api/v1/bill', billRouter)
     app.use('/api/v1/billPro', billProRouter)
     app.use('/api/v1/image', imageRouter)
+    app.use('/api/v1/address', createProxyMiddleware({
+        target: 'https://vapi.vnappmob.com',
+        changeOrigin: true,
+        onProxyRes: function (proxyRes, req, res) {
+            proxyRes.headers['Access-Control-Allow-Origin'] = 'http://localhost:3000';
+        }
+    }));
 }
 
 module.exports = useRouter

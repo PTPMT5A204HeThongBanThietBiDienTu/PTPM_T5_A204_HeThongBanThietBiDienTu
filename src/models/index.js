@@ -293,5 +293,6 @@ module.exports = {
     Cart,
     Bill,
     BillProduct,
+    Customer,
     createAllTable
 }

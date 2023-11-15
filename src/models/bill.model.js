@@ -25,7 +25,8 @@ Bill.init(
             defaultValue: BillStatus.UNPAID
         },
         createdAt: {
-            type: DataTypes.DATE
+            type: DataTypes.DATE,
+            defaultValue: Date.now
         }
     },
     {

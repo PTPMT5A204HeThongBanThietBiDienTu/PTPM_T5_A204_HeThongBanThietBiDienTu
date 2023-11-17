@@ -70,6 +70,10 @@ const create = async (req, res, next) => {
             })
         }
 
+        let restQuantity = pro.quantity - product.quantity
+        if (restQuantity < 0)
+            restQuantity = 0
+
         total += (product.price * product.quantity)
         const billPro = {
             proId: product.proId,
@@ -77,6 +81,8 @@ const create = async (req, res, next) => {
             quantity: product.quantity,
             billId: bill.id
         }
+
+        await Product.update({ quantity: restQuantity }, { where: { id: pro.id } })
 
         await BillProduct.create(billPro)
     }

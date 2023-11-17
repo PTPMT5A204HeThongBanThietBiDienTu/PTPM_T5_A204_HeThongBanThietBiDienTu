@@ -23,7 +23,7 @@ const useRouter = (app) => {
     app.use('/api/v1/bill', billRouter)
     app.use('/api/v1/billPro', billProRouter)
     app.use('/api/v1/image', imageRouter)
-    app.use('/api/v1/address', createProxyMiddleware({
+    app.use('/api', createProxyMiddleware({
         target: 'https://vapi.vnappmob.com',
         changeOrigin: true,
         onProxyRes: function (proxyRes, req, res) {

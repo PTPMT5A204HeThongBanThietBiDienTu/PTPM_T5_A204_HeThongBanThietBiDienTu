@@ -19,6 +19,27 @@ const getAllByUserId = async (req, res, next) => {
     })
 }
 
+const getById = async (req, res, next) => {
+    const bill = await Bill.findByPk(req.params.id, {
+        include: {
+            model: Customer,
+            as: 'customer'
+        }
+    })
+
+    if (!bill) {
+        return res.status(400).json({
+            success: false,
+            message: 'Invalid ID'
+        })
+    }
+
+    return res.status(200).json({
+        success: true,
+        data: bill
+    })
+}
+
 const create = async (req, res, next) => {
     if (req.body.products.length == 0) {
         return res.status(400).json({
@@ -77,5 +98,6 @@ const create = async (req, res, next) => {
 
 module.exports = {
     getAllByUserId,
+    getById,
     create
 }

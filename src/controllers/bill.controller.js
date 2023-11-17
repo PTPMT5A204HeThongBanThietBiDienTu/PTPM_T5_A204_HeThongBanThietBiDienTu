@@ -5,7 +5,14 @@ const BillStatus = require("../models/BillStatus")
 const getAllByUserId = async (req, res, next) => {
     const { data } = JWTService.decodeAccessToken(req.session.userToken.accessToken)
 
-    const bills = await Bill.findAll({ where: { userId: data.id } })
+    const bills = await Bill.findAll({
+        where: { userId: data.id },
+        include: {
+            model: Customer,
+            as: 'customer'
+        }
+    })
+
     return res.status(200).json({
         success: true,
         data: bills

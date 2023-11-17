@@ -14,7 +14,7 @@ const getAllByBillId = async (req, res, next) => {
         include: [{
             model: Product,
             as: 'product',
-            attributes: ['id', 'name']
+            attributes: ['id', 'name', 'img']
         }]
     })
 

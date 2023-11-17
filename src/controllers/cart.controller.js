@@ -140,9 +140,20 @@ const remove = async (req, res, next) => {
     })
 }
 
+const removeByUserId = async (req, res, next) => {
+    const { data } = JWTService.decodeAccessToken(req.session.userToken.accessToken)
+
+    console.log('abc')
+    const result = await Cart.destroy({ where: { userId: data.id } })
+    return res.status(200).json({
+        success: true
+    })
+}
+
 module.exports = {
     getAllByUserId,
     create,
     update,
-    remove
+    remove,
+    removeByUserId
 }

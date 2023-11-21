@@ -10,7 +10,7 @@ Role.init(
             primaryKey: true,
             defaultValue: DataTypes.UUIDV4
         },
-        name: {
+        roleName: {
             type: DataTypes.STRING,
             allowNull: false,
             unique: true

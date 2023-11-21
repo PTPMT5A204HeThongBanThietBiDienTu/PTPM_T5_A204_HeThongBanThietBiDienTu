@@ -2,7 +2,7 @@ const joi = require("joi")
 
 const validateRole = (data) => {
     const dataSchema = joi.object({
-        name: joi.string()
+        roleName: joi.string()
     })
     return dataSchema.validate(data)
 }

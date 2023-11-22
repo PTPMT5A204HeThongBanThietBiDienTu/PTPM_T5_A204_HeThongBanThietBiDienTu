@@ -10,6 +10,7 @@ namespace App
     static class Program
     {
         public static User currentUser = null;
+        public static string cusId = null;
         /// <summary>
         /// The main entry point for the application.
         /// </summary>

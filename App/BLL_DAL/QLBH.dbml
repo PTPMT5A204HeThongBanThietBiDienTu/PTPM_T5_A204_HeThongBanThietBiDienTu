@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?><Database Name="cellphones" Class="QLBHDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
-  <Connection Mode="AppSettings" ConnectionString="Data Source=.;Initial Catalog=cellphones;Integrated Security=True" SettingsObjectName="BLL_DAL.Properties.Settings" SettingsPropertyName="cellphonesConnectionString" Provider="System.Data.SqlClient" />
+  <Connection Mode="AppSettings" ConnectionString="Data Source=167.99.69.55;Initial Catalog=cellphones;User ID=dragon" SettingsObjectName="BLL_DAL.Properties.Settings" SettingsPropertyName="cellphonesConnectionString1" Provider="System.Data.SqlClient" />
   <Table Name="dbo.BillProducts" Member="BillProducts">
     <Type Name="BillProduct">
       <Column Name="id" Type="System.String" DbType="Char(36) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
@@ -20,9 +20,11 @@
       <Column Name="phone" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
       <Column Name="password" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
       <Column Name="roleId" Type="System.String" DbType="Char(36) NOT NULL" CanBeNull="false" />
-      <Column Name="is_Active" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="is_Active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
       <Association Name="User_Bill" Member="Bills" ThisKey="id" OtherKey="userId" Type="Bill" />
       <Association Name="User_Cart" Member="Carts" ThisKey="id" OtherKey="userId" Type="Cart" />
+      <Association Name="User_Order" Member="Orders" ThisKey="id" OtherKey="userId" Type="Order" />
+      <Association Name="User_Receipt" Member="Receipts" ThisKey="id" OtherKey="userId" Type="Receipt" />
       <Association Name="Role_User" Member="Role" ThisKey="roleId" OtherKey="id" Type="Role" IsForeignKey="true" />
     </Type>
   </Table>
@@ -32,8 +34,11 @@
       <Column Name="userId" Type="System.String" DbType="Char(36) NOT NULL" CanBeNull="false" />
       <Column Name="total" Type="System.Double" DbType="Float" CanBeNull="true" />
       <Column Name="status" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
+      <Column Name="createdAt" Type="System.DateTimeOffset" DbType="DateTimeOffset" CanBeNull="true" />
+      <Column Name="cusId" Type="System.String" DbType="Char(36)" CanBeNull="true" />
       <Association Name="Bill_BillProduct" Member="BillProducts" ThisKey="id" OtherKey="billId" Type="BillProduct" />
       <Association Name="User_Bill" Member="User" ThisKey="userId" OtherKey="id" Type="User" IsForeignKey="true" />
+      <Association Name="Customer_Bill" Member="Customer" ThisKey="cusId" OtherKey="id" Type="Customer" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.Brands" Member="Brands">
@@ -60,6 +65,15 @@
       <Association Name="Category_Product" Member="Products" ThisKey="id" OtherKey="catId" Type="Product" />
     </Type>
   </Table>
+  <Table Name="dbo.Customers" Member="Customers">
+    <Type Name="Customer">
+      <Column Name="id" Type="System.String" DbType="Char(36) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="name" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="phone" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="address" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Association Name="Customer_Bill" Member="Bills" ThisKey="id" OtherKey="cusId" Type="Bill" />
+    </Type>
+  </Table>
   <Table Name="dbo.Images" Member="Images">
     <Type Name="Image">
       <Column Name="id" Type="System.String" DbType="Char(36) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
@@ -68,14 +82,35 @@
       <Association Name="Product_Image" Member="Product" ThisKey="proId" OtherKey="id" Type="Product" IsForeignKey="true" />
     </Type>
   </Table>
+  <Table Name="dbo.OrderDetails" Member="OrderDetails">
+    <Type Name="OrderDetail">
+      <Column Name="id" Type="System.String" DbType="Char(36) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="orderId" Type="System.String" DbType="Char(36) NOT NULL" CanBeNull="false" />
+      <Column Name="proId" Type="System.String" DbType="Char(36) NOT NULL" CanBeNull="false" />
+      <Column Name="quantity" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="Order_OrderDetail" Member="Order" ThisKey="orderId" OtherKey="id" Type="Order" IsForeignKey="true" />
+      <Association Name="Product_OrderDetail" Member="Product" ThisKey="proId" OtherKey="id" Type="Product" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Orders" Member="Orders">
+    <Type Name="Order">
+      <Column Name="id" Type="System.String" DbType="Char(36) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="userId" Type="System.String" DbType="Char(36) NOT NULL" CanBeNull="false" />
+      <Column Name="createdAt" Type="System.DateTimeOffset" DbType="DateTimeOffset" CanBeNull="true" />
+      <Column Name="status" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Association Name="Order_OrderDetail" Member="OrderDetails" ThisKey="id" OtherKey="orderId" Type="OrderDetail" />
+      <Association Name="Order_Receipt" Member="Receipts" ThisKey="id" OtherKey="orderId" Type="Receipt" />
+      <Association Name="User_Order" Member="User" ThisKey="userId" OtherKey="id" Type="User" IsForeignKey="true" />
+    </Type>
+  </Table>
   <Table Name="dbo.Permissions" Member="Permissions">
     <Type Name="Permission">
       <Column Name="id" Type="System.String" DbType="Char(36) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
       <Column Name="roleId" Type="System.String" DbType="Char(36) NOT NULL" CanBeNull="false" />
       <Column Name="screenId" Type="System.String" DbType="Char(36) NOT NULL" CanBeNull="false" />
       <Column Name="is_Permission" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
-      <Association Name="Role_Permission" Member="Role" ThisKey="roleId" OtherKey="id" Type="Role" IsForeignKey="true" />
       <Association Name="Screen_Permission" Member="Screen" ThisKey="screenId" OtherKey="id" Type="Screen" IsForeignKey="true" />
+      <Association Name="Role_Permission" Member="Role" ThisKey="roleId" OtherKey="id" Type="Role" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.Products" Member="Products">
@@ -91,23 +126,40 @@
       <Association Name="Product_BillProduct" Member="BillProducts" ThisKey="id" OtherKey="proId" Type="BillProduct" />
       <Association Name="Product_Cart" Member="Carts" ThisKey="id" OtherKey="proId" Type="Cart" />
       <Association Name="Product_Image" Member="Images" ThisKey="id" OtherKey="proId" Type="Image" />
+      <Association Name="Product_OrderDetail" Member="OrderDetails" ThisKey="id" OtherKey="proId" Type="OrderDetail" />
+      <Association Name="Product_ReceiptDetail" Member="ReceiptDetails" ThisKey="id" OtherKey="proId" Type="ReceiptDetail" />
       <Association Name="Product_Specification" Member="Specifications" ThisKey="id" OtherKey="proId" Type="Specification" />
       <Association Name="Brand_Product" Member="Brand" ThisKey="braId" OtherKey="id" Type="Brand" IsForeignKey="true" />
       <Association Name="Category_Product" Member="Category" ThisKey="catId" OtherKey="id" Type="Category" IsForeignKey="true" />
     </Type>
   </Table>
-  <Table Name="dbo.Roles" Member="Roles">
-    <Type Name="Role">
+  <Table Name="dbo.ReceiptDetails" Member="ReceiptDetails">
+    <Type Name="ReceiptDetail">
       <Column Name="id" Type="System.String" DbType="Char(36) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
-      <Column Name="name" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
-      <Association Name="Role_User" Member="Users" ThisKey="id" OtherKey="roleId" Type="User" />
-      <Association Name="Role_Permission" Member="Permissions" ThisKey="id" OtherKey="roleId" Type="Permission" />
+      <Column Name="receiptId" Type="System.String" DbType="Char(36) NOT NULL" CanBeNull="false" />
+      <Column Name="proId" Type="System.String" DbType="Char(36) NOT NULL" CanBeNull="false" />
+      <Column Name="price" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="quantity" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="Product_ReceiptDetail" Member="Product" ThisKey="proId" OtherKey="id" Type="Product" IsForeignKey="true" />
+      <Association Name="Receipt_ReceiptDetail" Member="Receipt" ThisKey="receiptId" OtherKey="id" Type="Receipt" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Receipts" Member="Receipts">
+    <Type Name="Receipt">
+      <Column Name="id" Type="System.String" DbType="Char(36) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="userId" Type="System.String" DbType="Char(36) NOT NULL" CanBeNull="false" />
+      <Column Name="orderId" Type="System.String" DbType="Char(36) NOT NULL" CanBeNull="false" />
+      <Column Name="total" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="createdAt" Type="System.DateTimeOffset" DbType="DateTimeOffset" CanBeNull="true" />
+      <Association Name="Receipt_ReceiptDetail" Member="ReceiptDetails" ThisKey="id" OtherKey="receiptId" Type="ReceiptDetail" />
+      <Association Name="Order_Receipt" Member="Order" ThisKey="orderId" OtherKey="id" Type="Order" IsForeignKey="true" />
+      <Association Name="User_Receipt" Member="User" ThisKey="userId" OtherKey="id" Type="User" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.Screens" Member="Screens">
     <Type Name="Screen">
       <Column Name="id" Type="System.String" DbType="Char(36) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
-      <Column Name="name" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="screenName" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
       <Association Name="Screen_Permission" Member="Permissions" ThisKey="id" OtherKey="screenId" Type="Permission" />
     </Type>
   </Table>
@@ -118,6 +170,14 @@
       <Column Name="attributeName" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
       <Column Name="attributeValue" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
       <Association Name="Product_Specification" Member="Product" ThisKey="proId" OtherKey="id" Type="Product" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Roles" Member="Roles">
+    <Type Name="Role">
+      <Column Name="id" Type="System.String" DbType="Char(36) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="roleName" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Association Name="Role_User" Member="Users" ThisKey="id" OtherKey="roleId" Type="User" />
+      <Association Name="Role_Permission" Member="Permissions" ThisKey="id" OtherKey="roleId" Type="Permission" />
     </Type>
   </Table>
 </Database>

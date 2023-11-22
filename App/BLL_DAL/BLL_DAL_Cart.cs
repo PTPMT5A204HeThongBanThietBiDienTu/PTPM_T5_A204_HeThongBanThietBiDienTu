@@ -20,6 +20,12 @@ namespace BLL_DAL
             return carts.ToList<Object>();
         }
 
+        public List<Cart> getAll()
+        {
+            List<Cart> carts = qlbh.Carts.Select(c => c).ToList<Cart>();
+            return carts;
+        }
+
         public bool isExistsProduct(Cart cartN)
         {
             Cart cart = qlbh.Carts.Where(c => c.proId == cartN.proId && c.userId == cartN.userId).FirstOrDefault();
@@ -85,6 +91,38 @@ namespace BLL_DAL
                 return 1;
             }
             catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return 0;
+            }
+        }
+
+        public int deleteAll(string userId)
+        {
+            try
+            {
+                List<Cart> carts = qlbh.Carts.Where(c => c.userId == userId).ToList<Cart>();
+                qlbh.Carts.DeleteAllOnSubmit(carts);
+                qlbh.SubmitChanges();
+                return 1;
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return 0;
+            }
+        }
+
+        public int updateUserId(string id, string userId)
+        {
+            try
+            {
+                Cart cart = qlbh.Carts.Where(c => c.id == id).FirstOrDefault();
+                cart.userId = userId;
+                qlbh.SubmitChanges();
+                return 1;
+            }
+            catch(Exception ex)
             {
                 Console.WriteLine(ex.Message);
                 return 0;

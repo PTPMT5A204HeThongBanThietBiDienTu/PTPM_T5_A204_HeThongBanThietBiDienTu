@@ -48,28 +48,43 @@ namespace BLL_DAL
     partial void InsertCategory(Category instance);
     partial void UpdateCategory(Category instance);
     partial void DeleteCategory(Category instance);
+    partial void InsertCustomer(Customer instance);
+    partial void UpdateCustomer(Customer instance);
+    partial void DeleteCustomer(Customer instance);
     partial void InsertImage(Image instance);
     partial void UpdateImage(Image instance);
     partial void DeleteImage(Image instance);
+    partial void InsertOrderDetail(OrderDetail instance);
+    partial void UpdateOrderDetail(OrderDetail instance);
+    partial void DeleteOrderDetail(OrderDetail instance);
+    partial void InsertOrder(Order instance);
+    partial void UpdateOrder(Order instance);
+    partial void DeleteOrder(Order instance);
     partial void InsertPermission(Permission instance);
     partial void UpdatePermission(Permission instance);
     partial void DeletePermission(Permission instance);
     partial void InsertProduct(Product instance);
     partial void UpdateProduct(Product instance);
     partial void DeleteProduct(Product instance);
-    partial void InsertRole(Role instance);
-    partial void UpdateRole(Role instance);
-    partial void DeleteRole(Role instance);
+    partial void InsertReceiptDetail(ReceiptDetail instance);
+    partial void UpdateReceiptDetail(ReceiptDetail instance);
+    partial void DeleteReceiptDetail(ReceiptDetail instance);
+    partial void InsertReceipt(Receipt instance);
+    partial void UpdateReceipt(Receipt instance);
+    partial void DeleteReceipt(Receipt instance);
     partial void InsertScreen(Screen instance);
     partial void UpdateScreen(Screen instance);
     partial void DeleteScreen(Screen instance);
     partial void InsertSpecification(Specification instance);
     partial void UpdateSpecification(Specification instance);
     partial void DeleteSpecification(Specification instance);
+    partial void InsertRole(Role instance);
+    partial void UpdateRole(Role instance);
+    partial void DeleteRole(Role instance);
     #endregion
 		
 		public QLBHDataContext() : 
-				base(global::BLL_DAL.Properties.Settings.Default.cellphonesConnectionString, mappingSource)
+				base(global::BLL_DAL.Properties.Settings.Default.cellphonesConnectionString1, mappingSource)
 		{
 			OnCreated();
 		}
@@ -146,11 +161,35 @@ namespace BLL_DAL
 			}
 		}
 		
+		public System.Data.Linq.Table<Customer> Customers
+		{
+			get
+			{
+				return this.GetTable<Customer>();
+			}
+		}
+		
 		public System.Data.Linq.Table<Image> Images
 		{
 			get
 			{
 				return this.GetTable<Image>();
+			}
+		}
+		
+		public System.Data.Linq.Table<OrderDetail> OrderDetails
+		{
+			get
+			{
+				return this.GetTable<OrderDetail>();
+			}
+		}
+		
+		public System.Data.Linq.Table<Order> Orders
+		{
+			get
+			{
+				return this.GetTable<Order>();
 			}
 		}
 		
@@ -170,11 +209,19 @@ namespace BLL_DAL
 			}
 		}
 		
-		public System.Data.Linq.Table<Role> Roles
+		public System.Data.Linq.Table<ReceiptDetail> ReceiptDetails
 		{
 			get
 			{
-				return this.GetTable<Role>();
+				return this.GetTable<ReceiptDetail>();
+			}
+		}
+		
+		public System.Data.Linq.Table<Receipt> Receipts
+		{
+			get
+			{
+				return this.GetTable<Receipt>();
 			}
 		}
 		
@@ -191,6 +238,14 @@ namespace BLL_DAL
 			get
 			{
 				return this.GetTable<Specification>();
+			}
+		}
+		
+		public System.Data.Linq.Table<Role> Roles
+		{
+			get
+			{
+				return this.GetTable<Role>();
 			}
 		}
 	}
@@ -455,11 +510,15 @@ namespace BLL_DAL
 		
 		private string _roleId;
 		
-		private System.Nullable<bool> _is_Active;
+		private bool _is_Active;
 		
 		private EntitySet<Bill> _Bills;
 		
 		private EntitySet<Cart> _Carts;
+		
+		private EntitySet<Order> _Orders;
+		
+		private EntitySet<Receipt> _Receipts;
 		
 		private EntityRef<Role> _Role;
 		
@@ -481,7 +540,7 @@ namespace BLL_DAL
     partial void OnpasswordChanged();
     partial void OnroleIdChanging(string value);
     partial void OnroleIdChanged();
-    partial void Onis_ActiveChanging(System.Nullable<bool> value);
+    partial void Onis_ActiveChanging(bool value);
     partial void Onis_ActiveChanged();
     #endregion
 		
@@ -489,6 +548,8 @@ namespace BLL_DAL
 		{
 			this._Bills = new EntitySet<Bill>(new Action<Bill>(this.attach_Bills), new Action<Bill>(this.detach_Bills));
 			this._Carts = new EntitySet<Cart>(new Action<Cart>(this.attach_Carts), new Action<Cart>(this.detach_Carts));
+			this._Orders = new EntitySet<Order>(new Action<Order>(this.attach_Orders), new Action<Order>(this.detach_Orders));
+			this._Receipts = new EntitySet<Receipt>(new Action<Receipt>(this.attach_Receipts), new Action<Receipt>(this.detach_Receipts));
 			this._Role = default(EntityRef<Role>);
 			OnCreated();
 		}
@@ -637,8 +698,8 @@ namespace BLL_DAL
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_is_Active", DbType="Bit")]
-		public System.Nullable<bool> is_Active
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_is_Active", DbType="Bit NOT NULL")]
+		public bool is_Active
 		{
 			get
 			{
@@ -680,6 +741,32 @@ namespace BLL_DAL
 			set
 			{
 				this._Carts.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="User_Order", Storage="_Orders", ThisKey="id", OtherKey="userId")]
+		public EntitySet<Order> Orders
+		{
+			get
+			{
+				return this._Orders;
+			}
+			set
+			{
+				this._Orders.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="User_Receipt", Storage="_Receipts", ThisKey="id", OtherKey="userId")]
+		public EntitySet<Receipt> Receipts
+		{
+			get
+			{
+				return this._Receipts;
+			}
+			set
+			{
+				this._Receipts.Assign(value);
 			}
 		}
 		
@@ -760,6 +847,30 @@ namespace BLL_DAL
 			this.SendPropertyChanging();
 			entity.User = null;
 		}
+		
+		private void attach_Orders(Order entity)
+		{
+			this.SendPropertyChanging();
+			entity.User = this;
+		}
+		
+		private void detach_Orders(Order entity)
+		{
+			this.SendPropertyChanging();
+			entity.User = null;
+		}
+		
+		private void attach_Receipts(Receipt entity)
+		{
+			this.SendPropertyChanging();
+			entity.User = this;
+		}
+		
+		private void detach_Receipts(Receipt entity)
+		{
+			this.SendPropertyChanging();
+			entity.User = null;
+		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Bills")]
@@ -776,9 +887,15 @@ namespace BLL_DAL
 		
 		private string _status;
 		
+		private System.Nullable<System.DateTimeOffset> _createdAt;
+		
+		private string _cusId;
+		
 		private EntitySet<BillProduct> _BillProducts;
 		
 		private EntityRef<User> _User;
+		
+		private EntityRef<Customer> _Customer;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -792,12 +909,17 @@ namespace BLL_DAL
     partial void OntotalChanged();
     partial void OnstatusChanging(string value);
     partial void OnstatusChanged();
+    partial void OncreatedAtChanging(System.Nullable<System.DateTimeOffset> value);
+    partial void OncreatedAtChanged();
+    partial void OncusIdChanging(string value);
+    partial void OncusIdChanged();
     #endregion
 		
 		public Bill()
 		{
 			this._BillProducts = new EntitySet<BillProduct>(new Action<BillProduct>(this.attach_BillProducts), new Action<BillProduct>(this.detach_BillProducts));
 			this._User = default(EntityRef<User>);
+			this._Customer = default(EntityRef<Customer>);
 			OnCreated();
 		}
 		
@@ -885,6 +1007,50 @@ namespace BLL_DAL
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_createdAt", DbType="DateTimeOffset")]
+		public System.Nullable<System.DateTimeOffset> createdAt
+		{
+			get
+			{
+				return this._createdAt;
+			}
+			set
+			{
+				if ((this._createdAt != value))
+				{
+					this.OncreatedAtChanging(value);
+					this.SendPropertyChanging();
+					this._createdAt = value;
+					this.SendPropertyChanged("createdAt");
+					this.OncreatedAtChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_cusId", DbType="Char(36)")]
+		public string cusId
+		{
+			get
+			{
+				return this._cusId;
+			}
+			set
+			{
+				if ((this._cusId != value))
+				{
+					if (this._Customer.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OncusIdChanging(value);
+					this.SendPropertyChanging();
+					this._cusId = value;
+					this.SendPropertyChanged("cusId");
+					this.OncusIdChanged();
+				}
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Bill_BillProduct", Storage="_BillProducts", ThisKey="id", OtherKey="billId")]
 		public EntitySet<BillProduct> BillProducts
 		{
@@ -928,6 +1094,40 @@ namespace BLL_DAL
 						this._userId = default(string);
 					}
 					this.SendPropertyChanged("User");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Customer_Bill", Storage="_Customer", ThisKey="cusId", OtherKey="id", IsForeignKey=true)]
+		public Customer Customer
+		{
+			get
+			{
+				return this._Customer.Entity;
+			}
+			set
+			{
+				Customer previousValue = this._Customer.Entity;
+				if (((previousValue != value) 
+							|| (this._Customer.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Customer.Entity = null;
+						previousValue.Bills.Remove(this);
+					}
+					this._Customer.Entity = value;
+					if ((value != null))
+					{
+						value.Bills.Add(this);
+						this._cusId = value.id;
+					}
+					else
+					{
+						this._cusId = default(string);
+					}
+					this.SendPropertyChanged("Customer");
 				}
 			}
 		}
@@ -1409,6 +1609,168 @@ namespace BLL_DAL
 		}
 	}
 	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Customers")]
+	public partial class Customer : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private string _id;
+		
+		private string _name;
+		
+		private string _phone;
+		
+		private string _address;
+		
+		private EntitySet<Bill> _Bills;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnidChanging(string value);
+    partial void OnidChanged();
+    partial void OnnameChanging(string value);
+    partial void OnnameChanged();
+    partial void OnphoneChanging(string value);
+    partial void OnphoneChanged();
+    partial void OnaddressChanging(string value);
+    partial void OnaddressChanged();
+    #endregion
+		
+		public Customer()
+		{
+			this._Bills = new EntitySet<Bill>(new Action<Bill>(this.attach_Bills), new Action<Bill>(this.detach_Bills));
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", DbType="Char(36) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
+		public string id
+		{
+			get
+			{
+				return this._id;
+			}
+			set
+			{
+				if ((this._id != value))
+				{
+					this.OnidChanging(value);
+					this.SendPropertyChanging();
+					this._id = value;
+					this.SendPropertyChanged("id");
+					this.OnidChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_name", DbType="NVarChar(255) NOT NULL", CanBeNull=false)]
+		public string name
+		{
+			get
+			{
+				return this._name;
+			}
+			set
+			{
+				if ((this._name != value))
+				{
+					this.OnnameChanging(value);
+					this.SendPropertyChanging();
+					this._name = value;
+					this.SendPropertyChanged("name");
+					this.OnnameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_phone", DbType="NVarChar(255) NOT NULL", CanBeNull=false)]
+		public string phone
+		{
+			get
+			{
+				return this._phone;
+			}
+			set
+			{
+				if ((this._phone != value))
+				{
+					this.OnphoneChanging(value);
+					this.SendPropertyChanging();
+					this._phone = value;
+					this.SendPropertyChanged("phone");
+					this.OnphoneChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_address", DbType="NVarChar(MAX)")]
+		public string address
+		{
+			get
+			{
+				return this._address;
+			}
+			set
+			{
+				if ((this._address != value))
+				{
+					this.OnaddressChanging(value);
+					this.SendPropertyChanging();
+					this._address = value;
+					this.SendPropertyChanged("address");
+					this.OnaddressChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Customer_Bill", Storage="_Bills", ThisKey="id", OtherKey="cusId")]
+		public EntitySet<Bill> Bills
+		{
+			get
+			{
+				return this._Bills;
+			}
+			set
+			{
+				this._Bills.Assign(value);
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_Bills(Bill entity)
+		{
+			this.SendPropertyChanging();
+			entity.Customer = this;
+		}
+		
+		private void detach_Bills(Bill entity)
+		{
+			this.SendPropertyChanging();
+			entity.Customer = null;
+		}
+	}
+	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Images")]
 	public partial class Image : INotifyPropertyChanging, INotifyPropertyChanged
 	{
@@ -1560,6 +1922,453 @@ namespace BLL_DAL
 		}
 	}
 	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.OrderDetails")]
+	public partial class OrderDetail : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private string _id;
+		
+		private string _orderId;
+		
+		private string _proId;
+		
+		private int _quantity;
+		
+		private EntityRef<Order> _Order;
+		
+		private EntityRef<Product> _Product;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnidChanging(string value);
+    partial void OnidChanged();
+    partial void OnorderIdChanging(string value);
+    partial void OnorderIdChanged();
+    partial void OnproIdChanging(string value);
+    partial void OnproIdChanged();
+    partial void OnquantityChanging(int value);
+    partial void OnquantityChanged();
+    #endregion
+		
+		public OrderDetail()
+		{
+			this._Order = default(EntityRef<Order>);
+			this._Product = default(EntityRef<Product>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", DbType="Char(36) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
+		public string id
+		{
+			get
+			{
+				return this._id;
+			}
+			set
+			{
+				if ((this._id != value))
+				{
+					this.OnidChanging(value);
+					this.SendPropertyChanging();
+					this._id = value;
+					this.SendPropertyChanged("id");
+					this.OnidChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_orderId", DbType="Char(36) NOT NULL", CanBeNull=false)]
+		public string orderId
+		{
+			get
+			{
+				return this._orderId;
+			}
+			set
+			{
+				if ((this._orderId != value))
+				{
+					if (this._Order.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnorderIdChanging(value);
+					this.SendPropertyChanging();
+					this._orderId = value;
+					this.SendPropertyChanged("orderId");
+					this.OnorderIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_proId", DbType="Char(36) NOT NULL", CanBeNull=false)]
+		public string proId
+		{
+			get
+			{
+				return this._proId;
+			}
+			set
+			{
+				if ((this._proId != value))
+				{
+					if (this._Product.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnproIdChanging(value);
+					this.SendPropertyChanging();
+					this._proId = value;
+					this.SendPropertyChanged("proId");
+					this.OnproIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_quantity", DbType="Int NOT NULL")]
+		public int quantity
+		{
+			get
+			{
+				return this._quantity;
+			}
+			set
+			{
+				if ((this._quantity != value))
+				{
+					this.OnquantityChanging(value);
+					this.SendPropertyChanging();
+					this._quantity = value;
+					this.SendPropertyChanged("quantity");
+					this.OnquantityChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Order_OrderDetail", Storage="_Order", ThisKey="orderId", OtherKey="id", IsForeignKey=true)]
+		public Order Order
+		{
+			get
+			{
+				return this._Order.Entity;
+			}
+			set
+			{
+				Order previousValue = this._Order.Entity;
+				if (((previousValue != value) 
+							|| (this._Order.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Order.Entity = null;
+						previousValue.OrderDetails.Remove(this);
+					}
+					this._Order.Entity = value;
+					if ((value != null))
+					{
+						value.OrderDetails.Add(this);
+						this._orderId = value.id;
+					}
+					else
+					{
+						this._orderId = default(string);
+					}
+					this.SendPropertyChanged("Order");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Product_OrderDetail", Storage="_Product", ThisKey="proId", OtherKey="id", IsForeignKey=true)]
+		public Product Product
+		{
+			get
+			{
+				return this._Product.Entity;
+			}
+			set
+			{
+				Product previousValue = this._Product.Entity;
+				if (((previousValue != value) 
+							|| (this._Product.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Product.Entity = null;
+						previousValue.OrderDetails.Remove(this);
+					}
+					this._Product.Entity = value;
+					if ((value != null))
+					{
+						value.OrderDetails.Add(this);
+						this._proId = value.id;
+					}
+					else
+					{
+						this._proId = default(string);
+					}
+					this.SendPropertyChanged("Product");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Orders")]
+	public partial class Order : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private string _id;
+		
+		private string _userId;
+		
+		private System.Nullable<System.DateTimeOffset> _createdAt;
+		
+		private string _status;
+		
+		private EntitySet<OrderDetail> _OrderDetails;
+		
+		private EntitySet<Receipt> _Receipts;
+		
+		private EntityRef<User> _User;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnidChanging(string value);
+    partial void OnidChanged();
+    partial void OnuserIdChanging(string value);
+    partial void OnuserIdChanged();
+    partial void OncreatedAtChanging(System.Nullable<System.DateTimeOffset> value);
+    partial void OncreatedAtChanged();
+    partial void OnstatusChanging(string value);
+    partial void OnstatusChanged();
+    #endregion
+		
+		public Order()
+		{
+			this._OrderDetails = new EntitySet<OrderDetail>(new Action<OrderDetail>(this.attach_OrderDetails), new Action<OrderDetail>(this.detach_OrderDetails));
+			this._Receipts = new EntitySet<Receipt>(new Action<Receipt>(this.attach_Receipts), new Action<Receipt>(this.detach_Receipts));
+			this._User = default(EntityRef<User>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", DbType="Char(36) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
+		public string id
+		{
+			get
+			{
+				return this._id;
+			}
+			set
+			{
+				if ((this._id != value))
+				{
+					this.OnidChanging(value);
+					this.SendPropertyChanging();
+					this._id = value;
+					this.SendPropertyChanged("id");
+					this.OnidChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_userId", DbType="Char(36) NOT NULL", CanBeNull=false)]
+		public string userId
+		{
+			get
+			{
+				return this._userId;
+			}
+			set
+			{
+				if ((this._userId != value))
+				{
+					if (this._User.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnuserIdChanging(value);
+					this.SendPropertyChanging();
+					this._userId = value;
+					this.SendPropertyChanged("userId");
+					this.OnuserIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_createdAt", DbType="DateTimeOffset")]
+		public System.Nullable<System.DateTimeOffset> createdAt
+		{
+			get
+			{
+				return this._createdAt;
+			}
+			set
+			{
+				if ((this._createdAt != value))
+				{
+					this.OncreatedAtChanging(value);
+					this.SendPropertyChanging();
+					this._createdAt = value;
+					this.SendPropertyChanged("createdAt");
+					this.OncreatedAtChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_status", DbType="NVarChar(255)")]
+		public string status
+		{
+			get
+			{
+				return this._status;
+			}
+			set
+			{
+				if ((this._status != value))
+				{
+					this.OnstatusChanging(value);
+					this.SendPropertyChanging();
+					this._status = value;
+					this.SendPropertyChanged("status");
+					this.OnstatusChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Order_OrderDetail", Storage="_OrderDetails", ThisKey="id", OtherKey="orderId")]
+		public EntitySet<OrderDetail> OrderDetails
+		{
+			get
+			{
+				return this._OrderDetails;
+			}
+			set
+			{
+				this._OrderDetails.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Order_Receipt", Storage="_Receipts", ThisKey="id", OtherKey="orderId")]
+		public EntitySet<Receipt> Receipts
+		{
+			get
+			{
+				return this._Receipts;
+			}
+			set
+			{
+				this._Receipts.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="User_Order", Storage="_User", ThisKey="userId", OtherKey="id", IsForeignKey=true)]
+		public User User
+		{
+			get
+			{
+				return this._User.Entity;
+			}
+			set
+			{
+				User previousValue = this._User.Entity;
+				if (((previousValue != value) 
+							|| (this._User.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._User.Entity = null;
+						previousValue.Orders.Remove(this);
+					}
+					this._User.Entity = value;
+					if ((value != null))
+					{
+						value.Orders.Add(this);
+						this._userId = value.id;
+					}
+					else
+					{
+						this._userId = default(string);
+					}
+					this.SendPropertyChanged("User");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_OrderDetails(OrderDetail entity)
+		{
+			this.SendPropertyChanging();
+			entity.Order = this;
+		}
+		
+		private void detach_OrderDetails(OrderDetail entity)
+		{
+			this.SendPropertyChanging();
+			entity.Order = null;
+		}
+		
+		private void attach_Receipts(Receipt entity)
+		{
+			this.SendPropertyChanging();
+			entity.Order = this;
+		}
+		
+		private void detach_Receipts(Receipt entity)
+		{
+			this.SendPropertyChanging();
+			entity.Order = null;
+		}
+	}
+	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Permissions")]
 	public partial class Permission : INotifyPropertyChanging, INotifyPropertyChanged
 	{
@@ -1574,9 +2383,9 @@ namespace BLL_DAL
 		
 		private bool _is_Permission;
 		
-		private EntityRef<Role> _Role;
-		
 		private EntityRef<Screen> _Screen;
+		
+		private EntityRef<Role> _Role;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -1594,8 +2403,8 @@ namespace BLL_DAL
 		
 		public Permission()
 		{
-			this._Role = default(EntityRef<Role>);
 			this._Screen = default(EntityRef<Screen>);
+			this._Role = default(EntityRef<Role>);
 			OnCreated();
 		}
 		
@@ -1687,40 +2496,6 @@ namespace BLL_DAL
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Role_Permission", Storage="_Role", ThisKey="roleId", OtherKey="id", IsForeignKey=true)]
-		public Role Role
-		{
-			get
-			{
-				return this._Role.Entity;
-			}
-			set
-			{
-				Role previousValue = this._Role.Entity;
-				if (((previousValue != value) 
-							|| (this._Role.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Role.Entity = null;
-						previousValue.Permissions.Remove(this);
-					}
-					this._Role.Entity = value;
-					if ((value != null))
-					{
-						value.Permissions.Add(this);
-						this._roleId = value.id;
-					}
-					else
-					{
-						this._roleId = default(string);
-					}
-					this.SendPropertyChanged("Role");
-				}
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Screen_Permission", Storage="_Screen", ThisKey="screenId", OtherKey="id", IsForeignKey=true)]
 		public Screen Screen
 		{
@@ -1751,6 +2526,40 @@ namespace BLL_DAL
 						this._screenId = default(string);
 					}
 					this.SendPropertyChanged("Screen");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Role_Permission", Storage="_Role", ThisKey="roleId", OtherKey="id", IsForeignKey=true)]
+		public Role Role
+		{
+			get
+			{
+				return this._Role.Entity;
+			}
+			set
+			{
+				Role previousValue = this._Role.Entity;
+				if (((previousValue != value) 
+							|| (this._Role.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Role.Entity = null;
+						previousValue.Permissions.Remove(this);
+					}
+					this._Role.Entity = value;
+					if ((value != null))
+					{
+						value.Permissions.Add(this);
+						this._roleId = value.id;
+					}
+					else
+					{
+						this._roleId = default(string);
+					}
+					this.SendPropertyChanged("Role");
 				}
 			}
 		}
@@ -1804,6 +2613,10 @@ namespace BLL_DAL
 		
 		private EntitySet<Image> _Images;
 		
+		private EntitySet<OrderDetail> _OrderDetails;
+		
+		private EntitySet<ReceiptDetail> _ReceiptDetails;
+		
 		private EntitySet<Specification> _Specifications;
 		
 		private EntityRef<Brand> _Brand;
@@ -1837,6 +2650,8 @@ namespace BLL_DAL
 			this._BillProducts = new EntitySet<BillProduct>(new Action<BillProduct>(this.attach_BillProducts), new Action<BillProduct>(this.detach_BillProducts));
 			this._Carts = new EntitySet<Cart>(new Action<Cart>(this.attach_Carts), new Action<Cart>(this.detach_Carts));
 			this._Images = new EntitySet<Image>(new Action<Image>(this.attach_Images), new Action<Image>(this.detach_Images));
+			this._OrderDetails = new EntitySet<OrderDetail>(new Action<OrderDetail>(this.attach_OrderDetails), new Action<OrderDetail>(this.detach_OrderDetails));
+			this._ReceiptDetails = new EntitySet<ReceiptDetail>(new Action<ReceiptDetail>(this.attach_ReceiptDetails), new Action<ReceiptDetail>(this.detach_ReceiptDetails));
 			this._Specifications = new EntitySet<Specification>(new Action<Specification>(this.attach_Specifications), new Action<Specification>(this.detach_Specifications));
 			this._Brand = default(EntityRef<Brand>);
 			this._Category = default(EntityRef<Category>);
@@ -2050,6 +2865,32 @@ namespace BLL_DAL
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Product_OrderDetail", Storage="_OrderDetails", ThisKey="id", OtherKey="proId")]
+		public EntitySet<OrderDetail> OrderDetails
+		{
+			get
+			{
+				return this._OrderDetails;
+			}
+			set
+			{
+				this._OrderDetails.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Product_ReceiptDetail", Storage="_ReceiptDetails", ThisKey="id", OtherKey="proId")]
+		public EntitySet<ReceiptDetail> ReceiptDetails
+		{
+			get
+			{
+				return this._ReceiptDetails;
+			}
+			set
+			{
+				this._ReceiptDetails.Assign(value);
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Product_Specification", Storage="_Specifications", ThisKey="id", OtherKey="proId")]
 		public EntitySet<Specification> Specifications
 		{
@@ -2187,6 +3028,30 @@ namespace BLL_DAL
 			entity.Product = null;
 		}
 		
+		private void attach_OrderDetails(OrderDetail entity)
+		{
+			this.SendPropertyChanging();
+			entity.Product = this;
+		}
+		
+		private void detach_OrderDetails(OrderDetail entity)
+		{
+			this.SendPropertyChanging();
+			entity.Product = null;
+		}
+		
+		private void attach_ReceiptDetails(ReceiptDetail entity)
+		{
+			this.SendPropertyChanging();
+			entity.Product = this;
+		}
+		
+		private void detach_ReceiptDetails(ReceiptDetail entity)
+		{
+			this.SendPropertyChanging();
+			entity.Product = null;
+		}
+		
 		private void attach_Specifications(Specification entity)
 		{
 			this.SendPropertyChanging();
@@ -2200,19 +3065,25 @@ namespace BLL_DAL
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Roles")]
-	public partial class Role : INotifyPropertyChanging, INotifyPropertyChanged
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.ReceiptDetails")]
+	public partial class ReceiptDetail : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
 		
 		private string _id;
 		
-		private string _name;
+		private string _receiptId;
 		
-		private EntitySet<User> _Users;
+		private string _proId;
 		
-		private EntitySet<Permission> _Permissions;
+		private double _price;
+		
+		private int _quantity;
+		
+		private EntityRef<Product> _Product;
+		
+		private EntityRef<Receipt> _Receipt;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -2220,14 +3091,20 @@ namespace BLL_DAL
     partial void OnCreated();
     partial void OnidChanging(string value);
     partial void OnidChanged();
-    partial void OnnameChanging(string value);
-    partial void OnnameChanged();
+    partial void OnreceiptIdChanging(string value);
+    partial void OnreceiptIdChanged();
+    partial void OnproIdChanging(string value);
+    partial void OnproIdChanged();
+    partial void OnpriceChanging(double value);
+    partial void OnpriceChanged();
+    partial void OnquantityChanging(int value);
+    partial void OnquantityChanged();
     #endregion
 		
-		public Role()
+		public ReceiptDetail()
 		{
-			this._Users = new EntitySet<User>(new Action<User>(this.attach_Users), new Action<User>(this.detach_Users));
-			this._Permissions = new EntitySet<Permission>(new Action<Permission>(this.attach_Permissions), new Action<Permission>(this.detach_Permissions));
+			this._Product = default(EntityRef<Product>);
+			this._Receipt = default(EntityRef<Receipt>);
 			OnCreated();
 		}
 		
@@ -2251,49 +3128,415 @@ namespace BLL_DAL
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_name", DbType="NVarChar(255) NOT NULL", CanBeNull=false)]
-		public string name
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_receiptId", DbType="Char(36) NOT NULL", CanBeNull=false)]
+		public string receiptId
 		{
 			get
 			{
-				return this._name;
+				return this._receiptId;
 			}
 			set
 			{
-				if ((this._name != value))
+				if ((this._receiptId != value))
 				{
-					this.OnnameChanging(value);
+					if (this._Receipt.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnreceiptIdChanging(value);
 					this.SendPropertyChanging();
-					this._name = value;
-					this.SendPropertyChanged("name");
-					this.OnnameChanged();
+					this._receiptId = value;
+					this.SendPropertyChanged("receiptId");
+					this.OnreceiptIdChanged();
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Role_User", Storage="_Users", ThisKey="id", OtherKey="roleId")]
-		public EntitySet<User> Users
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_proId", DbType="Char(36) NOT NULL", CanBeNull=false)]
+		public string proId
 		{
 			get
 			{
-				return this._Users;
+				return this._proId;
 			}
 			set
 			{
-				this._Users.Assign(value);
+				if ((this._proId != value))
+				{
+					if (this._Product.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnproIdChanging(value);
+					this.SendPropertyChanging();
+					this._proId = value;
+					this.SendPropertyChanged("proId");
+					this.OnproIdChanged();
+				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Role_Permission", Storage="_Permissions", ThisKey="id", OtherKey="roleId")]
-		public EntitySet<Permission> Permissions
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_price", DbType="Float NOT NULL")]
+		public double price
 		{
 			get
 			{
-				return this._Permissions;
+				return this._price;
 			}
 			set
 			{
-				this._Permissions.Assign(value);
+				if ((this._price != value))
+				{
+					this.OnpriceChanging(value);
+					this.SendPropertyChanging();
+					this._price = value;
+					this.SendPropertyChanged("price");
+					this.OnpriceChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_quantity", DbType="Int NOT NULL")]
+		public int quantity
+		{
+			get
+			{
+				return this._quantity;
+			}
+			set
+			{
+				if ((this._quantity != value))
+				{
+					this.OnquantityChanging(value);
+					this.SendPropertyChanging();
+					this._quantity = value;
+					this.SendPropertyChanged("quantity");
+					this.OnquantityChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Product_ReceiptDetail", Storage="_Product", ThisKey="proId", OtherKey="id", IsForeignKey=true)]
+		public Product Product
+		{
+			get
+			{
+				return this._Product.Entity;
+			}
+			set
+			{
+				Product previousValue = this._Product.Entity;
+				if (((previousValue != value) 
+							|| (this._Product.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Product.Entity = null;
+						previousValue.ReceiptDetails.Remove(this);
+					}
+					this._Product.Entity = value;
+					if ((value != null))
+					{
+						value.ReceiptDetails.Add(this);
+						this._proId = value.id;
+					}
+					else
+					{
+						this._proId = default(string);
+					}
+					this.SendPropertyChanged("Product");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Receipt_ReceiptDetail", Storage="_Receipt", ThisKey="receiptId", OtherKey="id", IsForeignKey=true)]
+		public Receipt Receipt
+		{
+			get
+			{
+				return this._Receipt.Entity;
+			}
+			set
+			{
+				Receipt previousValue = this._Receipt.Entity;
+				if (((previousValue != value) 
+							|| (this._Receipt.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Receipt.Entity = null;
+						previousValue.ReceiptDetails.Remove(this);
+					}
+					this._Receipt.Entity = value;
+					if ((value != null))
+					{
+						value.ReceiptDetails.Add(this);
+						this._receiptId = value.id;
+					}
+					else
+					{
+						this._receiptId = default(string);
+					}
+					this.SendPropertyChanged("Receipt");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Receipts")]
+	public partial class Receipt : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private string _id;
+		
+		private string _userId;
+		
+		private string _orderId;
+		
+		private System.Nullable<double> _total;
+		
+		private System.Nullable<System.DateTimeOffset> _createdAt;
+		
+		private EntitySet<ReceiptDetail> _ReceiptDetails;
+		
+		private EntityRef<Order> _Order;
+		
+		private EntityRef<User> _User;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnidChanging(string value);
+    partial void OnidChanged();
+    partial void OnuserIdChanging(string value);
+    partial void OnuserIdChanged();
+    partial void OnorderIdChanging(string value);
+    partial void OnorderIdChanged();
+    partial void OntotalChanging(System.Nullable<double> value);
+    partial void OntotalChanged();
+    partial void OncreatedAtChanging(System.Nullable<System.DateTimeOffset> value);
+    partial void OncreatedAtChanged();
+    #endregion
+		
+		public Receipt()
+		{
+			this._ReceiptDetails = new EntitySet<ReceiptDetail>(new Action<ReceiptDetail>(this.attach_ReceiptDetails), new Action<ReceiptDetail>(this.detach_ReceiptDetails));
+			this._Order = default(EntityRef<Order>);
+			this._User = default(EntityRef<User>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", DbType="Char(36) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
+		public string id
+		{
+			get
+			{
+				return this._id;
+			}
+			set
+			{
+				if ((this._id != value))
+				{
+					this.OnidChanging(value);
+					this.SendPropertyChanging();
+					this._id = value;
+					this.SendPropertyChanged("id");
+					this.OnidChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_userId", DbType="Char(36) NOT NULL", CanBeNull=false)]
+		public string userId
+		{
+			get
+			{
+				return this._userId;
+			}
+			set
+			{
+				if ((this._userId != value))
+				{
+					if (this._User.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnuserIdChanging(value);
+					this.SendPropertyChanging();
+					this._userId = value;
+					this.SendPropertyChanged("userId");
+					this.OnuserIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_orderId", DbType="Char(36) NOT NULL", CanBeNull=false)]
+		public string orderId
+		{
+			get
+			{
+				return this._orderId;
+			}
+			set
+			{
+				if ((this._orderId != value))
+				{
+					if (this._Order.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnorderIdChanging(value);
+					this.SendPropertyChanging();
+					this._orderId = value;
+					this.SendPropertyChanged("orderId");
+					this.OnorderIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_total", DbType="Float")]
+		public System.Nullable<double> total
+		{
+			get
+			{
+				return this._total;
+			}
+			set
+			{
+				if ((this._total != value))
+				{
+					this.OntotalChanging(value);
+					this.SendPropertyChanging();
+					this._total = value;
+					this.SendPropertyChanged("total");
+					this.OntotalChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_createdAt", DbType="DateTimeOffset")]
+		public System.Nullable<System.DateTimeOffset> createdAt
+		{
+			get
+			{
+				return this._createdAt;
+			}
+			set
+			{
+				if ((this._createdAt != value))
+				{
+					this.OncreatedAtChanging(value);
+					this.SendPropertyChanging();
+					this._createdAt = value;
+					this.SendPropertyChanged("createdAt");
+					this.OncreatedAtChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Receipt_ReceiptDetail", Storage="_ReceiptDetails", ThisKey="id", OtherKey="receiptId")]
+		public EntitySet<ReceiptDetail> ReceiptDetails
+		{
+			get
+			{
+				return this._ReceiptDetails;
+			}
+			set
+			{
+				this._ReceiptDetails.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Order_Receipt", Storage="_Order", ThisKey="orderId", OtherKey="id", IsForeignKey=true)]
+		public Order Order
+		{
+			get
+			{
+				return this._Order.Entity;
+			}
+			set
+			{
+				Order previousValue = this._Order.Entity;
+				if (((previousValue != value) 
+							|| (this._Order.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Order.Entity = null;
+						previousValue.Receipts.Remove(this);
+					}
+					this._Order.Entity = value;
+					if ((value != null))
+					{
+						value.Receipts.Add(this);
+						this._orderId = value.id;
+					}
+					else
+					{
+						this._orderId = default(string);
+					}
+					this.SendPropertyChanged("Order");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="User_Receipt", Storage="_User", ThisKey="userId", OtherKey="id", IsForeignKey=true)]
+		public User User
+		{
+			get
+			{
+				return this._User.Entity;
+			}
+			set
+			{
+				User previousValue = this._User.Entity;
+				if (((previousValue != value) 
+							|| (this._User.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._User.Entity = null;
+						previousValue.Receipts.Remove(this);
+					}
+					this._User.Entity = value;
+					if ((value != null))
+					{
+						value.Receipts.Add(this);
+						this._userId = value.id;
+					}
+					else
+					{
+						this._userId = default(string);
+					}
+					this.SendPropertyChanged("User");
+				}
 			}
 		}
 		
@@ -2317,28 +3560,16 @@ namespace BLL_DAL
 			}
 		}
 		
-		private void attach_Users(User entity)
+		private void attach_ReceiptDetails(ReceiptDetail entity)
 		{
 			this.SendPropertyChanging();
-			entity.Role = this;
+			entity.Receipt = this;
 		}
 		
-		private void detach_Users(User entity)
+		private void detach_ReceiptDetails(ReceiptDetail entity)
 		{
 			this.SendPropertyChanging();
-			entity.Role = null;
-		}
-		
-		private void attach_Permissions(Permission entity)
-		{
-			this.SendPropertyChanging();
-			entity.Role = this;
-		}
-		
-		private void detach_Permissions(Permission entity)
-		{
-			this.SendPropertyChanging();
-			entity.Role = null;
+			entity.Receipt = null;
 		}
 	}
 	
@@ -2350,7 +3581,7 @@ namespace BLL_DAL
 		
 		private string _id;
 		
-		private string _name;
+		private string _screenName;
 		
 		private EntitySet<Permission> _Permissions;
 		
@@ -2360,8 +3591,8 @@ namespace BLL_DAL
     partial void OnCreated();
     partial void OnidChanging(string value);
     partial void OnidChanged();
-    partial void OnnameChanging(string value);
-    partial void OnnameChanged();
+    partial void OnscreenNameChanging(string value);
+    partial void OnscreenNameChanged();
     #endregion
 		
 		public Screen()
@@ -2390,22 +3621,22 @@ namespace BLL_DAL
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_name", DbType="NVarChar(255) NOT NULL", CanBeNull=false)]
-		public string name
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_screenName", DbType="NVarChar(255) NOT NULL", CanBeNull=false)]
+		public string screenName
 		{
 			get
 			{
-				return this._name;
+				return this._screenName;
 			}
 			set
 			{
-				if ((this._name != value))
+				if ((this._screenName != value))
 				{
-					this.OnnameChanging(value);
+					this.OnscreenNameChanging(value);
 					this.SendPropertyChanging();
-					this._name = value;
-					this.SendPropertyChanged("name");
-					this.OnnameChanged();
+					this._screenName = value;
+					this.SendPropertyChanged("screenName");
+					this.OnscreenNameChanged();
 				}
 			}
 		}
@@ -2628,6 +3859,148 @@ namespace BLL_DAL
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Roles")]
+	public partial class Role : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private string _id;
+		
+		private string _roleName;
+		
+		private EntitySet<User> _Users;
+		
+		private EntitySet<Permission> _Permissions;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnidChanging(string value);
+    partial void OnidChanged();
+    partial void OnroleNameChanging(string value);
+    partial void OnroleNameChanged();
+    #endregion
+		
+		public Role()
+		{
+			this._Users = new EntitySet<User>(new Action<User>(this.attach_Users), new Action<User>(this.detach_Users));
+			this._Permissions = new EntitySet<Permission>(new Action<Permission>(this.attach_Permissions), new Action<Permission>(this.detach_Permissions));
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", DbType="Char(36) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
+		public string id
+		{
+			get
+			{
+				return this._id;
+			}
+			set
+			{
+				if ((this._id != value))
+				{
+					this.OnidChanging(value);
+					this.SendPropertyChanging();
+					this._id = value;
+					this.SendPropertyChanged("id");
+					this.OnidChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_roleName", DbType="NVarChar(255) NOT NULL", CanBeNull=false)]
+		public string roleName
+		{
+			get
+			{
+				return this._roleName;
+			}
+			set
+			{
+				if ((this._roleName != value))
+				{
+					this.OnroleNameChanging(value);
+					this.SendPropertyChanging();
+					this._roleName = value;
+					this.SendPropertyChanged("roleName");
+					this.OnroleNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Role_User", Storage="_Users", ThisKey="id", OtherKey="roleId")]
+		public EntitySet<User> Users
+		{
+			get
+			{
+				return this._Users;
+			}
+			set
+			{
+				this._Users.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Role_Permission", Storage="_Permissions", ThisKey="id", OtherKey="roleId")]
+		public EntitySet<Permission> Permissions
+		{
+			get
+			{
+				return this._Permissions;
+			}
+			set
+			{
+				this._Permissions.Assign(value);
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_Users(User entity)
+		{
+			this.SendPropertyChanging();
+			entity.Role = this;
+		}
+		
+		private void detach_Users(User entity)
+		{
+			this.SendPropertyChanging();
+			entity.Role = null;
+		}
+		
+		private void attach_Permissions(Permission entity)
+		{
+			this.SendPropertyChanging();
+			entity.Role = this;
+		}
+		
+		private void detach_Permissions(Permission entity)
+		{
+			this.SendPropertyChanging();
+			entity.Role = null;
 		}
 	}
 }

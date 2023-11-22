@@ -26,7 +26,7 @@ namespace BLL_DAL
 
         public bool is_ExistsName(string roleName)
         {
-            Role role = qlbh.Roles.Where(r => r.name == roleName).FirstOrDefault();
+            Role role = qlbh.Roles.Where(r => r.roleName == roleName).FirstOrDefault();
             if (role != null)
                 return true;
             return false;
@@ -52,7 +52,7 @@ namespace BLL_DAL
             try
             {
                 Role role = qlbh.Roles.Where(r => r.id == roleN.id).FirstOrDefault();
-                role.name = roleN.name;
+                role.roleName = roleN.roleName;
                 qlbh.SubmitChanges();
                 return 1;
             }
@@ -77,6 +77,12 @@ namespace BLL_DAL
                 Console.WriteLine(ex.Message);
                 return 0;
             }
+        }
+
+        public List<Role> getAllForPermission()
+        {
+            List<Role> roles = qlbh.Roles.Where(r=>r.roleName != "user").ToList<Role>();
+            return roles;
         }
     }
 }

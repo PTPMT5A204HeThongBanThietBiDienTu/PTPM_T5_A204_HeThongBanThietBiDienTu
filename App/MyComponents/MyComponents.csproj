@@ -49,6 +49,9 @@
     <Compile Include="TextBoxNumber.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="TextBoxPhone.cs">
+      <SubType>Component</SubType>
+    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

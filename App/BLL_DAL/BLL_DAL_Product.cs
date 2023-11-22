@@ -26,24 +26,68 @@ namespace BLL_DAL
 
         public List<Product> getAll(int page)
         {
-            int skip = (page - 1) * 5;
-            int take = 5;
+            int skip = (page - 1) * 4;
+            int take = 4;
             List<Product> products = qlbh.Products.Select(p => p).Skip(skip).Take(take).ToList<Product>();
             return products;
         }
 
         public List<Product> getAllByCatIdAndBraId(string catId, string braId, int page)
         {
-            int skip = (page - 1) * 5;
-            int take = 5;
-            List<Product> products = qlbh.Products.Where(p => p.catId == catId && p.braId == braId).Skip(skip).Take(take).ToList<Product>();
+            int skip = (page - 1) * 4;
+            int take = 4;
+            List<Product> products = qlbh.Products.Where(p => p.catId == catId && p.braId == braId && p.quantity > 0).Skip(skip).Take(take).ToList<Product>();
             return products;
+        }
+
+        public int countProductByCatIdAndBraId(string catId, string braId)
+        {
+            List<Product> products = qlbh.Products.Where(p => p.catId == catId && p.braId == braId).ToList<Product>();
+            return products.Count;
         }
 
         public int getQuantityOfProduct(string id)
         {
             Product product = qlbh.Products.Where(p => p.id == id).FirstOrDefault();
             return product.quantity;
+        }
+
+        public Product getByProId(string id)
+        {
+            Product product = qlbh.Products.Where(p => p.id == id).FirstOrDefault();
+            return product;
+        }
+
+        public int updateDecreaseQuantity(string id)
+        {
+            try
+            {
+                Product product = qlbh.Products.Where(p => p.id == id).FirstOrDefault();
+                product.quantity = product.quantity - 1;
+                qlbh.SubmitChanges();
+                return 1;
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return 0;
+            }
+        }
+
+        public int updateIncreaseQuantity(string id, int quantity)
+        {
+            try
+            {
+                Product product = qlbh.Products.Where(p => p.id == id).FirstOrDefault();
+                product.quantity = product.quantity + quantity;
+                qlbh.SubmitChanges();
+                return 1;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return 0;
+            }
         }
     }
 }

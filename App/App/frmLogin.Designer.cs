@@ -31,9 +31,9 @@ namespace App
         {
             this.lblEmail = new System.Windows.Forms.Label();
             this.lblPassword = new System.Windows.Forms.Label();
-            this.txtPassword = new System.Windows.Forms.TextBox();
             this.btnLogin = new System.Windows.Forms.Button();
             this.txtEmail = new MyComponents.TextBoxEmail();
+            this.txtPassword = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // lblEmail
@@ -56,21 +56,12 @@ namespace App
             this.lblPassword.TabIndex = 2;
             this.lblPassword.Text = "Mật khẩu";
             // 
-            // txtPassword
-            // 
-            this.txtPassword.Location = new System.Drawing.Point(143, 83);
-            this.txtPassword.Name = "txtPassword";
-            this.txtPassword.PasswordChar = '*';
-            this.txtPassword.Size = new System.Drawing.Size(288, 35);
-            this.txtPassword.TabIndex = 3;
-            this.txtPassword.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtPassword_KeyDown);
-            // 
             // btnLogin
             // 
             this.btnLogin.Location = new System.Drawing.Point(154, 147);
             this.btnLogin.Name = "btnLogin";
             this.btnLogin.Size = new System.Drawing.Size(172, 41);
-            this.btnLogin.TabIndex = 4;
+            this.btnLogin.TabIndex = 6;
             this.btnLogin.Text = "Đăng nhập";
             this.btnLogin.UseVisualStyleBackColor = true;
             this.btnLogin.Click += new System.EventHandler(this.btnLogin_Click);
@@ -83,13 +74,22 @@ namespace App
             this.txtEmail.Size = new System.Drawing.Size(288, 35);
             this.txtEmail.TabIndex = 0;
             // 
+            // txtPassword
+            // 
+            this.txtPassword.Location = new System.Drawing.Point(143, 83);
+            this.txtPassword.Name = "txtPassword";
+            this.txtPassword.PasswordChar = '*';
+            this.txtPassword.Size = new System.Drawing.Size(288, 35);
+            this.txtPassword.TabIndex = 5;
+            this.txtPassword.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtPassword_KeyDown);
+            // 
             // frmLogin
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(14F, 29F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(466, 207);
-            this.Controls.Add(this.btnLogin);
             this.Controls.Add(this.txtPassword);
+            this.Controls.Add(this.btnLogin);
             this.Controls.Add(this.lblPassword);
             this.Controls.Add(this.lblEmail);
             this.Controls.Add(this.txtEmail);
@@ -108,8 +108,8 @@ namespace App
         private MyComponents.TextBoxEmail txtEmail;
         private System.Windows.Forms.Label lblEmail;
         private System.Windows.Forms.Label lblPassword;
-        private System.Windows.Forms.TextBox txtPassword;
         private System.Windows.Forms.Button btnLogin;
+        private System.Windows.Forms.TextBox txtPassword;
     }
 }
 

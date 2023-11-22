@@ -26,7 +26,10 @@ namespace MyComponents
             {
                 string str = txt.Text;
                 if (str.StartsWith(".com") || str.StartsWith("@") || !str.EndsWith(".com") || str.EndsWith("@.com") || !str.Contains("@"))
+                {
                     MessageBox.Show("Email không hợp lệ");
+                    this.Focus();
+                }
             }
         }
     }

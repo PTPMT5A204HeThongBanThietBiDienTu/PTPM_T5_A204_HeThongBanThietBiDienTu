@@ -33,26 +33,35 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Aspose.Words, Version=22.1.0.0, Culture=neutral, PublicKeyToken=716fcc553a201e56, processorArchitecture=MSIL">
+      <HintPath>..\packages\Aspose.Words.22.1.0\lib\net461\Aspose.Words.dll</HintPath>
+    </Reference>
+    <Reference Include="Aspose.Words.Pdf2Word, Version=22.1.0.0, Culture=neutral, PublicKeyToken=716fcc553a201e56, processorArchitecture=MSIL">
+      <HintPath>..\packages\Aspose.Words.22.1.0\lib\net461\Aspose.Words.Pdf2Word.dll</HintPath>
+    </Reference>
     <Reference Include="BLL_DAL">
       <HintPath>..\BLL_DAL\bin\Debug\BLL_DAL.dll</HintPath>
     </Reference>
     <Reference Include="MyComponents">
       <HintPath>..\MyComponents\bin\Debug\MyComponents.dll</HintPath>
     </Reference>
+    <Reference Include="RenderUI">
+      <HintPath>..\RenderUI\bin\Debug\RenderUI.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
     </Reference>
     <Reference Include="System.Core" />
-    <Reference Include="System.Memory, Version=4.0.1.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Memory.4.5.4\lib\net461\System.Memory.dll</HintPath>
+    <Reference Include="System.Memory, Version=4.0.1.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Memory.4.5.5\lib\net461\System.Memory.dll</HintPath>
     </Reference>
     <Reference Include="System.Numerics" />
     <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
     </Reference>
-    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.5.3\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.6.0.0\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
     </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -65,23 +74,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="frmBrand.cs">
+    <Compile Include="frmChangePassWord.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmBrand.Designer.cs">
-      <DependentUpon>frmBrand.cs</DependentUpon>
+    <Compile Include="frmChangePassWord.Designer.cs">
+      <DependentUpon>frmChangePassWord.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmCart.cs">
+    <Compile Include="frmCustomer.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmCart.Designer.cs">
-      <DependentUpon>frmCart.cs</DependentUpon>
+    <Compile Include="frmCustomer.Designer.cs">
+      <DependentUpon>frmCustomer.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmCategory.cs">
+    <Compile Include="frmDashboard.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmCategory.Designer.cs">
-      <DependentUpon>frmCategory.cs</DependentUpon>
+    <Compile Include="frmDashboard.Designer.cs">
+      <DependentUpon>frmDashboard.cs</DependentUpon>
     </Compile>
     <Compile Include="frmLogin.cs">
       <SubType>Form</SubType>
@@ -89,55 +98,20 @@
     <Compile Include="frmLogin.Designer.cs">
       <DependentUpon>frmLogin.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmMain.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="frmMain.Designer.cs">
-      <DependentUpon>frmMain.cs</DependentUpon>
-    </Compile>
-    <Compile Include="frmPermission.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="frmPermission.Designer.cs">
-      <DependentUpon>frmPermission.cs</DependentUpon>
-    </Compile>
-    <Compile Include="frmProductSale.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="frmProductSale.Designer.cs">
-      <DependentUpon>frmProductSale.cs</DependentUpon>
-    </Compile>
-    <Compile Include="frmRole.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="frmRole.Designer.cs">
-      <DependentUpon>frmRole.cs</DependentUpon>
-    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="frmBrand.resx">
-      <DependentUpon>frmBrand.cs</DependentUpon>
+    <Compile Include="WordExport.cs" />
+    <EmbeddedResource Include="frmChangePassWord.resx">
+      <DependentUpon>frmChangePassWord.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmCart.resx">
-      <DependentUpon>frmCart.cs</DependentUpon>
+    <EmbeddedResource Include="frmCustomer.resx">
+      <DependentUpon>frmCustomer.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmCategory.resx">
-      <DependentUpon>frmCategory.cs</DependentUpon>
+    <EmbeddedResource Include="frmDashboard.resx">
+      <DependentUpon>frmDashboard.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmLogin.resx">
       <DependentUpon>frmLogin.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="frmMain.resx">
-      <DependentUpon>frmMain.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="frmPermission.resx">
-      <DependentUpon>frmPermission.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="frmProductSale.resx">
-      <DependentUpon>frmProductSale.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="frmRole.resx">
-      <DependentUpon>frmRole.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -161,6 +135,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DTO\DTO.csproj">
+      <Project>{80988e0e-58af-4555-8375-db03951a6ffb}</Project>
+      <Name>DTO</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -60,12 +60,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BLL_DAL_Bill.cs" />
+    <Compile Include="BLL_DAL_BillProduct.cs" />
     <Compile Include="BLL_DAL_Brand.cs" />
     <Compile Include="BLL_DAL_Cart.cs" />
     <Compile Include="BLL_DAL_Category.cs" />
+    <Compile Include="BLL_DAL_Customer.cs" />
     <Compile Include="BLL_DAL_Permission.cs" />
     <Compile Include="BLL_DAL_Product.cs" />
     <Compile Include="BLL_DAL_Role.cs" />
+    <Compile Include="BLL_DAL_Screen.cs" />
     <Compile Include="BLL_DAL_User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
@@ -97,6 +101,12 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DTO\DTO.csproj">
+      <Project>{80988e0e-58af-4555-8375-db03951a6ffb}</Project>
+      <Name>DTO</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

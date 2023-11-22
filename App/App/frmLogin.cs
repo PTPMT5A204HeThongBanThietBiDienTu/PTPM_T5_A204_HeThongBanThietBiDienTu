@@ -34,6 +34,15 @@ namespace App
                 txtPassword.Focus();
                 return;
             }
+            else
+            {
+                if (txtPassword.Text.Length < 5)
+                {
+                    MessageBox.Show("Mật khẩu phải chứa ít nhất 5 kí tự");
+                    txtPassword.Focus();
+                    return;
+                }
+            }
 
             int result = bdu.checkEmailAndPassword(txtEmail.Text, txtPassword.Text);
             if (result == -1)
@@ -50,10 +59,18 @@ namespace App
                 return;
             }
 
+            if (result == 2)
+            {
+                MessageBox.Show("Tài khoản đã bị khóa");
+                txtEmail.Focus();
+                return;
+            }
+
             Program.currentUser = bdu.getInfo(txtEmail.Text);
-            frmMain frm = new frmMain();
+            frmDashboard frm = new frmDashboard();
+
             this.Hide();
-            frm.ShowDialog();
+            frm.Show();
         }
 
         private void frmLogin_FormClosing(object sender, FormClosingEventArgs e)
@@ -63,7 +80,7 @@ namespace App
 
         private void txtPassword_KeyDown(object sender, KeyEventArgs e)
         {
-            if(e.KeyCode == Keys.Enter)
+            if (e.KeyCode == Keys.Enter)
                 handleLogin();
         }
     }

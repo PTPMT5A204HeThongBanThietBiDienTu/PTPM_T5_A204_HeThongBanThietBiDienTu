@@ -32,5 +32,16 @@ namespace BLL_DAL.Properties {
                 return ((string)(this["cellphonesConnectionString"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=167.99.69.55;Initial Catalog=cellphones;User ID=dragon;Password=q`@75" +
+            "JTQmj4tM!C$")]
+        public string cellphonesConnectionString1 {
+            get {
+                return ((string)(this["cellphonesConnectionString1"]));
+            }
+        }
     }
 }

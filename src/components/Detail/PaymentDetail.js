@@ -18,7 +18,7 @@ const PaymentDetail = (props) => {
                 const dataCart = {
                     proId: productByID.id
                 }
-                axios.post(`http://localhost:1234/api/v1/cart/create`, dataCart)
+                axios.post(`http://localhost:7777/api/v1/cart/create`, dataCart)
                     .then(res => {
                         if (res && res.data.success === true) {
                             navigate('/cart');
@@ -28,6 +28,9 @@ const PaymentDetail = (props) => {
                     }).catch(err => {
                         if (err.response.data.message === "Quantity has reached the limit") {
                             toast.warning('Đã đạt giới hạn thêm vào giỏ hàng !!! Vui lòng liên hệ: 0587928264 nếu muốn mua nhiều hơn');
+                            navigate('/cart');
+                        } else if (err.response.data.message === "The product is out of stock") {
+                            toast.warning('Đang không có sẵn hàng !!! Vui lòng liên hệ: 0587928264 nếu muốn mua nhiều hơn');
                             navigate('/cart');
                         } else {
                             console.log(err);
@@ -47,7 +50,7 @@ const PaymentDetail = (props) => {
                 const dataCart = {
                     proId: productByID.id
                 }
-                axios.post(`http://localhost:1234/api/v1/cart/create`, dataCart)
+                axios.post(`http://localhost:7777/api/v1/cart/create`, dataCart)
                     .then(res => {
                         if (res && res.data.success === true) {
                             toast.success('Đã thêm sản phẩm vào giỏ hàng');
@@ -57,6 +60,8 @@ const PaymentDetail = (props) => {
                     }).catch(err => {
                         if (err.response.data.message === "Quantity has reached the limit") {
                             toast.warning('Đã đạt giới hạn thêm vào giỏ hàng !!! Vui lòng liên hệ: 0587928264 nếu muốn mua nhiều hơn');
+                        } else if (err.response.data.message === "The product is out of stock") {
+                            toast.warning('Đang không có sẵn hàng !!! Vui lòng liên hệ: 0587928264 nếu muốn mua nhiều hơn');
                         } else {
                             console.log(err);
                         }

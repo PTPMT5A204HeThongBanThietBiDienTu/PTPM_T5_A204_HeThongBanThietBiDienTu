@@ -12,7 +12,7 @@ const Detail = ({ name }) => {
     const { id } = useParams();
     const [productByID, setProductByID] = useState([]);
     useEffect(() => {
-        axios.get(`http://localhost:1234/api/v1/product/${id}`)
+        axios.get(`http://localhost:7777/api/v1/product/${id}`)
             .then(res => {
                 if (res && res.data) {
                     setProductByID(res.data.data);
@@ -36,7 +36,7 @@ const Detail = ({ name }) => {
                     </div>
                     <hr />
                     <div className='image'>
-                        <img src={`http://localhost:1234/${productByID.img}`} alt='' />
+                        <img src={`http://localhost:7777/${productByID.img}`} alt='' />
                         <div className='love'>
                             <i className='fa-solid fa-heart'></i>
                         </div>

@@ -10,7 +10,7 @@ import axios from 'axios';
 const Navbar = ({ name }) => {
     // const navigate = useNavigate();
     const handleLogout = () => {
-        axios.post('http://localhost:1234/api/v1/auth/logout')
+        axios.post('http://localhost:7777/api/v1/auth/logout')
             .then(res => {
                 if (res && res.data.success === true && res.data.message === 'Logout success') {
                     window.location.reload();

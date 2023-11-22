@@ -43,12 +43,12 @@ const OrderInformation = () => {
                     };
                 })
             }
-            axios.post(`http://localhost:1234/api/v1/bill/create`, dataOrderInfo)
+            axios.post(`http://localhost:7777/api/v1/bill/create`, dataOrderInfo)
                 .then(res => {
                     if (res && res.data.success === true) {
                         const billId = res.data.data.id;
                         console.log(billId);
-                        axios.delete(`http://localhost:1234/api/v1/cart/deleteByUserId`)
+                        axios.delete(`http://localhost:7777/api/v1/cart/deleteByUserId`)
                             .then(res => {
                                 if (res && res.data.success === true) {
                                     navigate('/order-complete', { state: { billId: billId } });
@@ -59,7 +59,7 @@ const OrderInformation = () => {
         }
     }
     const loadCart = useCallback(() => {
-        axios.get(`http://localhost:1234/api/v1/cart/`)
+        axios.get(`http://localhost:7777/api/v1/cart/`)
             .then(res => {
                 if (res && res.data) {
                     setCart(res.data.data);
@@ -84,7 +84,7 @@ const OrderInformation = () => {
     }
     const fetchDataCity = useCallback(async () => {
         try {
-            const res = await axios.get('http://localhost:1234/api/province/');
+            const res = await axios.get('http://localhost:7777/api/province/');
             const formatCity = res.data.results.map(city => ({
                 id: city.province_id,
                 name: city.province_name
@@ -96,7 +96,7 @@ const OrderInformation = () => {
     }, []);
     const fetchDataDistrict = useCallback(async () => {
         try {
-            const res = await axios.get(`http://localhost:1234/api/province/district/${provinceid}`);
+            const res = await axios.get(`http://localhost:7777/api/province/district/${provinceid}`);
             const formatDistrict = res.data.results.map(district => ({
                 id: district.district_id,
                 name: district.district_name
@@ -108,7 +108,7 @@ const OrderInformation = () => {
     }, [provinceid]);
     const fetchDataWard = useCallback(async () => {
         try {
-            const res = await axios.get(`http://localhost:1234/api/province/ward/${districtid}`);
+            const res = await axios.get(`http://localhost:7777/api/province/ward/${districtid}`);
             const formatWard = res.data.results.map(ward => ({
                 id: ward.ward_id,
                 name: ward.ward_name

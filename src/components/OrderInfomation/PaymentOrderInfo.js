@@ -27,7 +27,7 @@ const PaymentOrderInfo = (props) => {
                             <div className='total'><b>{formatCurrency(totalPrice)}</b></div>
                         </div>
                         <div className='button-payment'><button type="submit">Tiếp tục</button></div>
-                        <Link to={'/product'} style={{ textDecoration: 'none', color: '#222' }}><div className='button-buy'><button>Chọn thêm sản phẩm</button></div></Link>
+                        <Link to={'/'} style={{ textDecoration: 'none', color: '#222' }}><div className='button-buy'><button>Chọn thêm sản phẩm</button></div></Link>
                     </div>
                 ) : <div className='fail-order d-flex flex-column p-3'>
                     <div className='title'>KHÔNG CÓ SẢN PHẨM TRONG GIỎ HÀNG</div>

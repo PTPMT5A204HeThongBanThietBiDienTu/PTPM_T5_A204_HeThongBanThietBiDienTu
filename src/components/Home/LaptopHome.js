@@ -31,19 +31,19 @@ const ProductHome = (props) => {
     const [product, setProduct] = useState([]);
     useEffect(() => {
         if (acer === false && asus === false) {
-            axios.get(`http://localhost:1234/api/v1/product/getByCatId/3289f294-65b0-4dd8-a5dc-ef6ca442eb68`).then(res => {
+            axios.get(`http://localhost:7777/api/v1/product/getByCatId/3289f294-65b0-4dd8-a5dc-ef6ca442eb68`).then(res => {
                 if (res && res.data) {
                     setProduct(res.data.data);
                 }
             }).catch(err => console.log(err));
         } else if (acer === true) {
-            axios.get(`http://localhost:1234/api/v1/product/getByBraId/90320d05-772f-41e5-a077-411532c68145`).then(res => {
+            axios.get(`http://localhost:7777/api/v1/product/getByBraId/90320d05-772f-41e5-a077-411532c68145`).then(res => {
                 if (res && res.data) {
                     setProduct(res.data.data);
                 }
             }).catch(err => console.log(err));
         } else {
-            axios.get(`http://localhost:1234/api/v1/product/getByBraId/9757c182-3f7d-44d7-a2b6-b0cef9917778`).then(res => {
+            axios.get(`http://localhost:7777/api/v1/product/getByBraId/9757c182-3f7d-44d7-a2b6-b0cef9917778`).then(res => {
                 if (res && res.data) {
                     setProduct(res.data.data);
                 }
@@ -85,7 +85,7 @@ const ProductHome = (props) => {
                         <div className='card-product'>
                             <Link style={{ textDecoration: "none", color: "#222" }} to={`/product/${value.id}`}>
                                 <div className='card-image'>
-                                    <img src={`http://localhost:1234/${value.img}`} alt='' />
+                                    <img src={`http://localhost:7777/${value.img}`} alt='' />
                                 </div>
                                 <div className='card-name'>
                                     <b>{value.name}</b>

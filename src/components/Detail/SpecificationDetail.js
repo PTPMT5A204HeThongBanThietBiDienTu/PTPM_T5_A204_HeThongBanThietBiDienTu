@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react'
 const SpecificationDetail = ({ id }) => {
     const [specification, setSpecification] = useState([]);
     useEffect(() => {
-        axios.get(`http://localhost:1234/api/v1/specification/getByProId/${id}`)
+        axios.get(`http://localhost:7777/api/v1/specification/getByProId/${id}`)
             .then(res => {
                 if (res && res.data) {
                     setSpecification(res.data.data);

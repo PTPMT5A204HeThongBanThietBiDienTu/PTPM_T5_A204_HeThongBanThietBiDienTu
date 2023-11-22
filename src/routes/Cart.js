@@ -8,7 +8,7 @@ const Cart = () => {
     const navigate = useNavigate();
     const [cart, setCart] = useState([]);
     const loadCart = useCallback(() => {
-        axios.get(`http://localhost:1234/api/v1/cart/`)
+        axios.get(`http://localhost:7777/api/v1/cart/`)
             .then(res => {
                 if (res && res.data) {
                     setCart(res.data.data);

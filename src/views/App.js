@@ -22,7 +22,7 @@ function App() {
   axios.defaults.withCredentials = true;
   const [name, setName] = useState('');
   useEffect(() => {
-    axios.get('http://localhost:1234/api/v1/auth/getInfo')
+    axios.get('http://localhost:7777/api/v1/auth/getInfo')
       .then(res => {
         if (res && res.data.success === true) {
           setName(res.data.data.name);
@@ -31,7 +31,7 @@ function App() {
   }, [])
   // useEffect(() => {
   //   const verify = () => {
-  //     axios.get('http://localhost:1234/api/v1/auth/getInfo')
+  //     axios.get('http://localhost:7777/api/v1/auth/getInfo')
   //       .then(res => {
   //         // if (res && res.data.success === true) {
   //         // } else {
@@ -40,7 +40,7 @@ function App() {
   //         console.log(res);
   //       }).catch(err => {
   //         if (err.response.data.message === 'jwt expired') {
-  //           axios.post(`http://localhost:1234/api/v1/auth/refreshToken`)
+  //           axios.post(`http://localhost:7777/api/v1/auth/refreshToken`)
   //             .then(res => {
   //               if (res && res.data.message === 'Refresh token success') {
   //                 return;

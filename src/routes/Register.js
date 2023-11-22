@@ -27,7 +27,7 @@ const Register = () => {
                 address: values.address,
                 password: values.password
             };
-            axios.post(`http://localhost:1234/api/v1/auth/register`, registerData)
+            axios.post(`http://localhost:7777/api/v1/auth/register`, registerData)
                 .then(res => {
                     if (res && res.data.message === 'Register success') {
                         toast.success('Register successfully !!!');
@@ -40,7 +40,7 @@ const Register = () => {
     }
     useEffect(() => {
         const verify = async () => {
-            await axios.get('http://localhost:1234/api/v1/auth/getInfo')
+            await axios.get('http://localhost:7777/api/v1/auth/getInfo')
                 .then(res => {
                     if (res && res.data.success === true) {
                         navigate('/');

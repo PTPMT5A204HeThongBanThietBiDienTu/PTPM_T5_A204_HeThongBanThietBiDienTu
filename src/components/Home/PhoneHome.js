@@ -32,19 +32,19 @@ const ProductHome = (props) => {
 
     useEffect(() => {
         if (iphone === false && samsung === false) {
-            axios.get(`http://localhost:1234/api/v1/product/getByCatId/47845903-009d-4294-80cb-cd6549bd2dab`).then(res => {
+            axios.get(`http://localhost:7777/api/v1/product/getByCatId/47845903-009d-4294-80cb-cd6549bd2dab`).then(res => {
                 if (res && res.data) {
                     setProduct(res.data.data);
                 }
             }).catch(err => console.log(err));
         } else if (iphone === true) {
-            axios.get(`http://localhost:1234/api/v1/product/getByBraId/9e5b2654-a901-46b5-8f23-819dcec28457`).then(res => {
+            axios.get(`http://localhost:7777/api/v1/product/getByBraId/9e5b2654-a901-46b5-8f23-819dcec28457`).then(res => {
                 if (res && res.data) {
                     setProduct(res.data.data);
                 }
             }).catch(err => console.log(err));
         } else {
-            axios.get(`http://localhost:1234/api/v1/product/getByBraId/ab84deca-6afa-4f4a-a826-46342f72d80e`).then(res => {
+            axios.get(`http://localhost:7777/api/v1/product/getByBraId/ab84deca-6afa-4f4a-a826-46342f72d80e`).then(res => {
                 if (res && res.data) {
                     setProduct(res.data.data);
                 }
@@ -85,7 +85,7 @@ const ProductHome = (props) => {
                         <div className='card-product'>
                             <Link style={{ textDecoration: "none", color: "#222" }} to={`/product/${value.id}`}>
                                 <div className='card-image'>
-                                    <img src={`http://localhost:1234/${value.img}`} alt='' />
+                                    <img src={`http://localhost:7777/${value.img}`} alt='' />
                                 </div>
                                 <div className='card-name'>
                                     <b>{value.name}</b>

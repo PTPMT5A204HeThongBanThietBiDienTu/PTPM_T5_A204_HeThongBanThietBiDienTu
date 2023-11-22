@@ -5,7 +5,7 @@ const ProductOrderComplete = ({ billId, formatCurrency }) => {
     const [bill, setBill] = useState([]);
 
     const loadBill = useCallback(() => {
-        axios.get(`http://localhost:1234/api/v1/billPro/getAllByBillId/${billId}`)
+        axios.get(`http://localhost:7777/api/v1/billPro/getAllByBillId/${billId}`)
             .then(res => {
                 if (res && res.data) {
                     setBill(res.data.data);
@@ -23,7 +23,7 @@ const ProductOrderComplete = ({ billId, formatCurrency }) => {
                     return (
                         <div className='card-complete my-2 d-flex' key={value.productid}>
                             <div className='card-image my-2'>
-                                <img src={`http://localhost:1234/${value.product.img}`} alt='' />
+                                <img src={`http://localhost:7777/${value.product.img}`} alt='' />
                             </div>
                             <div className='card-content d-flex flex-column mx-3 my-2'>
                                 <div className='card-name'><b>{value.product.name}</b></div>

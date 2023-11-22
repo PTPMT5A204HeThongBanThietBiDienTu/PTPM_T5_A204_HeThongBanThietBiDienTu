@@ -4,7 +4,7 @@ import React, { useCallback, useEffect, useState } from 'react'
 const InfoOrderComplete = ({ billId, formatCurrency }) => {
     const [customer, setCustomer] = useState([]);
     const loadDataCompleteOrder = useCallback(() => {
-        axios.get(`http://localhost:1234/api/v1/bill/${billId}`)
+        axios.get(`http://localhost:7777/api/v1/bill/${billId}`)
             .then(res => {
                 setCustomer(res.data.data);
             }).catch(err => console.log(err));

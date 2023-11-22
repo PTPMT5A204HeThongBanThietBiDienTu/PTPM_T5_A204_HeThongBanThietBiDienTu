@@ -22,7 +22,7 @@ const ProductCart = (props) => {
         });
     };
     const handleDeleteCart = async (cartId) => {
-        axios.delete(`http://localhost:1234/api/v1/cart/${cartId}`)
+        axios.delete(`http://localhost:7777/api/v1/cart/${cartId}`)
             .then(res => {
                 if (res && res.data.success === true) {
                     toast.success('Đã xóa sản phẩm ra khỏi giỏ hàng');
@@ -40,7 +40,7 @@ const ProductCart = (props) => {
             quantity: newQuantity,
         }
         if (newQuantity > 0) {
-            axios.patch(`http://localhost:1234/api/v1/cart/${cartId}`, dataUpdateCart)
+            axios.patch(`http://localhost:7777/api/v1/cart/${cartId}`, dataUpdateCart)
                 .then(res => {
                     if (res && res.data.success === true) {
                         loadCart();
@@ -48,6 +48,8 @@ const ProductCart = (props) => {
                 }).catch(err => {
                     if (err.response.data.message === "Quantity has reached the limit") {
                         toast.warning('Đã đạt giới hạn thêm vào giỏ hàng !!! Vui lòng liên hệ: 0587928264 nếu muốn mua nhiều hơn');
+                    } else if (err.response.data.message === "The rest quantity of product is not enough") {
+                        toast.warning('Đang không có sẵn hàng !!! Vui lòng liên hệ: 0587928264 nếu muốn mua nhiều hơn');
                     } else {
                         console.log(err);
                     }
@@ -65,7 +67,7 @@ const ProductCart = (props) => {
                     return (
                         <div className='card-cart' key={data.userId}>
                             <div className='card-image'>
-                                <img src={`http://localhost:1234/${data.product.img}`} alt='' />
+                                <img src={`http://localhost:7777/${data.product.img}`} alt='' />
                             </div>
                             <div className='card-info'>
                                 <div className='card-name'><Link style={{ textDecoration: 'none', color: '#666' }} to={`/product/${data.product.id}`}><b>{data.product.name}</b></Link></div>

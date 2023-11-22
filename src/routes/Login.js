@@ -19,7 +19,7 @@ const Login = () => {
     };
     const handleSubmit = (event) => {
         event.preventDefault();
-        axios.post('http://localhost:1234/api/v1/auth/login', values)
+        axios.post('http://localhost:7777/api/v1/auth/login', values)
             .then(res => {
                 if (res && res.data.message === 'Login success') {
                     window.location.reload();
@@ -55,7 +55,7 @@ const Login = () => {
 
     useEffect(() => {
         const verify = () => {
-            axios.get('http://localhost:1234/api/v1/auth/getInfo')
+            axios.get('http://localhost:7777/api/v1/auth/getInfo')
                 .then(res => {
                     console.log(res);
                     if (res && res.data.success === true) {
@@ -65,7 +65,7 @@ const Login = () => {
                     }
                 }).catch(err => {
                     if (err.response.data.message === 'jwt expired') {
-                        axios.post(`http://localhost:1234/api/v1/auth/refreshToken`)
+                        axios.post(`http://localhost:7777/api/v1/auth/refreshToken`)
                             .then(res => {
                                 if (res && res.data.success === true && res.data.message === 'Refresh token success') {
                                     return;

@@ -22,7 +22,7 @@ const SimilarProductDetail = () => {
         }
     };
     const [product, setProduct] = useState([]);
-    axios.get(`http://localhost:1234/api/v1/product/getByCatId/47845903-009d-4294-80cb-cd6549bd2dab`).then(res => {
+    axios.get(`http://localhost:7777/api/v1/product/getByCatId/47845903-009d-4294-80cb-cd6549bd2dab`).then(res => {
         if (res && res.data) {
             setProduct(res.data.data);
         }
@@ -36,7 +36,7 @@ const SimilarProductDetail = () => {
                         <div className='card-product' key={value._id} >
                             <Link style={{ textDecoration: "none", color: "#222" }} to={`/product/${value.id}`}>
                                 <div className='card-image'>
-                                    <img src={`http://localhost:1234/${value.img}`} alt='' />
+                                    <img src={`http://localhost:7777/${value.img}`} alt='' />
                                 </div>
                                 <div className='card-name'>
                                     <b>{value.name}</b>

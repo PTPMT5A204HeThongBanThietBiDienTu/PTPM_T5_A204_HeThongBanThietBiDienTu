@@ -20,7 +20,7 @@ const login = async (req, res, next) => {
         include: [{
             model: Role,
             as: 'role',
-            attributes: ['id', 'name']
+            attributes: ['id', 'roleName']
         }]
     })
 
@@ -91,7 +91,7 @@ const refreshToken = async (req, res, next) => {
         include: [{
             model: Role,
             as: 'role',
-            attributes: ['id', 'name']
+            attributes: ['id', 'roleName']
         }]
     })
 
@@ -124,7 +124,7 @@ const getInfo = async (req, res, next) => {
         include: [{
             model: Role,
             as: 'role',
-            attributes: ['id', 'name']
+            attributes: ['id', 'roleName']
         }],
         attributes: ['id', 'name', 'email', 'address', 'phone', 'roleId']
     })

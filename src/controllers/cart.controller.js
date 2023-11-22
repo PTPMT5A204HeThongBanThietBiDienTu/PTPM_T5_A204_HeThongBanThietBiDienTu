@@ -73,6 +73,13 @@ const create = async (req, res, next) => {
         })
     }
     else {
+        if (product.quantity - proInCart.quantity - 1 <= 0) {
+            return res.status(400).json({
+                success: false,
+                message: 'The product is out of stock'
+            })
+        }
+
         if (proInCart.quantity == 3) {
             return res.status(400).json({
                 success: false,
@@ -118,6 +125,15 @@ const update = async (req, res, next) => {
         return res.status(400).json({
             success: false,
             message: 'Quantity has reached the limit'
+        })
+    }
+
+    const product = await Product.findByPk(cart.proId)
+    let restQuantity = product.quantity - req.body.quantity
+    if (restQuantity < 0) {
+        return res.status(400).json({
+            success: false,
+            message: 'The rest quantity of product is not enough'
         })
     }
 

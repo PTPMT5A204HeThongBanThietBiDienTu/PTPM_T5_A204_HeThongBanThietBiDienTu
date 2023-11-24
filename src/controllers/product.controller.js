@@ -1,6 +1,6 @@
 const fs = require("fs")
 const { QueryTypes } = require('sequelize')
-const { Product, Category, Brand } = require("../models/index")
+const { Product, Category, Brand, Image } = require("../models/index")
 
 const getAll = async (req, res, next) => {
     const products = await Product.findAll({
@@ -109,9 +109,16 @@ const getById = async (req, res, next) => {
         })
     }
 
+
+    const images = await Image.findAll({
+        where: { proId: req.params.id },
+        attributes: ['id', 'imgSrc']
+    })
+
     return res.status(200).json({
         success: true,
-        data: product
+        data: product,
+        images: images
     })
 }
 

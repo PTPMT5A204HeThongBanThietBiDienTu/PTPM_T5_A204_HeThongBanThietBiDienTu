@@ -1,11 +1,13 @@
 const fs = require("fs")
-const { QueryTypes } = require('sequelize')
+const { QueryTypes, Op } = require('sequelize')
 const { Product, Category, Brand, Image } = require("../models/index")
 const PAGE_SIZE = 4
 
 const getAll = async (req, res, next) => {
     let page = req.query.page
     let products = []
+    const totalCount = await Product.count()
+    const totalPages = Math.ceil(totalCount / PAGE_SIZE);
 
     if (page) {
         page = parseInt(page)
@@ -45,7 +47,8 @@ const getAll = async (req, res, next) => {
 
     return res.status(200).json({
         success: true,
-        data: products
+        data: products,
+        totalPages: totalPages
     })
 }
 
@@ -60,6 +63,10 @@ const getAllByCatId = async (req, res, next) => {
 
     let page = req.query.page
     let products = []
+    const totalCount = await Product.count({
+        where: { catId: req.params.id }
+    });
+    const totalPages = Math.ceil(totalCount / PAGE_SIZE);
 
     if (page) {
         page = parseInt(page)
@@ -101,7 +108,8 @@ const getAllByCatId = async (req, res, next) => {
 
     return res.status(200).json({
         success: true,
-        data: products
+        data: products,
+        totalPages: totalPages
     })
 }
 
@@ -116,6 +124,10 @@ const getAllByBraId = async (req, res, next) => {
 
     let page = req.query.page
     let products = []
+    const totalCount = await Product.count({
+        where: { braId: req.params.id }
+    });
+    const totalPages = Math.ceil(totalCount / PAGE_SIZE);
 
     if (page) {
         page = parseInt(page)
@@ -157,7 +169,70 @@ const getAllByBraId = async (req, res, next) => {
 
     return res.status(200).json({
         success: true,
-        data: products
+        data: products,
+        totalPages: totalPages
+    })
+}
+
+const getAllByPrice = async (req, res, next) => {
+    let page = req.query.page
+    let products = []
+    const totalCount = await Product.count({
+        where: {
+            price: {
+                [Op.gt]: req.body.minPrice,
+                [Op.lt]: req.body.maxPrice
+            }
+        }
+    })
+    const totalPages = Math.ceil(totalCount / PAGE_SIZE);
+
+    if (page) {
+        page = parseInt(page)
+        products = await Product.findAll({
+            include: [
+                {
+                    model: Category,
+                    as: 'category',
+                    attributes: ['id', 'name']
+                },
+                {
+                    model: Brand,
+                    as: 'brand',
+                    attributes: ['id', 'name']
+                }
+            ],
+            offset: (page - 1) * PAGE_SIZE,
+            limit: PAGE_SIZE
+        })
+    }
+    else {
+        products = await Product.findAll({
+            where: {
+                price: {
+                    [Op.gt]: req.body.minPrice,
+                    [Op.lt]: req.body.maxPrice
+                }
+            },
+            include: [
+                {
+                    model: Category,
+                    as: 'category',
+                    attributes: ['id', 'name']
+                },
+                {
+                    model: Brand,
+                    as: 'brand',
+                    attributes: ['id', 'name']
+                }
+            ]
+        })
+    }
+
+    return res.status(200).json({
+        success: true,
+        data: products,
+        totalPages: totalPages
     })
 }
 
@@ -306,6 +381,7 @@ module.exports = {
     getAll,
     getAllByCatId,
     getAllByBraId,
+    getAllByPrice,
     getById,
     create,
     update,

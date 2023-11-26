@@ -3,6 +3,7 @@ const {
   getAll,
   getAllByCatId,
   getAllByBraId,
+  getAllByPrice,
   getById,
   create,
   update,
@@ -17,6 +18,7 @@ const { asyncHandle } = require("../middlewares/errorHandle.middleware")
 const router = Router()
 
 router.get('/', asyncHandle(getAll))
+router.get('/getAllByPrice', asyncHandle(getAllByPrice))
 router.get('/:id', asyncHandle(getById))
 router.get('/getByCatId/:id', asyncHandle(getAllByCatId))
 router.get('/getByBraId/:id', asyncHandle(getAllByBraId))

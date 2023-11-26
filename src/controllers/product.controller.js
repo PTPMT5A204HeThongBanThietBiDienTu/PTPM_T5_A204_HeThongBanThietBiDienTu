@@ -1,22 +1,47 @@
 const fs = require("fs")
 const { QueryTypes } = require('sequelize')
 const { Product, Category, Brand, Image } = require("../models/index")
+const PAGE_SIZE = 4
 
 const getAll = async (req, res, next) => {
-    const products = await Product.findAll({
-        include: [
-            {
-                model: Category,
-                as: 'category',
-                attributes: ['id', 'name']
-            },
-            {
-                model: Brand,
-                as: 'brand',
-                attributes: ['id', 'name']
-            }
-        ]
-    })
+    let page = req.query.page
+    let products = []
+
+    if (page) {
+        page = parseInt(page)
+        products = await Product.findAll({
+            include: [
+                {
+                    model: Category,
+                    as: 'category',
+                    attributes: ['id', 'name']
+                },
+                {
+                    model: Brand,
+                    as: 'brand',
+                    attributes: ['id', 'name']
+                }
+            ],
+            offset: (page - 1) * PAGE_SIZE,
+            limit: PAGE_SIZE
+        })
+    }
+    else {
+        products = await Product.findAll({
+            include: [
+                {
+                    model: Category,
+                    as: 'category',
+                    attributes: ['id', 'name']
+                },
+                {
+                    model: Brand,
+                    as: 'brand',
+                    attributes: ['id', 'name']
+                }
+            ]
+        })
+    }
 
     return res.status(200).json({
         success: true,
@@ -33,21 +58,46 @@ const getAllByCatId = async (req, res, next) => {
         })
     }
 
-    const products = await Product.findAll({
-        where: { catId: req.params.id },
-        include: [
-            {
-                model: Category,
-                as: 'category',
-                attributes: ['id', 'name']
-            },
-            {
-                model: Brand,
-                as: 'brand',
-                attributes: ['id', 'name']
-            }
-        ]
-    })
+    let page = req.query.page
+    let products = []
+
+    if (page) {
+        page = parseInt(page)
+        products = await Product.findAll({
+            where: { catId: req.params.id },
+            include: [
+                {
+                    model: Category,
+                    as: 'category',
+                    attributes: ['id', 'name']
+                },
+                {
+                    model: Brand,
+                    as: 'brand',
+                    attributes: ['id', 'name']
+                }
+            ],
+            offset: (page - 1) * PAGE_SIZE,
+            limit: PAGE_SIZE
+        })
+    }
+    else {
+        products = await Product.findAll({
+            where: { catId: req.params.id },
+            include: [
+                {
+                    model: Category,
+                    as: 'category',
+                    attributes: ['id', 'name']
+                },
+                {
+                    model: Brand,
+                    as: 'brand',
+                    attributes: ['id', 'name']
+                }
+            ]
+        })
+    }
 
     return res.status(200).json({
         success: true,
@@ -64,21 +114,46 @@ const getAllByBraId = async (req, res, next) => {
         })
     }
 
-    const products = await Product.findAll({
-        where: { braId: req.params.id },
-        include: [
-            {
-                model: Category,
-                as: 'category',
-                attributes: ['id', 'name']
-            },
-            {
-                model: Brand,
-                as: 'brand',
-                attributes: ['id', 'name']
-            }
-        ]
-    })
+    let page = req.query.page
+    let products = []
+
+    if (page) {
+        page = parseInt(page)
+        products = await Product.findAll({
+            where: { braId: req.params.id },
+            include: [
+                {
+                    model: Category,
+                    as: 'category',
+                    attributes: ['id', 'name']
+                },
+                {
+                    model: Brand,
+                    as: 'brand',
+                    attributes: ['id', 'name']
+                }
+            ],
+            offset: (page - 1) * PAGE_SIZE,
+            limit: PAGE_SIZE
+        })
+    }
+    else {
+        products = await Product.findAll({
+            where: { braId: req.params.id },
+            include: [
+                {
+                    model: Category,
+                    as: 'category',
+                    attributes: ['id', 'name']
+                },
+                {
+                    model: Brand,
+                    as: 'brand',
+                    attributes: ['id', 'name']
+                }
+            ]
+        })
+    }
 
     return res.status(200).json({
         success: true,

@@ -4,14 +4,15 @@ import Banner2 from '../../assets/images/banner-2.png'
 import Banner3 from '../../assets/images/banner-3.png'
 import { MenuItems } from './MenuItems.js';
 import '../../styles/Navbar.scss';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import swal from 'sweetalert';
 import OutsideClickHandler from 'react-outside-click-handler';
 import ModalContact from './ModalContact.js';
+import { toast } from 'react-toastify';
 
 const Navbar = ({ name }) => {
-    // const navigate = useNavigate();
+    const navigate = useNavigate();
     const [search, setSearch] = useState('');
     const [resultSearch, setResultSearch] = useState([]);
     const [showModalContact, setShowModalContact] = useState(false);
@@ -23,6 +24,15 @@ const Navbar = ({ name }) => {
     };
     const closeSearch = () => {
         setSearch('');
+    }
+    const handleToSearch = (search) => {
+        if (search === "") {
+            toast.error("Vui lòng nhập sản phẩm cần tìm kiếm !!!");
+        }
+        else {
+            navigate('/search', { state: { search: search } })
+            setSearch('')
+        }
     }
     useEffect(() => {
         if (search !== '') {
@@ -55,6 +65,13 @@ const Navbar = ({ name }) => {
                 }
             }).catch(err => console.log(err));
     }
+    function formatCurrency(amount) {
+        const formatter = new Intl.NumberFormat('vi-VN', {
+            style: 'currency',
+            currency: 'VND',
+        });
+        return formatter.format(amount);
+    }
     return (
         <div className='all-nav flex flex-col'>
             <div className='top'>
@@ -69,31 +86,39 @@ const Navbar = ({ name }) => {
                         <div className='all-search d-flex flex-column'>
                             <div className='search-form w-100 d-flex'>
                                 <input type='text' placeholder='Search...' value={search} onChange={(e) => handleFilterSearch(e.target.value)} />
-                                <button type='submit'><i class="fa-solid fa-magnifying-glass"></i></button>
+                                <button type='submit' onClick={() => handleToSearch(search)}><i class="fa-solid fa-magnifying-glass"></i></button>
                             </div>
+                            {
+                                search !== '' ?
+                                    <>
+                                        <div className='search-result border'>
+                                            <h5>Sản phẩm gợi ý</h5>
+                                            {
+                                                resultSearch.length > 0 ? resultSearch.map((data) => (
+                                                    <Link style={{ textDecoration: "none", color: "#222" }} to={`/product/${data.id}`} onClick={() => closeSearch()}>
+                                                        <div key={data.id} className='search-item'>
+                                                            <div className='flex'>
+                                                                <div className='image'>
+                                                                    <img src={`http://localhost:7777/${data.img}`} alt='' />
+                                                                </div>
+                                                                <div className='name'>
+                                                                    {data.name}
+                                                                </div>
+                                                                <div className='price'>
+                                                                    <p>{formatCurrency(data.price)}</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </Link>
+                                                )) : <div className='search-empty'>
+                                                    <p className='fs-5 text-center'>Không có kết quả tìm kiếm !!!</p>
+                                                </div>
+                                            }
+                                        </div>
+                                    </> : <></>
+                            }
                         </div>
-                        {
-                            search !== '' ?
-                                <>
-                                    <div className='search-result'>
-                                        <h5>Sản phẩm gợi ý</h5>
-                                        {
-                                            resultSearch.map((data) => (
-                                                <Link style={{ textDecoration: "none", color: "#222" }} to={`/product/${data.id}`} onClick={() => closeSearch()}>
-                                                    <div key={data.id} className='search-item d-flex'>
-                                                        <div className='image'>
-                                                            <img src={`http://localhost:7777/${data.img}`} alt='' />
-                                                        </div>
-                                                        <div className='name'>
-                                                            {data.name}
-                                                        </div>
-                                                    </div>
-                                                </Link>
-                                            ))
-                                        }
-                                    </div>
-                                </> : <></>
-                        }
+
                     </OutsideClickHandler>
                     <ul className='nav-menu'>
                         {MenuItems.map((item, index) => {

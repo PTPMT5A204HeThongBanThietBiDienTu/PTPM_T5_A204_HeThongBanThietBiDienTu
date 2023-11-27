@@ -20,6 +20,7 @@ import OrderInformation from "../routes/OrderInformation";
 import OrderComplete from "../routes/OrderComplete";
 import Category from "../routes/Category";
 import Payment from "../routes/Payment";
+import Search from "../routes/Search";
 
 function App() {
   axios.defaults.withCredentials = true;
@@ -30,32 +31,19 @@ function App() {
         if (res && res.data.success === true) {
           setName(res.data.data.name);
         }
-      }).catch(err => console.log(err));
+      }).catch(err => {
+        if (err.response.data.message === 'jwt expired') {
+          axios.post(`http://localhost:7777/api/v1/auth/refreshToken`)
+            .then(res => {
+              if (res && res.data.message === 'Refresh token success') {
+                return;
+              }
+            }).catch(error => console.log(error));
+        } else {
+          console.log(err);
+        }
+      });
   }, [])
-  // useEffect(() => {
-  //   const verify = () => {
-  //     axios.get('http://localhost:7777/api/v1/auth/getInfo')
-  //       .then(res => {
-  //         // if (res && res.data.success === true) {
-  //         // } else {
-  //         //     return;
-  //         // }
-  //         console.log(res);
-  //       }).catch(err => {
-  //         if (err.response.data.message === 'jwt expired') {
-  //           axios.post(`http://localhost:7777/api/v1/auth/refreshToken`)
-  //             .then(res => {
-  //               if (res && res.data.message === 'Refresh token success') {
-  //                 return;
-  //               }
-  //             }).catch(error => console.log(error));
-  //         } else {
-  //           console.log(err);
-  //         }
-  //       });
-  //   }
-  //   verify();
-  // }, [])
 
   return (
     <>
@@ -70,11 +58,12 @@ function App() {
         <Route path="/order-complete" element={<OrderComplete />} />
         <Route path="/category/:catID" element={<Category />} />
         <Route path="/payment" element={<Payment />} />
+        <Route path="/search" element={<Search />} />
         <Route path='*' element={<PageDoesNotExist />} />
       </Routes>
       <Footer />
       <ToastContainer className='toast-container'
-        style={{ marginTop: "5%" }}
+        style={{ marginTop: "5%", position: "fixed" }}
         position="top-center"
         autoClose={2000}
         hideProgressBar={false}

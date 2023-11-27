@@ -23,11 +23,9 @@ const Detail = ({ name }) => {
                 }
             }).catch(err => console.log(err));
     }, [setSlideImage, setMainImage, setProductByID, id])
-    console.log(slideImage);
     useEffect(() => {
         loadDataProductByID();
     }, [loadDataProductByID]);
-    console.log(slideImage);
     function formatCurrency(amount) {
         const formatter = new Intl.NumberFormat('vi-VN', {
             style: 'currency',

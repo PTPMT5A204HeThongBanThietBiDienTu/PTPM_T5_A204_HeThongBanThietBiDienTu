@@ -24,7 +24,7 @@ const Category = () => {
 
                                     <div className='flex'><span class="material-icons">
                                         {
-                                            data.name === "Điện thoại" ? <>smartphone</> : data.name === "Laptop" && <>laptop</>
+                                            data.name === "Điện thoại" ? <>smartphone</> : data.name === "Laptop" ? <>laptop</> : data.name === "Màn hình" ? <>desktop_windows</> : data.name === "PC" ? <>devices</> : data.name === "Chuột" ? <>mouse</> : data.name === "Bàn phím" ? <>keyboard</> : <></>
                                         }
                                     </span> <p>{data.name}</p></div>
                                     <div className='text-2xl'>{'>'}</div>

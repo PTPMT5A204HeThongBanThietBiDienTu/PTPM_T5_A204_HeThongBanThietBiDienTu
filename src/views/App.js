@@ -18,6 +18,9 @@ import PageDoesNotExist from '../routes/Page_Does_Not_Exist/PageDoseNotExist';
 import Cart from "../routes/Cart";
 import OrderInformation from "../routes/OrderInformation";
 import OrderComplete from "../routes/OrderComplete";
+import Category from "../routes/Category";
+import Payment from "../routes/Payment";
+
 function App() {
   axios.defaults.withCredentials = true;
   const [name, setName] = useState('');
@@ -65,6 +68,8 @@ function App() {
         <Route path="/cart" element={<Cart />} />
         <Route path="/order-information" element={<OrderInformation />} />
         <Route path="/order-complete" element={<OrderComplete />} />
+        <Route path="/category/:catID" element={<Category />} />
+        <Route path="/payment" element={<Payment />} />
         <Route path='*' element={<PageDoesNotExist />} />
       </Routes>
       <Footer />

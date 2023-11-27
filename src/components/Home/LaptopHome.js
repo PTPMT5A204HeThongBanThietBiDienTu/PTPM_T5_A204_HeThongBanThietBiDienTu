@@ -17,14 +17,18 @@ const ProductHome = (props) => {
         },
         tablet: {
             breakpoint: { max: 1200, min: 1000 },
-            items: 3
+            items: 4
         },
         mobile: {
             breakpoint: { max: 1000, min: 0 },
-            items: 2
+            items: 3
         },
         mini_mobile: {
             breakpoint: { max: 700, min: 0 },
+            items: 2
+        },
+        min_mobile: {
+            breakpoint: { max: 483, min: 0 },
             items: 1
         }
     };

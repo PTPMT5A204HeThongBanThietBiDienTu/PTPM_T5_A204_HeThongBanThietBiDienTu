@@ -17,11 +17,11 @@ const TopOrderInfo = () => {
                 <i class="fa-solid fa-ticket" style={{ border: '2px solid #222' }}></i>
                 <p>Mã giảm giá</p>
             </div> */}
-            {/* <span className="icon-separator fw-bold fs-5">-----</span>
+            <span className="icon-separator fw-bold fs-5">-----</span>
             <div className='icon'>
                 <i class="fa-solid fa-credit-card" style={{ border: '2px solid #222' }}></i>
-                <p>Payment</p>
-            </div> */}
+                <p>Thanh toán</p>
+            </div>
             <span className="icon-separator fw-bold fs-5">-----</span>
             <div className='icon'>
                 <i class="fa-solid fa-box-open" style={{ border: '2px solid #222' }}></i>

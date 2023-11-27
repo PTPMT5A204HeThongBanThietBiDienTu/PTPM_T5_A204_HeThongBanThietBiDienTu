@@ -20,7 +20,7 @@ const OrderComplete = () => {
         <div className='all-complete py-4'>
             <div className='complete'>
                 <div className='title'>
-                    <h3 className='giohang'>Complete Order</h3>
+                    <h3 className='giohang'>Hoàn tất đơn hàng</h3>
                 </div>
                 <hr />
                 <div className='complete-content'>

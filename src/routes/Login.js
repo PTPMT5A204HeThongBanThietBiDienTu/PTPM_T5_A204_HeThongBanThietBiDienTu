@@ -6,7 +6,7 @@ import '../styles/Login.scss';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-
+import swal from 'sweetalert';
 const Login = () => {
     // axios.defaults.withCredentials = true;
     const navigate = useNavigate();
@@ -22,9 +22,13 @@ const Login = () => {
         axios.post('http://localhost:7777/api/v1/auth/login', values)
             .then(res => {
                 if (res && res.data.message === 'Login success') {
-                    window.location.reload();
+                    swal({
+                        title: "Đăng nhập thành công!",
+                        icon: "success",
+                    }).then(() => {
+                        window.location.reload();
+                    });
                 }
-                console.log(res);
             })
             .catch(err => {
                 if (err && err.response && err.response.data) {

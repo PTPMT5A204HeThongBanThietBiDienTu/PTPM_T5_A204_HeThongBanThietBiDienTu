@@ -31,11 +31,13 @@ const OrderInformation = () => {
             toast.error('Vui lòng điền đầy đủ thông tin để đặt hàng !!!');
         } else {
             const address = `${housenumber}, ${wardname}, ${districtname}, ${cityname}`;
+            let total = 0
             const dataOrderInfo = {
                 name: values.name,
                 phone: values.phonenumber,
                 address: address,
                 products: cart.map((item) => {
+                    total += item.product.price * item.quantity
                     return {
                         proId: item.product.id,
                         price: item.product.price,
@@ -43,19 +45,7 @@ const OrderInformation = () => {
                     };
                 })
             }
-            axios.post(`http://localhost:7777/api/v1/bill/create`, dataOrderInfo)
-                .then(res => {
-                    if (res && res.data.success === true) {
-                        const billId = res.data.data.id;
-                        console.log(billId);
-                        axios.delete(`http://localhost:7777/api/v1/cart/deleteByUserId`)
-                            .then(res => {
-                                if (res && res.data.success === true) {
-                                    navigate('/order-complete', { state: { billId: billId } });
-                                }
-                            }).catch(err => console.log(err));
-                    }
-                }).catch(err => console.log(err));
+            navigate('/payment', { state: { dataOrderInfo: dataOrderInfo, total: total } });
         }
     }
     const loadCart = useCallback(() => {

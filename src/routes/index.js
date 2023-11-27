@@ -9,6 +9,7 @@ const authRouter = require("./auth.route")
 const billRouter = require("./bill.route")
 const billProRouter = require("./billproduct.route")
 const imageRouter = require("./image.route")
+const mailRouter = require("./nodemailer.route")
 const { createProxyMiddleware } = require("http-proxy-middleware")
 
 const useRouter = (app) => {
@@ -23,6 +24,7 @@ const useRouter = (app) => {
     app.use('/api/v1/bill', billRouter)
     app.use('/api/v1/billPro', billProRouter)
     app.use('/api/v1/image', imageRouter)
+    app.use('/api/v1/sendmail', mailRouter)
     app.use('/api', createProxyMiddleware({
         target: 'https://vapi.vnappmob.com',
         changeOrigin: true,

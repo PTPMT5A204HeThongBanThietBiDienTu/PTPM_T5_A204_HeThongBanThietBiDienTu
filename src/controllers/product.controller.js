@@ -1,7 +1,7 @@
 const fs = require("fs")
 const { QueryTypes, Op } = require('sequelize')
 const { Product, Category, Brand, Image } = require("../models/index")
-const PAGE_SIZE = 4
+const PAGE_SIZE = 8
 
 const getAll = async (req, res, next) => {
     let page = req.query.page
@@ -544,6 +544,7 @@ const search = async (req, res, next) => {
                     left join Categories c on p.catId = c.id
                     left join Brands b on p.braId = b.id
                     where p.name like :content or c.name like :content or b.name like :content`
+
     const products = await Product.sequelize.query(queryStr, {
         replacements: { content: '%' + req.body.content + '%' },
         type: QueryTypes.SELECT

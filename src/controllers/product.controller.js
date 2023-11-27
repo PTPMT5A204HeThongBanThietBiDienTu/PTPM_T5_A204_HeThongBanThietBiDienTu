@@ -7,7 +7,7 @@ const getAll = async (req, res, next) => {
     let page = req.query.page
     let products = []
     const totalCount = await Product.count()
-    const totalPages = Math.ceil(totalCount / PAGE_SIZE);
+    const totalPages = Math.ceil(totalCount / PAGE_SIZE)
 
     if (page) {
         page = parseInt(page)
@@ -65,8 +65,8 @@ const getAllByCatId = async (req, res, next) => {
     let products = []
     const totalCount = await Product.count({
         where: { catId: req.params.id }
-    });
-    const totalPages = Math.ceil(totalCount / PAGE_SIZE);
+    })
+    const totalPages = Math.ceil(totalCount / PAGE_SIZE)
 
     if (page) {
         page = parseInt(page)
@@ -126,8 +126,8 @@ const getAllByBraId = async (req, res, next) => {
     let products = []
     const totalCount = await Product.count({
         where: { braId: req.params.id }
-    });
-    const totalPages = Math.ceil(totalCount / PAGE_SIZE);
+    })
+    const totalPages = Math.ceil(totalCount / PAGE_SIZE)
 
     if (page) {
         page = parseInt(page)
@@ -177,19 +177,199 @@ const getAllByBraId = async (req, res, next) => {
 const getAllByPrice = async (req, res, next) => {
     let page = req.query.page
     let products = []
+    const category = await Category.findByPk(req.query.catId)
+    if (!category) {
+        return res.status(400).json({
+            success: false,
+            message: 'Invalid catId'
+        })
+    }
+
+    if (req.query.braId) {
+        const brand = await Brand.findByPk(req.query.braId)
+        if (!brand) {
+            return res.status(400).json({
+                success: false,
+                message: 'Invalid braId'
+            })
+        }
+
+        const totalCount = await Product.count({
+            where: {
+                catId: category.id,
+                braId: brand.id,
+                price: {
+                    [Op.gt]: req.body.minPrice,
+                    [Op.lt]: req.body.maxPrice
+                }
+            }
+        })
+        const totalPages = Math.ceil(totalCount / PAGE_SIZE)
+
+
+        if (page) {
+            page = parseInt(page)
+            products = await Product.findAll({
+                where: {
+                    catId: category.id,
+                    braId: brand.id,
+                    price: {
+                        [Op.gt]: req.body.minPrice,
+                        [Op.lt]: req.body.maxPrice
+                    }
+                },
+                include: [
+                    {
+                        model: Category,
+                        as: 'category',
+                        attributes: ['id', 'name']
+                    },
+                    {
+                        model: Brand,
+                        as: 'brand',
+                        attributes: ['id', 'name']
+                    }
+                ],
+                offset: (page - 1) * PAGE_SIZE,
+                limit: PAGE_SIZE
+            })
+        }
+        else {
+            products = await Product.findAll({
+                where: {
+                    catId: category.id,
+                    braId: brand.id,
+                    price: {
+                        [Op.gt]: req.body.minPrice,
+                        [Op.lt]: req.body.maxPrice
+                    }
+                },
+                include: [
+                    {
+                        model: Category,
+                        as: 'category',
+                        attributes: ['id', 'name']
+                    },
+                    {
+                        model: Brand,
+                        as: 'brand',
+                        attributes: ['id', 'name']
+                    }
+                ]
+            })
+        }
+
+        return res.status(200).json({
+            success: true,
+            data: products,
+            totalPages: totalPages
+        })
+    }
+    else {
+        const totalCount = await Product.count({
+            where: {
+                catId: category.id,
+                price: {
+                    [Op.gt]: req.body.minPrice,
+                    [Op.lt]: req.body.maxPrice
+                }
+            }
+        })
+        const totalPages = Math.ceil(totalCount / PAGE_SIZE)
+
+
+        if (page) {
+            page = parseInt(page)
+            products = await Product.findAll({
+                where: {
+                    catId: category.id,
+                    price: {
+                        [Op.gt]: req.body.minPrice,
+                        [Op.lt]: req.body.maxPrice
+                    }
+                },
+                include: [
+                    {
+                        model: Category,
+                        as: 'category',
+                        attributes: ['id', 'name']
+                    },
+                    {
+                        model: Brand,
+                        as: 'brand',
+                        attributes: ['id', 'name']
+                    }
+                ],
+                offset: (page - 1) * PAGE_SIZE,
+                limit: PAGE_SIZE
+            })
+        }
+        else {
+            products = await Product.findAll({
+                where: {
+                    catId: category.id,
+                    price: {
+                        [Op.gt]: req.body.minPrice,
+                        [Op.lt]: req.body.maxPrice
+                    }
+                },
+                include: [
+                    {
+                        model: Category,
+                        as: 'category',
+                        attributes: ['id', 'name']
+                    },
+                    {
+                        model: Brand,
+                        as: 'brand',
+                        attributes: ['id', 'name']
+                    }
+                ]
+            })
+        }
+
+        return res.status(200).json({
+            success: true,
+            data: products,
+            totalPages: totalPages
+        })
+    }
+}
+
+const getAllByCatIdAndBraId = async (req, res, next) => {
+    const category = await Category.findByPk(req.query.catId)
+    if (!category) {
+        return res.status(400).json({
+            success: false,
+            message: 'Invalid catId'
+        })
+    }
+
+    const brand = await Brand.findByPk(req.query.braId)
+    if (!brand) {
+        return res.status(400).json({
+            success: false,
+            message: 'Invalid braId'
+        })
+    }
+
+    let page = req.query.page
+    let products = []
     const totalCount = await Product.count({
         where: {
-            price: {
-                [Op.gt]: req.body.minPrice,
-                [Op.lt]: req.body.maxPrice
-            }
+            catId: req.query.catId,
+            braId: req.query.braId
         }
     })
-    const totalPages = Math.ceil(totalCount / PAGE_SIZE);
+    const totalPages = Math.ceil(totalCount / PAGE_SIZE)
 
     if (page) {
         page = parseInt(page)
         products = await Product.findAll({
+            where: {
+                catId: req.query.catId,
+                braId: req.query.braId
+            },
             include: [
                 {
                     model: Category,
@@ -209,10 +389,8 @@ const getAllByPrice = async (req, res, next) => {
     else {
         products = await Product.findAll({
             where: {
-                price: {
-                    [Op.gt]: req.body.minPrice,
-                    [Op.lt]: req.body.maxPrice
-                }
+                catId: req.query.catId,
+                braId: req.query.braId
             },
             include: [
                 {
@@ -382,6 +560,7 @@ module.exports = {
     getAllByCatId,
     getAllByBraId,
     getAllByPrice,
+    getAllByCatIdAndBraId,
     getById,
     create,
     update,

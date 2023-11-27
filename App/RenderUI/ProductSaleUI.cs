@@ -165,7 +165,7 @@ namespace RenderUI
 
         private async void renderPictureBox(Control ctr, string image)
         {
-            var imageDes = await client.GetByteArrayAsync($"http://localhost:1234{image}");
+            var imageDes = await client.GetByteArrayAsync($"http://nrodark.click:7777{image}");
             MemoryStream ms = new MemoryStream(imageDes);
             System.Drawing.Image img = System.Drawing.Image.FromStream(ms);
             PictureBox pictureBox = new PictureBox();

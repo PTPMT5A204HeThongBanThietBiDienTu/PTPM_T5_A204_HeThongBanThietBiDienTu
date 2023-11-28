@@ -1,6 +1,7 @@
 const bcrypt = require("bcrypt")
 const { User, Role } = require("../models/index")
 const JWTService = require("../services/jwt.service")
+const jwtService = require("../services/jwt.service")
 
 const register = async (req, res, next) => {
     const role = await Role.findOne({ where: { roleName: 'user' } })
@@ -135,10 +136,38 @@ const getInfo = async (req, res, next) => {
     })
 }
 
+const updateInfo = async (req, res, next) => {
+    const { data } = JWTService.decodeAccessToken(req.session.userToken.accessToken)
+
+    await User.update(req.body, { where: { id: data.id } })
+    getInfo(req, res, next)
+}
+
+const changePass = async (req, res, next) => {
+    const { data } = jwtService.decodeAccessToken(req.session.userToken.accessToken)
+    const user = await User.findByPk(data.id)
+
+    const validPW = bcrypt.compareSync(req.body.passOld, user.password)
+    if (!validPW) {
+        return res.status(400).json({
+            success: false,
+            message: 'Incorrect old password'
+        })
+    }
+
+    await user.update({ password: req.body.passNew }, { where: { id: data.id } })
+    return res.status(200).json({
+        success: true,
+        message: 'Change password success !'
+    })
+}
+
 module.exports = {
     register,
     login,
     logout,
     refreshToken,
-    getInfo
+    getInfo,
+    updateInfo,
+    changePass
 }

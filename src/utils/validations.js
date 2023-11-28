@@ -103,6 +103,24 @@ const validateBill = (data) => {
     return dataSchema.validate(data)
 }
 
+const validateUpdateInfo = (data) => {
+    const dataSchema = joi.object({
+        name: joi.string(),
+        email: joi.string().email(),
+        address: joi.string(),
+        phone: joi.string().length(10).pattern(/^[0-9]+$/).messages({ 'string.pattern.base': 'Phone number must have 10 digits' })
+    })
+    return dataSchema.validate(data)
+}
+
+const validateChangePass = (data) => {
+    const dataSchema = joi.object({
+        passOld: joi.string().length(5).required(),
+        passNew: joi.string().length(5).required()
+    })
+    return dataSchema.validate(data)
+}
+
 module.exports = {
     validateRole,
     validateBrand,
@@ -114,5 +132,7 @@ module.exports = {
     validateSpecification,
     validateInsertCart,
     validateUpdateCart,
-    validateBill
+    validateBill,
+    validateUpdateInfo,
+    validateChangePass
 }

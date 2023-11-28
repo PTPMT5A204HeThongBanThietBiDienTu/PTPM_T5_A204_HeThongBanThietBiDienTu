@@ -46,6 +46,7 @@
       <Column Name="id" Type="System.String" DbType="Char(36) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
       <Column Name="name" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
       <Association Name="Brand_Product" Member="Products" ThisKey="id" OtherKey="braId" Type="Product" />
+      <Association Name="Brand_Category_Brand" Member="Category_Brands" ThisKey="id" OtherKey="braId" Type="Category_Brand" />
     </Type>
   </Table>
   <Table Name="dbo.Carts" Member="Carts">
@@ -63,6 +64,7 @@
       <Column Name="id" Type="System.String" DbType="Char(36) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
       <Column Name="name" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
       <Association Name="Category_Product" Member="Products" ThisKey="id" OtherKey="catId" Type="Product" />
+      <Association Name="Category_Category_Brand" Member="Category_Brands" ThisKey="id" OtherKey="catId" Type="Category_Brand" />
     </Type>
   </Table>
   <Table Name="dbo.Customers" Member="Customers">
@@ -178,6 +180,14 @@
       <Column Name="roleName" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
       <Association Name="Role_User" Member="Users" ThisKey="id" OtherKey="roleId" Type="User" />
       <Association Name="Role_Permission" Member="Permissions" ThisKey="id" OtherKey="roleId" Type="Permission" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Category_Brands" Member="Category_Brands">
+    <Type Name="Category_Brand">
+      <Column Name="catId" Type="System.String" DbType="Char(36) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="braId" Type="System.String" DbType="Char(36) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Association Name="Brand_Category_Brand" Member="Brand" ThisKey="braId" OtherKey="id" Type="Brand" IsForeignKey="true" />
+      <Association Name="Category_Category_Brand" Member="Category" ThisKey="catId" OtherKey="id" Type="Category" IsForeignKey="true" />
     </Type>
   </Table>
 </Database>

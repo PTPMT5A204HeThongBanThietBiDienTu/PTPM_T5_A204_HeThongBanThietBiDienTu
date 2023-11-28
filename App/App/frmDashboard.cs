@@ -354,6 +354,8 @@ namespace App
 
             prSUI.renderLabelReport("lblReport", 450, 400);
 
+            prSUI.loadData();
+
             btnCart.Visible = true;
             btnCart.Location = new Point(1052, 77);
         }
@@ -629,7 +631,7 @@ namespace App
             else
             {
                 abUI.renderDTGVBill("dtgvBill", 305, 115);
-                abUI.renderDTGVBillProduct("dtgvBillProduct", 305, 390);
+                abUI.renderDTGVBillProduct("dtgvBillProduct", 305, 440);
             }
         }
 
@@ -727,7 +729,7 @@ namespace App
         }
 
         /*********************************************************************/
-        /*                              PERMISSIONS                          */
+        /*                              INFORMATION                          */
         /*********************************************************************/
         private void renderFormInfomation()
         {

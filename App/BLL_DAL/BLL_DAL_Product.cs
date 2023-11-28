@@ -58,12 +58,12 @@ namespace BLL_DAL
             return product;
         }
 
-        public int updateDecreaseQuantity(string id)
+        public int updateDecreaseQuantity(string id, int quantity = 1)
         {
             try
             {
                 Product product = qlbh.Products.Where(p => p.id == id).FirstOrDefault();
-                product.quantity = product.quantity - 1;
+                product.quantity = product.quantity - quantity;
                 qlbh.SubmitChanges();
                 return 1;
             }

@@ -18,6 +18,16 @@ namespace BLL_DAL
             return brands;
         }
 
+        public List<Object> getAllByCatId(string catId)
+        {
+            var brands = from b in qlbh.Brands
+                         join cb in qlbh.Category_Brands on b.id equals cb.braId
+                         where cb.catId == catId
+                         select new { b.id, b.name };
+
+            return brands.ToList<Object>();
+        }
+
         public bool is_ExistsName(string brandName)
         {
             Brand brand = qlbh.Brands.Where(b => b.name == brandName).FirstOrDefault();

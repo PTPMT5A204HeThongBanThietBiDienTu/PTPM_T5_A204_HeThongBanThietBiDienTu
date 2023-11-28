@@ -64,6 +64,7 @@ namespace RenderUI
             Button btn = (Button)sender;
             CheckBox cb = (CheckBox)ctr.Controls.Find("cbIsPayment", false)[0];
             DataGridView dtgvBill = (DataGridView)ctr.Controls.Find("dtgvBill", false)[0];
+            DataGridView dtgvBillProduct = (DataGridView)ctr.Controls.Find("dtgvBillProduct", false)[0];
             TextBox txt = (TextBox)ctr.Controls.Find("txtBillId", false)[0];
 
             if(txt.Text == string.Empty)
@@ -85,6 +86,7 @@ namespace RenderUI
 
                 txt.Text = string.Empty;
                 cb.Checked = false;
+                dtgvBillProduct.Visible = false;
             }
             else
                 MessageBox.Show("Thanh toán thất bại");
@@ -97,7 +99,7 @@ namespace RenderUI
             dtgv.Top = topPos;
             dtgv.Left = leftPos;
             dtgv.Width = 935;
-            dtgv.Height = 250;
+            dtgv.Height = 300;
             dtgv.Font = new Font("Arial", 15);
             dtgv.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dtgv.MultiSelect = false;
@@ -173,7 +175,7 @@ namespace RenderUI
             dtgv.Top = topPos;
             dtgv.Left = leftPos;
             dtgv.Width = 935;
-            dtgv.Height = 300;
+            dtgv.Height = 250;
             dtgv.Font = new Font("Arial", 15);
             dtgv.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dtgv.MultiSelect = false;

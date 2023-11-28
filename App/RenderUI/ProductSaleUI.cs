@@ -53,9 +53,9 @@ namespace RenderUI
             ComboBox cboBrand = (ComboBox)ctr.Controls.Find("cboBrand", false)[0];
 
             string catId = cboCategory.SelectedValue.ToString();
-            string braId = cboBrand.SelectedValue.ToString();
-
-            renderProductList(catId, braId, page);
+            cboBrand.DataSource = bdb.getAllByCatId(catId);
+            cboBrand.DisplayMember = "name";
+            cboBrand.ValueMember = "id";
         }
 
         public void renderCBoBrand(string name, int width, int leftPos, int topPos)
@@ -67,9 +67,6 @@ namespace RenderUI
 
             cbo.Width = width;
             cbo.Font = new Font("Arial", 16);
-            cbo.DataSource = bdb.getAll();
-            cbo.DisplayMember = "name";
-            cbo.ValueMember = "id";
             cbo.SelectedIndexChanged += cboBrand_SelectedIndexChanged;
             ctr.Controls.Add(cbo);
         }
@@ -79,7 +76,7 @@ namespace RenderUI
             ComboBox cboCategory = (ComboBox)ctr.Controls.Find("cboCategory", false)[0];
             ComboBox cboBrand = (ComboBox)sender;
 
-            string catId = cboCategory.SelectedValue != null ? cboCategory.SelectedValue.ToString() : "";
+            string catId = cboCategory.SelectedValue.ToString();
             string braId = cboBrand.SelectedValue.ToString();
 
             renderProductList(catId, braId, page);
@@ -336,6 +333,20 @@ namespace RenderUI
             string braId = cboBrand.SelectedValue.ToString();
             renderProductList(catId, braId, page);
             btnNext.Visible = true;
+        }
+
+        public void loadData()
+        {
+            ComboBox cboCategory = (ComboBox)ctr.Controls.Find("cboCategory", false)[0];
+            ComboBox cboBrand = (ComboBox)ctr.Controls.Find("cboBrand", false)[0];
+
+            string catId = cboCategory.SelectedValue.ToString();
+            cboBrand.DataSource = bdb.getAllByCatId(catId);
+            cboBrand.DisplayMember = "name";
+            cboBrand.ValueMember = "id";
+
+            string braId = cboBrand.SelectedValue.ToString();
+            renderProductList(catId, braId, page);
         }
     }
 }

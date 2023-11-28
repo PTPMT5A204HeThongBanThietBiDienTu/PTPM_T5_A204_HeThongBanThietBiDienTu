@@ -81,6 +81,9 @@ namespace BLL_DAL
     partial void InsertRole(Role instance);
     partial void UpdateRole(Role instance);
     partial void DeleteRole(Role instance);
+    partial void InsertCategory_Brand(Category_Brand instance);
+    partial void UpdateCategory_Brand(Category_Brand instance);
+    partial void DeleteCategory_Brand(Category_Brand instance);
     #endregion
 		
 		public QLBHDataContext() : 
@@ -246,6 +249,14 @@ namespace BLL_DAL
 			get
 			{
 				return this.GetTable<Role>();
+			}
+		}
+		
+		public System.Data.Linq.Table<Category_Brand> Category_Brands
+		{
+			get
+			{
+				return this.GetTable<Category_Brand>();
 			}
 		}
 	}
@@ -1177,6 +1188,8 @@ namespace BLL_DAL
 		
 		private EntitySet<Product> _Products;
 		
+		private EntitySet<Category_Brand> _Category_Brands;
+		
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -1190,6 +1203,7 @@ namespace BLL_DAL
 		public Brand()
 		{
 			this._Products = new EntitySet<Product>(new Action<Product>(this.attach_Products), new Action<Product>(this.detach_Products));
+			this._Category_Brands = new EntitySet<Category_Brand>(new Action<Category_Brand>(this.attach_Category_Brands), new Action<Category_Brand>(this.detach_Category_Brands));
 			OnCreated();
 		}
 		
@@ -1246,6 +1260,19 @@ namespace BLL_DAL
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Brand_Category_Brand", Storage="_Category_Brands", ThisKey="id", OtherKey="braId")]
+		public EntitySet<Category_Brand> Category_Brands
+		{
+			get
+			{
+				return this._Category_Brands;
+			}
+			set
+			{
+				this._Category_Brands.Assign(value);
+			}
+		}
+		
 		public event PropertyChangingEventHandler PropertyChanging;
 		
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -1273,6 +1300,18 @@ namespace BLL_DAL
 		}
 		
 		private void detach_Products(Product entity)
+		{
+			this.SendPropertyChanging();
+			entity.Brand = null;
+		}
+		
+		private void attach_Category_Brands(Category_Brand entity)
+		{
+			this.SendPropertyChanging();
+			entity.Brand = this;
+		}
+		
+		private void detach_Category_Brands(Category_Brand entity)
 		{
 			this.SendPropertyChanging();
 			entity.Brand = null;
@@ -1507,6 +1546,8 @@ namespace BLL_DAL
 		
 		private EntitySet<Product> _Products;
 		
+		private EntitySet<Category_Brand> _Category_Brands;
+		
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -1520,6 +1561,7 @@ namespace BLL_DAL
 		public Category()
 		{
 			this._Products = new EntitySet<Product>(new Action<Product>(this.attach_Products), new Action<Product>(this.detach_Products));
+			this._Category_Brands = new EntitySet<Category_Brand>(new Action<Category_Brand>(this.attach_Category_Brands), new Action<Category_Brand>(this.detach_Category_Brands));
 			OnCreated();
 		}
 		
@@ -1576,6 +1618,19 @@ namespace BLL_DAL
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Category_Category_Brand", Storage="_Category_Brands", ThisKey="id", OtherKey="catId")]
+		public EntitySet<Category_Brand> Category_Brands
+		{
+			get
+			{
+				return this._Category_Brands;
+			}
+			set
+			{
+				this._Category_Brands.Assign(value);
+			}
+		}
+		
 		public event PropertyChangingEventHandler PropertyChanging;
 		
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -1603,6 +1658,18 @@ namespace BLL_DAL
 		}
 		
 		private void detach_Products(Product entity)
+		{
+			this.SendPropertyChanging();
+			entity.Category = null;
+		}
+		
+		private void attach_Category_Brands(Category_Brand entity)
+		{
+			this.SendPropertyChanging();
+			entity.Category = this;
+		}
+		
+		private void detach_Category_Brands(Category_Brand entity)
 		{
 			this.SendPropertyChanging();
 			entity.Category = null;
@@ -4001,6 +4068,174 @@ namespace BLL_DAL
 		{
 			this.SendPropertyChanging();
 			entity.Role = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Category_Brands")]
+	public partial class Category_Brand : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private string _catId;
+		
+		private string _braId;
+		
+		private EntityRef<Brand> _Brand;
+		
+		private EntityRef<Category> _Category;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OncatIdChanging(string value);
+    partial void OncatIdChanged();
+    partial void OnbraIdChanging(string value);
+    partial void OnbraIdChanged();
+    #endregion
+		
+		public Category_Brand()
+		{
+			this._Brand = default(EntityRef<Brand>);
+			this._Category = default(EntityRef<Category>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_catId", DbType="Char(36) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
+		public string catId
+		{
+			get
+			{
+				return this._catId;
+			}
+			set
+			{
+				if ((this._catId != value))
+				{
+					if (this._Category.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OncatIdChanging(value);
+					this.SendPropertyChanging();
+					this._catId = value;
+					this.SendPropertyChanged("catId");
+					this.OncatIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_braId", DbType="Char(36) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
+		public string braId
+		{
+			get
+			{
+				return this._braId;
+			}
+			set
+			{
+				if ((this._braId != value))
+				{
+					if (this._Brand.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnbraIdChanging(value);
+					this.SendPropertyChanging();
+					this._braId = value;
+					this.SendPropertyChanged("braId");
+					this.OnbraIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Brand_Category_Brand", Storage="_Brand", ThisKey="braId", OtherKey="id", IsForeignKey=true)]
+		public Brand Brand
+		{
+			get
+			{
+				return this._Brand.Entity;
+			}
+			set
+			{
+				Brand previousValue = this._Brand.Entity;
+				if (((previousValue != value) 
+							|| (this._Brand.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Brand.Entity = null;
+						previousValue.Category_Brands.Remove(this);
+					}
+					this._Brand.Entity = value;
+					if ((value != null))
+					{
+						value.Category_Brands.Add(this);
+						this._braId = value.id;
+					}
+					else
+					{
+						this._braId = default(string);
+					}
+					this.SendPropertyChanged("Brand");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Category_Category_Brand", Storage="_Category", ThisKey="catId", OtherKey="id", IsForeignKey=true)]
+		public Category Category
+		{
+			get
+			{
+				return this._Category.Entity;
+			}
+			set
+			{
+				Category previousValue = this._Category.Entity;
+				if (((previousValue != value) 
+							|| (this._Category.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Category.Entity = null;
+						previousValue.Category_Brands.Remove(this);
+					}
+					this._Category.Entity = value;
+					if ((value != null))
+					{
+						value.Category_Brands.Add(this);
+						this._catId = value.id;
+					}
+					else
+					{
+						this._catId = default(string);
+					}
+					this.SendPropertyChanged("Category");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
 		}
 	}
 }

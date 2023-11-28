@@ -141,15 +141,17 @@ namespace RenderUI
                 return;
             }
 
-            int numberInStock = bdp.getQuantityOfProduct(txtProId.Text);
-            if (quantity > numberInStock)
+            int quantityInStock = bdp.getQuantityOfProduct(txtProId.Text);
+            if (quantity > quantityInStock)
             {
                 MessageBox.Show("Số lượng vượt quá số lượng hàng trong kho");
                 return;
             }
 
+            int quantityInCart = int.Parse(dtgv.CurrentRow.Cells[2].Value.ToString());
+            bdp.updateIncreaseQuantity(txtProId.Text, quantityInCart);
+
             Cart cart = new Cart();
-            cart.id = Guid.NewGuid().ToString();
             cart.proId = txtProId.Text;
             cart.userId = userId;
             cart.quantity = quantity;
@@ -157,6 +159,7 @@ namespace RenderUI
             int result = bdc.update(cart);
             if (result == 1)
             {
+                bdp.updateDecreaseQuantity(txtProId.Text, quantity);
                 MessageBox.Show("Sửa thành công");
                 loadData(dtgv);
 
@@ -191,6 +194,8 @@ namespace RenderUI
                     int index = dtgv.SelectedRows[i].Index;
                     string proId = dtgv.Rows[index].Cells[0].Value.ToString();
                     result = bdc.delete(proId, userId);
+                    int quantity = int.Parse(dtgv.Rows[index].Cells[2].Value.ToString());
+                    bdp.updateIncreaseQuantity(proId, quantity);
                 }
 
                 if (result == 1)

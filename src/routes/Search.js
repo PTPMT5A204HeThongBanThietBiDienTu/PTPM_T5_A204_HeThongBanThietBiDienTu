@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import sold from '../assets/icons/sold.png'
 import "../styles/Search.scss"
+
 const Search = () => {
     const location = useLocation();
     const { search } = location.state || {};
@@ -17,14 +18,13 @@ const Search = () => {
                     .then(res => {
                         if (res && res.data.success === true) {
                             setProduct(res.data.data)
-                        } else {
-                            setProduct([]);
                         }
                     }).catch(err => console.log(err));
             }
             handleSearch();
         }
     }, [search]);
+
     function formatCurrency(amount) {
         const formatter = new Intl.NumberFormat('vi-VN', {
             style: 'currency',
@@ -34,11 +34,6 @@ const Search = () => {
     }
     return (
         <div className='container-fluid'>
-            <div className='advance-search flex flex-col'>
-                <div className='flex'>
-                    <h4>Sắp xếp theo:</h4>
-                </div>
-            </div>
             <div className='all-search'>
                 {
                     product.length > 0 ?

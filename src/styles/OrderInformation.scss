@@ -118,6 +118,26 @@
     color: #efb4b4;
     text-align: center;
 }
+.all-order .order  .card .card-orderdetail .card-image{
+    width: 10rem;
+    height: 10rem;
+}
+.all-order .order .card .card-orderdetail .card-image img{
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+.all-order .order  .card .card-orderdetail{
+    position: relative;
+    box-shadow: 0 5px 15px 0 rgb(0, 0, 0, 0.25);
+    background-color: white;
+    border-radius: 10px;
+}
+.all-order .order  .card .card-orderdetail .card-subtotal{
+    position: absolute;
+    right: 0;
+    bottom: 0;
+}
 @media screen and (max-width: 850px) {
     .all-order .order{
         width: auto;

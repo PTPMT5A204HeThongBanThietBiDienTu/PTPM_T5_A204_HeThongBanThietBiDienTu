@@ -148,6 +148,14 @@ const OrderInformation = () => {
         fetchDataWard();
         loadCart();
     }, [fetchDataCity, fetchDataDistrict, fetchDataWard, loadCart]);
+    function formatCurrency(amount) {
+        const formatter = new Intl.NumberFormat('vi-VN', {
+            style: 'currency',
+            currency: 'VND',
+        });
+        return formatter.format(amount);
+    }
+    console.log(cart);
     return (
         <div className='all-order py-4'>
             <div className='order'>
@@ -191,6 +199,35 @@ const OrderInformation = () => {
                             </form>
                         </div>
                     </div>
+                </div>
+                <div className='card d-flex flex-column p-2 my-4'>
+                    {
+                        cart.length > 0 ? cart.map((order) => {
+                            const subTotal = order.quantity * order.product.price;
+                            return (
+                                <div className='card-orderdetail my-2 d-flex' key={order.id}>
+                                    <div className='card-image my-2'>
+                                        <img src={`http://localhost:7777/${order.product.img}`} alt='' />
+                                    </div>
+                                    <div className='card-content d-flex flex-column mx-3 my-2'>
+                                        <div className='card-name'><b>{order.product.name}</b></div>
+                                        <div className='price-cost d-flex'>
+                                            <div className='price-title'>Giá:</div>
+                                            <div className='price mx-2 fw-bold'>{formatCurrency(order.product.price)}</div>
+                                        </div>
+                                        <div className='card-quantity d-flex'>
+                                            <div className='quantity-title'>Số lượng:</div>
+                                            <div className='quantity fw-bold mx-2'>{order.quantity}</div>
+                                        </div>
+                                        <div className='card-subtotal d-flex'>
+                                            <div className='subtotal-title'>Thành tiền:</div>
+                                            <div className='subtotal mx-2 fw-bold'>{formatCurrency(subTotal)}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            )
+                        }) : <h3 className='text-center text-danger'>Sản phẩm không tồn tại</h3>
+                    }
                 </div>
             </div>
         </div>

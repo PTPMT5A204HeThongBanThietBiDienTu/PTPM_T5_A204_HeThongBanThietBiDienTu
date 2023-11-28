@@ -66,8 +66,8 @@ function App() {
         <Route path="/search" element={<Search />} />
         <Route path="/order-history" element={<OrderHistory name={name} />} />
         <Route path="/order-detail" element={<OrderDetail name={name} />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/change-password" element={<ChangePassword />} />
+        <Route path="/profile" element={<Profile name={name} />} />
+        <Route path="/change-password" element={<ChangePassword name={name} />} />
         <Route path='*' element={<PageDoesNotExist />} />
       </Routes>
       <Footer />

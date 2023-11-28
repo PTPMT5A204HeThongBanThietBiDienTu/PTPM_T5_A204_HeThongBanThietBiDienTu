@@ -4,8 +4,9 @@ import "../styles/Profile.scss"
 import axios from 'axios'
 import { toast } from 'react-toastify'
 import swal from 'sweetalert'
+import PageDoseNotExist from './Page_Does_Not_Exist/PageDoseNotExist'
 
-const Profile = () => {
+const Profile = ({ name }) => {
     const navigate = useNavigate();
     const [profile, setProfile] = useState([])
     const [housenumber, setHousenumber] = useState('');
@@ -112,89 +113,90 @@ const Profile = () => {
         }
     }
     return (
-        <div className='all-info d-flex vh-100 justify-content-center align-items-center'>
-            <div className='info p-3 w-50'>
-                <form onSubmit={handleSubmit}>
-                    <Link to={'/'} className='btn-back btn btn-warning'>Trở về</Link>
-                    <div className='title'><p className='text-center fw-bold'>Thông tin người dùng</p></div>
-                    <div className='mb-3 fs-5'>
-                        <p>ID: <b>{profile.id}</b></p>
-                    </div>
-                    <div className='row'>
-                        <div className='mb-3 col-6'>
-                            <label htmlFor='name' className='fw-bold'>Họ tên</label>
-                            <input type='text' value={profile.name} name='name' onChange={handleInputChange} className='form-control' required />
+        name !== '' ?
+            <div className='all-info d-flex vh-100 justify-content-center align-items-center'>
+                <div className='info p-3 w-50'>
+                    <form onSubmit={handleSubmit}>
+                        <Link to={'/'} className='btn-back btn btn-warning'>Trở về</Link>
+                        <div className='title'><p className='text-center fw-bold'>Thông tin người dùng</p></div>
+                        <div className='mb-3 fs-5'>
+                            <p>ID: <b>{profile.id}</b></p>
                         </div>
-                        <div className='mb-3 col-6'>
-                            <label htmlFor='email' className='fw-bold'>Email</label>
-                            <input type='email' name='email' value={profile.email} onChange={handleInputChange} className='form-control' required />
-                        </div>
-
-                    </div>
-                    <div className='mb-3'>
-                        <label htmlFor='phone' className='fw-bold'>Số điện thoại</label>
-                        <input type='number' name='phone' value={profile.phone} onChange={handleInputChange} className='form-control' required />
-                    </div>
-
-                    <div className='mb-3'>
-                        <label htmlFor='address' className='fw-bold'>Địa chỉ</label>
-                        <div className='row my-2'>
-                            <div className='col-6'>
-                                <select className='form-control' onChange={handleCityChange}>
-                                    <option value=''>-- Chọn Thành Phố --</option>
-                                    {
-                                        city.map((select_city) => (
-                                            <option key={select_city.id} value={`${select_city.id}-${select_city.name}`}>{select_city.name}</option>
-                                        ))
-                                    }
-                                </select>
+                        <div className='row'>
+                            <div className='mb-3 col-6'>
+                                <label htmlFor='name' className='fw-bold'>Họ tên</label>
+                                <input type='text' value={profile.name} name='name' onChange={handleInputChange} className='form-control' required />
                             </div>
-                            <div className='col-6'>
-                                <select className='form-control' onChange={handleDistrictChange}>
-                                    <option value=''>-- Chọn Quận --</option>
-                                    {district.length === 0 ?
-                                        <></>
-                                        : (
-                                            district.map((select_district) => (
+                            <div className='mb-3 col-6'>
+                                <label htmlFor='email' className='fw-bold'>Email</label>
+                                <input type='email' name='email' value={profile.email} onChange={handleInputChange} className='form-control' required />
+                            </div>
+
+                        </div>
+                        <div className='mb-3'>
+                            <label htmlFor='phone' className='fw-bold'>Số điện thoại</label>
+                            <input type='number' name='phone' value={profile.phone} onChange={handleInputChange} className='form-control' required />
+                        </div>
+
+                        <div className='mb-3'>
+                            <label htmlFor='address' className='fw-bold'>Địa chỉ</label>
+                            <div className='row my-2'>
+                                <div className='col-6'>
+                                    <select className='form-control' onChange={handleCityChange}>
+                                        <option value=''>-- Chọn Thành Phố --</option>
+                                        {
+                                            city.map((select_city) => (
+                                                <option key={select_city.id} value={`${select_city.id}-${select_city.name}`}>{select_city.name}</option>
+                                            ))
+                                        }
+                                    </select>
+                                </div>
+                                <div className='col-6'>
+                                    <select className='form-control' onChange={handleDistrictChange}>
+                                        <option value=''>-- Chọn Quận --</option>
+                                        {district.length === 0 ?
+                                            <></>
+                                            : (
+                                                district.map((select_district) => (
+                                                    <>
+                                                        <option value={`${select_district.id}-${select_district.name}`}>{select_district.name}</option>
+                                                    </>
+                                                ))
+
+                                            )
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                            <div className='row  my-2'>
+                                <div className='col-6'>
+                                    <select className='form-control' onChange={handleWardChange}>
+                                        <option value=''>-- Chọn Phường --</option>
+                                        {ward.length > 0 ?
+                                            ward.map((select_ward) => (
                                                 <>
-                                                    <option value={`${select_district.id}-${select_district.name}`}>{select_district.name}</option>
+                                                    <option value={select_ward.name}>{select_ward.name}</option>
                                                 </>
                                             ))
-
-                                        )
-                                    }
-                                </select>
+                                            : <></>
+                                        }
+                                    </select>
+                                </div>
+                                <div className='col-6'>
+                                    <input type="text" placeholder='Số nhà, tên đường' name='housenumber' onChange={(e) => handleHousenumberChange(e)} className='form-control' />
+                                </div>
                             </div>
+                            {
+                                profile.address !== null &&
+                                <div className='mb-3'>
+                                    <input type='text' name='address' value={profile.address} className='form-control' readOnly />
+                                </div>
+                            }
                         </div>
-                        <div className='row  my-2'>
-                            <div className='col-6'>
-                                <select className='form-control' onChange={handleWardChange}>
-                                    <option value=''>-- Chọn Phường --</option>
-                                    {ward.length > 0 ?
-                                        ward.map((select_ward) => (
-                                            <>
-                                                <option value={select_ward.name}>{select_ward.name}</option>
-                                            </>
-                                        ))
-                                        : <></>
-                                    }
-                                </select>
-                            </div>
-                            <div className='col-6'>
-                                <input type="text" placeholder='Số nhà, tên đường' name='housenumber' onChange={(e) => handleHousenumberChange(e)} className='form-control' />
-                            </div>
-                        </div>
-                        {
-                            profile.address !== null &&
-                            <div className='mb-3'>
-                                <input type='text' name='address' value={profile.address} className='form-control' readOnly />
-                            </div>
-                        }
-                    </div>
-                    <button type='submit' className='btn btn-dark w-25'>Lưu</button>
-                </form>
-            </div>
-        </div >
+                        <button type='submit' className='btn btn-dark w-25'>Lưu</button>
+                    </form>
+                </div>
+            </div > : <PageDoseNotExist />
     )
 }
 

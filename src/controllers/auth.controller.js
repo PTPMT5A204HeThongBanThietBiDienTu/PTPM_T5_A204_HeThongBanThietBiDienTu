@@ -3,7 +3,7 @@ const { User, Role } = require("../models/index")
 const JWTService = require("../services/jwt.service")
 
 const register = async (req, res, next) => {
-    const role = await Role.findOne({ where: { name: 'user' } })
+    const role = await Role.findOne({ where: { roleName: 'user' } })
     req.body.roleId = role.id
 
     const user = await User.create(req.body)

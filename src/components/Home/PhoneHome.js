@@ -42,15 +42,15 @@ const ProductHome = (props) => {
                 }
             }).catch(err => console.log(err));
         } else if (iphone === true) {
-            axios.get(`http://localhost:7777/api/v1/product/getByBraId/9e5b2654-a901-46b5-8f23-819dcec28457`).then(res => {
+            axios.get(`http://localhost:7777/api/v1/product/getAllByCatIdAndBraId/?catId=47845903-009d-4294-80cb-cd6549bd2dab&braId=9e5b2654-a901-46b5-8f23-819dcec28457`).then(res => {
                 if (res && res.data) {
                     setProduct(res.data.data);
                 }
             }).catch(err => console.log(err));
-        } else {
-            axios.get(`http://localhost:7777/api/v1/product/getByBraId/ab84deca-6afa-4f4a-a826-46342f72d80e`).then(res => {
+        } else if (samsung === true) {
+            axios.get(`http://localhost:7777/api/v1/product/getAllByCatIdAndBraId/?catId=47845903-009d-4294-80cb-cd6549bd2dab&braId=ab84deca-6afa-4f4a-a826-46342f72d80e`).then(res => {
                 if (res && res.data) {
-                    setProduct(res.data.data);
+                    setProduct(res.data.data)
                 }
             }).catch(err => console.log(err));
         }

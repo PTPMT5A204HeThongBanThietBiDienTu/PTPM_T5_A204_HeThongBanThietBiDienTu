@@ -4,14 +4,14 @@ import { Link } from 'react-router-dom'
 const ActionOrderComplete = () => {
     return (
         <div className='action d-flex p-2'>
-            <div className='check-order btn btn-primary p-3 d-flex flex-column'>
+            <Link to={'/order-history'} className='check-order btn btn-primary p-3 d-flex flex-column'>
                 <div className='title'>
                     Kiểm tra đơn hàng của bạn
                 </div>
                 <div className='icon my-1'>
                     <i class="fa-solid fa-circle-check"></i>
                 </div>
-            </div>
+            </Link>
             <div className='continue-shoping'>
                 <Link to={'/'} className='btn btn-danger p-3 d-flex flex-column'>
                     <div className='title'>

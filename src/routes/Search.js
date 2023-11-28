@@ -34,6 +34,11 @@ const Search = () => {
     }
     return (
         <div className='container-fluid'>
+            <div className='advance-search flex flex-col'>
+                <div className='flex'>
+                    <h4>Sắp xếp theo:</h4>
+                </div>
+            </div>
             <div className='all-search'>
                 {
                     product.length > 0 ?

@@ -79,6 +79,29 @@ const Detail = ({ name }) => {
                             <PaymentDetail quantity={productByID.quantity} name={name} productByID={productByID} />
                         </div>
                     </div>
+                    {/* <div className='buy-together flex flex-col'>
+                        <div className='top my-2'>
+                            <h3>Sản phẩm mua cùng</h3>
+                        </div>
+                        <div className='bottom'>
+                            <div className='card-product'>
+                                <Link style={{ textDecoration: "none", color: "#222" }} to={`/product/}`}>
+                                    <div className='card-image'>
+                                        <img src={`http://localhost:7777/images/image-1695873437069.png`} alt='' />
+                                    </div>
+                                    <div className='card-name'>
+                                        <b>IPhone 14 ProMax</b>
+                                    </div>
+                                    <div className='price-cost'>
+                                        <div className='price'>50000000</div>
+                                    </div>
+                                    <div className='love'>
+                                        <i className='fa-solid fa-heart'></i>
+                                    </div>
+                                </Link>
+                            </div>
+                        </div>
+                    </div> */}
                     <SpecificationDetail id={id} />
                     <SimilarProductDetail />
                     {/* <div className='reviews-comments'>

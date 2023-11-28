@@ -16,19 +16,36 @@
 // .wallpaper .top .grid-item{
 //     background: black;
 // }
-.wallpaper .top .all-category{
+.wallpaper .top .all-category {
     height: 375px;
     border: 1px solid black;
     border-radius: 10px;
+    display: flex;
+    position: relative;
 }
-.wallpaper .top .category{
+.wallpaper .top .all-category .brand-list{
+    width: 15rem;
+    height: 375px;
+    left: 102%;
+    background-color: #fff;
+    position: absolute;
+    border: 1px solid #222;
+    border-radius: 10px;
+    z-index: 999999999;
+    display: none;
+}
+.wallpaper .top .all-category .category:hover
+.brand-list{
+    display: block;
+}
+
+.wallpaper .top .category {
     background-color: #fff;
     border-radius: 10px;
-    height: auto;
+    flex: 1;
     overflow: hidden;
     padding: 0;
     width: 100%;
-    
 }
 .wallpaper .top .category .category-item{
     padding-left: 0.5rem;

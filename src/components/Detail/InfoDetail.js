@@ -2,14 +2,6 @@ import React from 'react'
 const InfoDetail = () => {
     return (
         <div className='information'>
-            <div className='store'>
-                <p>Có <b>1</b> cửa hàng có sản phẩm</p>
-                <table class="table table-striped table-hover">
-                    <tbody>
-                        <tr><td>140 Lê Trọng Tấn, Tây Thạnh, Tân Phú, Thành phố Hồ Chí Minh, Việt Nam</td></tr>
-                    </tbody>
-                </table>
-            </div>
             <div className='product-information'>
                 <h5>Thông tin sản phẩm</h5>
                 <p>

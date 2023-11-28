@@ -9,6 +9,7 @@ import zalopay from '../assets/logo/zalopay.png';
 import shopeepay from '../assets/logo/shopeepay.png';
 import kredivo from '../assets/logo/kredivo.png';
 import { toast } from 'react-toastify';
+import swal from 'sweetalert';
 
 const Payment = () => {
     const location = useLocation();
@@ -25,11 +26,15 @@ const Payment = () => {
                 .then(res => {
                     if (res && res.data.success === true) {
                         const billId = res.data.data.id;
-                        console.log(billId);
                         axios.delete(`http://localhost:7777/api/v1/cart/deleteByUserId`)
                             .then(res => {
                                 if (res && res.data.success === true) {
-                                    navigate('/order-complete', { state: { billId: billId } });
+                                    swal({
+                                        title: "Đặt hàng thành công!",
+                                        icon: "success",
+                                    }).then(() => {
+                                        navigate('/order-complete', { state: { billId: billId } });
+                                    });
                                 }
                             }).catch(err => console.log(err));
                     }

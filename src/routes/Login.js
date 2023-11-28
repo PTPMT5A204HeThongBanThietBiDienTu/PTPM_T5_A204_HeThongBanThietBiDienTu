@@ -116,7 +116,7 @@ const Login = () => {
                             <input type="password" className="form-control" id="password" name='password' onChange={handleInputChange} required />
                         </div>
                         <div className='d-flex justify-content-center'>
-                            <button type="submit" class="btn btn-dark btn-lg w-25">Đăng nhập</button>
+                            <button type="submit" class="btn btn-dark btn-lg w-50">Đăng nhập</button>
                         </div>
                     </form>
                     <a href='/register' className='new-account btn btn-success'>Đăng ký tài khoản mới</a>

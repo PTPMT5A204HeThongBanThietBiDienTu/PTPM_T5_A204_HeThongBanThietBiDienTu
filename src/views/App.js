@@ -21,6 +21,10 @@ import OrderComplete from "../routes/OrderComplete";
 import Category from "../routes/Category";
 import Payment from "../routes/Payment";
 import Search from "../routes/Search";
+import OrderHistory from "../routes/OrderHistory";
+import OrderDetail from "../routes/OrderDetail";
+import Profile from "../routes/Profile";
+import ChangePassword from "../routes/ChangePassword";
 
 function App() {
   axios.defaults.withCredentials = true;
@@ -57,8 +61,13 @@ function App() {
         <Route path="/order-information" element={<OrderInformation />} />
         <Route path="/order-complete" element={<OrderComplete />} />
         <Route path="/category/:catID" element={<Category />} />
+        <Route path="/category/:catID/:braId" element={<Category />} />
         <Route path="/payment" element={<Payment />} />
         <Route path="/search" element={<Search />} />
+        <Route path="/order-history" element={<OrderHistory name={name} />} />
+        <Route path="/order-detail" element={<OrderDetail name={name} />} />
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/change-password" element={<ChangePassword />} />
         <Route path='*' element={<PageDoesNotExist />} />
       </Routes>
       <Footer />

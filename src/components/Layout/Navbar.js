@@ -10,6 +10,7 @@ import swal from 'sweetalert';
 import OutsideClickHandler from 'react-outside-click-handler';
 import ModalContact from './ModalContact.js';
 import { toast } from 'react-toastify';
+import Dropdown from 'react-bootstrap/Dropdown';
 
 const Navbar = ({ name }) => {
     const navigate = useNavigate();
@@ -101,11 +102,13 @@ const Navbar = ({ name }) => {
                                                                 <div className='image'>
                                                                     <img src={`http://localhost:7777/${data.img}`} alt='' />
                                                                 </div>
-                                                                <div className='name'>
-                                                                    {data.name}
-                                                                </div>
-                                                                <div className='price'>
-                                                                    <p>{formatCurrency(data.price)}</p>
+                                                                <div className='flex flex-col'>
+                                                                    <div className='name'>
+                                                                        {data.name}
+                                                                    </div>
+                                                                    <div className='price'>
+                                                                        <p>{formatCurrency(data.price)}</p>
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -144,18 +147,28 @@ const Navbar = ({ name }) => {
                         })}
                         {name !== '' ? (
                             <>
-                                <li>
-                                    <Link className='nav-links' to={'#'}>
-                                        <i className='fa-solid fa-user'></i>
-                                        {name}
-                                    </Link>
-                                </li>
-                                <li>
+                                <Dropdown className='d-flex dropdown nav-links'>
+                                    <Dropdown.Toggle variant="default" id="dropdown-menu">
+                                        <span className='nav-links-user'>
+                                            <i class="fa-solid fa-user"></i>
+                                            {name}
+                                        </span>
+                                    </Dropdown.Toggle>
+
+                                    <Dropdown.Menu>
+                                        {/* <Dropdown.Item href="/info-customer" className='text-primary'><i class="fa-solid fa-user fa-beat"></i> Profile</Dropdown.Item> */}
+                                        <Dropdown.Item href="/profile" className='text-primary'><i class="fa-solid fa-user"></i>Thông tin cá nhân</Dropdown.Item>
+                                        <Dropdown.Item href="/change-password" className='text-dark'><i class="fa-solid fa-gear"></i>Đổi mật khẩu</Dropdown.Item>
+                                        <Dropdown.Item href="/order-history" className='text-success'><i class="fa-solid fa-cart-plus"></i>Lịch sử mua hàng</Dropdown.Item>
+                                        <Dropdown.Item onClick={handleLogout} className='text-danger'><i className="fa-solid fa-right-from-bracket"></i>Đăng xuất</Dropdown.Item>
+                                    </Dropdown.Menu>
+                                </Dropdown>
+                                {/* <li>
                                     <div className='nav-links' onClick={handleLogout}>
                                         <i className="fa-solid fa-right-from-bracket"></i>
                                         Đăng xuất
                                     </div>
-                                </li>
+                                </li> */}
                             </>
                         ) : (
                             <li>

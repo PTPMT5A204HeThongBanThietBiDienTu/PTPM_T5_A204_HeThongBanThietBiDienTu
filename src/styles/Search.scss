@@ -2,9 +2,16 @@
     width: 100%;
     height: auto;
     background-color: white;
+    display: flex;
+    position: relative;
+}
+.container-fluid .advance-search{
+  position: absolute;
+  left: 0;
+  top: 0;
 }
 .container-fluid .all-search{
-    width: 80%;
+    width: 60%;
     margin-left: auto;
     margin-right: auto;
     display: flex;
@@ -21,7 +28,7 @@
     margin-top: 2rem;
 }
 .container-fluid .all-search .search .card-product{
-    flex: 0 1 calc(20% - 2.5rem);
+    flex: 0 1 calc(25% - 2.5rem);
     height: 25rem;
     padding-top: 2rem;
     box-shadow: 0 5px 15px 0 rgba(0, 0, 0, 0.25);

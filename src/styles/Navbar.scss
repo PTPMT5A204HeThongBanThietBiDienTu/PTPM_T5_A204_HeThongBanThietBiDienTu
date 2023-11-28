@@ -114,9 +114,9 @@
     background-color: #151516;
     color: #fff;
 }
-.dropdown.nav-links:hover{
-background-color: #666;
-}
+// .dropdown.nav-links:hover{
+// background-color: #666;
+// }
 .menu-icons{
     display: none;
 }
@@ -171,7 +171,7 @@ background-color: #666;
     justify-content: center;
     align-items: center;
     margin-left: 1rem;
-    font-size: 1.2rem;
+    font-size: 1rem;
     font-weight: bold;
   }
   .search-result .search-item .image{
@@ -184,10 +184,7 @@ background-color: #666;
     object-fit: contain;
   }
   .search-result .search-item .price{
-    position: absolute;
-    right: 0;
-    top: 50%;
-    transform: translate(0,-50%);
+    margin-left: 1rem;
   }
   .search-result .search-item:hover .price,
   .search-result .search-item:hover .name{

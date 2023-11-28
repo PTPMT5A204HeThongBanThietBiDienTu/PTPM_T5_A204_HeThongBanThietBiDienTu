@@ -19,9 +19,14 @@ const ModalContact = (props) => {
         const dataMailer = {
             name: values.name,
             email: values.email,
-            content: values.content
+            content:
+                `
+            Tên: <b style="color: red;">${values.name}</b><br>
+            Email: <b style="color: blue;">${values.email}</b><br>
+            Nội dung: <b style="color: green;">${values.content}</b>
+            `
         }
-        axios.post(`http://localhost:7777/api/v1/nodemailer/sendMail`, dataMailer)
+        axios.post(`http://localhost:7777/api/v1/sendmail/sendMail`, dataMailer)
             .then(res => {
                 if (res && res.data.success === true) {
                     swal({

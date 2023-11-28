@@ -37,24 +37,23 @@ const ProductHome = (props) => {
         if (acer === false && asus === false) {
             axios.get(`http://localhost:7777/api/v1/product/getByCatId/3289f294-65b0-4dd8-a5dc-ef6ca442eb68`).then(res => {
                 if (res && res.data) {
-                    setProduct(res.data.data);
+                    setProduct(res.data.data)
                 }
             }).catch(err => console.log(err));
         } else if (acer === true) {
-            axios.get(`http://localhost:7777/api/v1/product/getByBraId/90320d05-772f-41e5-a077-411532c68145`).then(res => {
+            axios.get(`http://localhost:7777/api/v1/product/getAllByCatIdAndBraId/?catId=3289f294-65b0-4dd8-a5dc-ef6ca442eb68&braId=90320d05-772f-41e5-a077-411532c68145`).then(res => {
                 if (res && res.data) {
-                    setProduct(res.data.data);
+                    setProduct(res.data.data)
                 }
             }).catch(err => console.log(err));
-        } else {
-            axios.get(`http://localhost:7777/api/v1/product/getByBraId/9757c182-3f7d-44d7-a2b6-b0cef9917778`).then(res => {
+        } else if (asus === true) {
+            axios.get(`http://localhost:7777/api/v1/product/getAllByCatIdAndBraId/?catId=3289f294-65b0-4dd8-a5dc-ef6ca442eb68&braId=9757c182-3f7d-44d7-a2b6-b0cef9917778`).then(res => {
                 if (res && res.data) {
-                    setProduct(res.data.data);
+                    setProduct(res.data.data)
                 }
             }).catch(err => console.log(err));
         }
     }, [acer, asus]);
-    // console.log(product);
     function formatCurrency(amount) {
         const formatter = new Intl.NumberFormat('vi-VN', {
             style: 'currency',

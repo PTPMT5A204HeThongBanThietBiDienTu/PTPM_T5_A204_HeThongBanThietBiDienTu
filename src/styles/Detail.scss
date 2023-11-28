@@ -26,10 +26,11 @@
 .all-detail .detail-content{
     display: flex;
     justify-content: space-between;
+    width: 100%;
 }
 .all-detail .detail-content .detail-left{
     float: left;
-    width: 45rem;
+    width: 58%;
     margin-top: 0.5rem;
 }
 .all-detail .image{
@@ -87,6 +88,7 @@
 .all-detail .detail-content .detail-left .information{
     display: flex;
     height: 17.5rem;
+    width: 100%;
 }
 .all-detail .detail-content .detail-left .information .product-information{
     width: 21.75rem;
@@ -96,7 +98,7 @@
     border-radius: 10px;
     display: inline-block;
     padding: 10px 10px 0;
-    // float: left;
+    width: 100%;
 }
 .all-detail .detail-content .detail-left .product-information h5{
     font-weight: bold;
@@ -116,7 +118,7 @@
 }
 .all-detail .detail-content .detail-right{
     float: right;
-    width: 28.75rem;
+    width: 40%;
 }
 .all-detail .detail-content .detail-right .memory,
 .all-detail .detail-content .detail-right .color{
@@ -377,6 +379,82 @@
 }
 .all-detail .reviews-comments .top .content .star{
     border: 2px;
+}
+.all-detail .buy-together .bottom{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    width: 100%;
+    padding-bottom: 5rem;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 2rem;
+}
+.all-detail .buy-together .bottom .card-product{
+    flex: 0 1 calc(20% - 2.5rem);
+    height: 20rem;
+    padding-top: 2rem;
+    box-shadow: 0 5px 15px 0 rgba(0, 0, 0, 0.25);
+    border-radius: 7px;
+    position: relative;
+    margin-right: 2.5rem; 
+    margin-bottom: 2.5rem;
+    cursor: pointer;
+    overflow: hidden;
+}
+.all-detail .buy-together .bottom .card-product:not(:nth-last-child(-n + 4)) {
+    margin-bottom: 2.5rem;
+  }
+.all-detail .buy-together .bottom .card-product .card-image {
+    max-width: 10rem;
+    max-height: 10rem;
+    margin-left: auto;
+    margin-right: auto;
+  }
+.all-detail .buy-together .bottom .card-product .sold-out{
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100px;
+    height: 100px;
+    scale: 1.2;
+}
+.all-detail .buy-together .bottom .card-product .sold-out img{
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+.all-detail .buy-together .bottom .card-product .card-image img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.all-detail .buy-together .bottom .card-product .card-name{
+    margin:0.5rem 0rem 0rem 0.5rem;
+    font-size: 1rem;
+    text-align: center;
+}
+.all-detail .buy-together .bottom .card-product .price-cost{
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    margin-top: 1rem;
+}
+.all-detail .buy-together .bottom .card-product .price-cost .price{
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: red;
+    margin-right: 0.5rem;
+}
+.all-detail .buy-together .bottom .card-product .love{
+    position: absolute;
+    bottom: 1rem;
+    right: 1rem;
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+.all-detail .buy-together .bottom .card-product .love:hover i{
+    color: red!important;
 }
 @media screen and (max-width:1200px) {
     .all-detail{

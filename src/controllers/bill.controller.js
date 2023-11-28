@@ -56,7 +56,7 @@ const create = async (req, res, next) => {
     }
 
     const cusNew = await Customer.create(customer)
-    const bill = await Bill.create({ userId: data.id, cusId: cusNew.id })
+    const bill = await Bill.create({ userId: data.id, cusId: cusNew.id, status: BillStatus.PAID })
 
     let total = bill.total
     for (let product of req.body.products) {

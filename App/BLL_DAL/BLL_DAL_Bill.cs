@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DTO;
 
 namespace BLL_DAL
 {
@@ -127,6 +128,24 @@ namespace BLL_DAL
                 Console.WriteLine(ex.Message);
                 return 0;
             }
+        }
+        public List<Object> getAllPaid()
+        {
+            var bills = from b in qlbh.Bills
+                        where b.status == "paid"
+                        join c in qlbh.Customers on b.cusId equals c.id
+                        select new { b.id,b.total,b.status,b.createdAt.Value.UtcDateTime, c.name, c.phone };
+
+            return bills.ToList<Object>();
+        }
+        public List<BillInfo> getAllPaidForExcel()
+        {
+            var bills = from b in qlbh.Bills
+                        where b.status == "paid"
+                        join c in qlbh.Customers on b.cusId equals c.id
+                        select new BillInfo { Id= b.id,Total =(double)b.total,Status= b.status,CreatedAt= b.createdAt.Value.UtcDateTime,Name= c.name,Phone= c.phone };
+
+            return bills.ToList<BillInfo>();
         }
     }
 }

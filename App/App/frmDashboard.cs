@@ -156,6 +156,12 @@ namespace App
                         renderFormInfomation();
                     }
                     break;
+                case "SR011":
+                    {
+                        removeAllForm();
+                        renderFormSale();
+                    }
+                    break;
             }
         }
 
@@ -774,6 +780,33 @@ namespace App
             frmChangePassWord frm = new frmChangePassWord();
             frm.ShowDialog();
         }
+        /*********************************************************************/
+        /*                                 SALE                              */
+        /*********************************************************************/
+        private void renderFormSale()
+        {
+            AppUI appUI = new AppUI(this);
+
+            appUI.renderLabel("Mã hóa đơn", "lblBillId", 300, 60);
+            appUI.renderTextBox("txtBillId", 410, 450, 55, true);
+            
+            SaleUI abUI = new SaleUI(this);
+
+            List<Object> bills = bdb.getAllPaid();
+            if (bills.Count == 0)
+                abUI.renderLabelReport("lblReport", 500, 350);
+            else
+            {
+                appUI.renderLabel("Danh sách hóa đơn", "DSHD", 305, 110);
+                abUI.renderDataGridView("dtgvBill", 305, 135);
+                appUI.renderLabel("Danh sách sản phẩm", "DSHD", 305, 340);
+                abUI.renderDTGVBillProduct("dtgvBillProduct", 305, 375);
+                appUI.renderLabel("Ngày thống kế:", "ngaythongke", 305, 585);
+                abUI.renderDatePicker("startDate", 200, 482, 580);
+                abUI.renderButtonExport("Export",305,620);
+            }
+        }
+
 
         /*********************************************************************/
         private void pnlLogout_MouseClick(object sender, MouseEventArgs e)

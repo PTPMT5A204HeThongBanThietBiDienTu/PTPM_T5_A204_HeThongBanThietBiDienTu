@@ -539,20 +539,117 @@ const remove = async (req, res, next) => {
 }
 
 const search = async (req, res, next) => {
-    let queryStr = `select p.id, p.name, p.price, p.quantity, p.description, p.img, p.catId, p.braId 
-                    from Products p 
-                    left join Categories c on p.catId = c.id
-                    left join Brands b on p.braId = b.id
-                    where p.name like :content or c.name like :content or b.name like :content`
+    const content = `%${req.body.content}%`
+    let page = req.query.page
+    let products = []
 
-    const products = await Product.sequelize.query(queryStr, {
-        replacements: { content: '%' + req.body.content + '%' },
-        type: QueryTypes.SELECT
+    const totalCount = await Product.count({
+        include: [
+            {
+                model: Category,
+                as: 'category'
+            },
+            {
+                model: Brand,
+                as: 'brand'
+            }
+        ],
+        where: {
+            [Op.or]: [
+                {
+                    name: {
+                        [Op.like]: content
+                    }
+                },
+                {
+                    '$category.name$': {
+                        [Op.like]: content
+                    }
+                },
+                {
+                    '$brand.name$': {
+                        [Op.like]: content
+                    }
+                }
+            ]
+        }
     })
+    const totalPages = Math.ceil(totalCount / PAGE_SIZE)
+
+    if (page) {
+        page = parseInt(page)
+        products = await Product.findAll({
+            include: [
+                {
+                    model: Category,
+                    as: 'category'
+                },
+                {
+                    model: Brand,
+                    as: 'brand'
+                }
+            ],
+            where: {
+                [Op.or]: [
+                    {
+                        name: {
+                            [Op.like]: content
+                        }
+                    },
+                    {
+                        '$category.name$': {
+                            [Op.like]: content
+                        }
+                    },
+                    {
+                        '$brand.name$': {
+                            [Op.like]: content
+                        }
+                    }
+                ]
+            },
+            offset: (page - 1) * PAGE_SIZE,
+            limit: PAGE_SIZE
+        })
+    }
+    else {
+        products = await Product.findAll({
+            include: [
+                {
+                    model: Category,
+                    as: 'category'
+                },
+                {
+                    model: Brand,
+                    as: 'brand'
+                }
+            ],
+            where: {
+                [Op.or]: [
+                    {
+                        name: {
+                            [Op.like]: content
+                        }
+                    },
+                    {
+                        '$category.name$': {
+                            [Op.like]: content
+                        }
+                    },
+                    {
+                        '$brand.name$': {
+                            [Op.like]: content
+                        }
+                    }
+                ]
+            }
+        })
+    }
 
     return res.status(200).json({
         success: true,
-        data: products
+        data: products,
+        totalPages: totalPages
     })
 }
 

@@ -16,6 +16,7 @@ const OrderDetail = require("./orderdetail.model")
 const Receipt = require("./receipt.model")
 const ReceiptDetail = require('./receiptdetail.model')
 const Customer = require('./customer.model')
+const Category_Brand = require('./category_brand.model')
 
 //--------------------------------- FOREIGN KEY ON TABLE USER -------------------------------------//
 //--relationship between Role and User--//
@@ -269,6 +270,30 @@ ReceiptDetail.belongsTo(Product, {
     as: 'product'
 })
 
+//--------------------------------- FOREIGN KEY ON TABLE CATEGORY_BRAND -------------------------------------//
+//--relationship between Category and Category_Brand--//
+Category.hasMany(Category_Brand, {
+    foreignKey: 'catId',
+    as: 'category_brand',
+    onDelete: 'NO ACTION'
+})
+
+Category_Brand.belongsTo(Category, {
+    foreignKey: 'catId',
+    as: 'category'
+})
+
+//--relationship between Brand and Category_Brand--//
+Brand.hasMany(Category_Brand, {
+    foreignKey: 'braId',
+    as: 'category_brand',
+    onDelete: 'NO ACTION'
+})
+
+Category_Brand.belongsTo(Brand, {
+    foreignKey: 'braId',
+    as: 'brand'
+})
 
 //====================//====================//====================//====================//====================
 
@@ -294,5 +319,6 @@ module.exports = {
     Bill,
     BillProduct,
     Customer,
+    Category_Brand,
     createAllTable
 }

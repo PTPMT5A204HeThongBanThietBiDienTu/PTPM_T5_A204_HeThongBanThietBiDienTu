@@ -1,7 +1,31 @@
-const { Brand } = require('../models/index')
+const { Brand, Category_Brand, Category } = require('../models/index')
 
 const getAll = async (req, res, next) => {
     const brands = await Brand.findAll()
+    return res.status(200).json({
+        success: true,
+        data: brands
+    })
+}
+
+const getAllByCatId = async (req, res, next) => {
+    const category = await Category.findByPk(req.params.id)
+    if (!category) {
+        return res.status(400).json({
+            success: false,
+            message: 'Invalid catID'
+        })
+    }
+
+    const brands = await Category_Brand.findAll({
+        where: { catId: req.params.id },
+        include: {
+            model: Brand,
+            as: 'brand',
+            attributes: ['name']
+        }
+    })
+
     return res.status(200).json({
         success: true,
         data: brands
@@ -62,6 +86,7 @@ const remove = async (req, res, next) => {
 
 module.exports = {
     getAll,
+    getAllByCatId,
     getById,
     create,
     update,

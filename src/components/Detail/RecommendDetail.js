@@ -6,8 +6,6 @@ import { toast } from 'react-toastify';
 
 const RecommendDetail = (props) => {
     const { formatCurrency, handleScrollToTop, productByID, name } = props
-    const [recommend, setRecommend] = useState(false)
-    const [proById, setProById] = useState([])
     const responsive = {
         superLargeDesktop: {
             breakpoint: { max: 4000, min: 3000 },
@@ -31,6 +29,8 @@ const RecommendDetail = (props) => {
         }
     };
     const [product, setProduct] = useState([]);
+    const [recommend, setRecommend] = useState(false)
+    const [proById, setProById] = useState([])
     const getAllAccompany = useCallback(() => {
         axios.get(`http://localhost:7777/api/v1/product/getAllAccompany/${productByID.id}`).then(res => {
             if (res && res.data.success === true) {

@@ -1,8 +1,8 @@
 import axios from 'axios';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Carousel from 'react-multi-carousel';
 import { Link } from 'react-router-dom';
-const SimilarProductDetail = () => {
+const SimilarProductDetail = ({ catId, braId, handleScrollToTop }) => {
     const responsive = {
         superLargeDesktop: {
             breakpoint: { max: 4000, min: 3000 },
@@ -26,19 +26,24 @@ const SimilarProductDetail = () => {
         }
     };
     const [product, setProduct] = useState([]);
-    axios.get(`http://localhost:7777/api/v1/product/getByCatId/47845903-009d-4294-80cb-cd6549bd2dab`).then(res => {
-        if (res && res.data) {
-            setProduct(res.data.data);
-        }
-    }).catch(err => console.log(err));
+    useEffect(() => {
+        axios.get(`http://localhost:7777/api/v1/product/getAllByCatIdAndBraId/?catId=${catId}&braId=${braId}`).then(res => {
+            if (res && res.data) {
+                setProduct(res.data.data);
+            }
+        }).catch(err => console.log(err));
+    }, [catId, braId])
     return (
         <div className='similar-product'>
+            <h3>
+                Sản phẩm tương tự
+            </h3>
             <Carousel responsive={responsive} autoPlay={true} infinite={true}>
                 {
                     product.map((value) => (
 
                         <div className='card-product' key={value._id} >
-                            <Link style={{ textDecoration: "none", color: "#222" }} to={`/product/${value.id}`}>
+                            <Link style={{ textDecoration: "none", color: "#222" }} to={`/product/${value.id}`} onClick={handleScrollToTop}>
                                 <div className='card-image'>
                                     <img src={`http://localhost:7777/${value.img}`} alt='' />
                                 </div>

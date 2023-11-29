@@ -7,12 +7,14 @@ import PaymentDetail from '../components/Detail/PaymentDetail';
 import SpecificationDetail from '../components/Detail/SpecificationDetail';
 import SimilarProductDetail from '../components/Detail/SimilarProductDetail';
 import sold from '../assets/icons/sold.png';
+import RecommendDetail from '../components/Detail/RecommendDetail';
 
-const Detail = ({ name }) => {
+const Detail = ({ name, handleScrollToTop }) => {
     const { id } = useParams();
     const [productByID, setProductByID] = useState([]);
     const [slideImage, setSlideImage] = useState([]);
     const [mainImage, setMainImage] = useState('');
+    const [categoryName, setCategoryName] = useState('');
     const loadDataProductByID = useCallback(() => {
         axios.get(`http://localhost:7777/api/v1/product/${id}`)
             .then(res => {
@@ -20,6 +22,7 @@ const Detail = ({ name }) => {
                     setProductByID(res.data.data);
                     setMainImage(`http://localhost:7777/${res.data.data.img}`);
                     setSlideImage(res.data.images);
+                    setCategoryName(res.data.data.category.name)
                 }
             }).catch(err => console.log(err));
     }, [setSlideImage, setMainImage, setProductByID, id])
@@ -79,31 +82,12 @@ const Detail = ({ name }) => {
                             <PaymentDetail quantity={productByID.quantity} name={name} productByID={productByID} />
                         </div>
                     </div>
-                    {/* <div className='buy-together flex flex-col'>
-                        <div className='top my-2'>
-                            <h3>Sản phẩm mua cùng</h3>
-                        </div>
-                        <div className='bottom'>
-                            <div className='card-product'>
-                                <Link style={{ textDecoration: "none", color: "#222" }} to={`/product/}`}>
-                                    <div className='card-image'>
-                                        <img src={`http://localhost:7777/images/image-1695873437069.png`} alt='' />
-                                    </div>
-                                    <div className='card-name'>
-                                        <b>IPhone 14 ProMax</b>
-                                    </div>
-                                    <div className='price-cost'>
-                                        <div className='price'>50000000</div>
-                                    </div>
-                                    <div className='love'>
-                                        <i className='fa-solid fa-heart'></i>
-                                    </div>
-                                </Link>
-                            </div>
-                        </div>
-                    </div> */}
+                    {
+                        categoryName !== "Phụ kiện" && categoryName !== "Chuột" && categoryName !== "Bàn phím" &&
+                        <RecommendDetail handleScrollToTop={handleScrollToTop} productByID={productByID} name={name} formatCurrency={formatCurrency} />
+                    }
                     <SpecificationDetail id={id} />
-                    <SimilarProductDetail />
+                    <SimilarProductDetail catId={productByID.catId} braId={productByID.braId} handleScrollToTop={handleScrollToTop} />
                     {/* <div className='reviews-comments'>
                         <b className='title'>Reviews & comments</b>
                         {

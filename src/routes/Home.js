@@ -6,7 +6,7 @@ import BannerHome from '../components/Home/BannerHome';
 import PhoneHome from '../components/Home/PhoneHome';
 import LaptopHome from '../components/Home/LaptopHome';
 
-const Home = () => {
+const Home = ({ handleScrollToTop }) => {
     const [iphone, setIphone] = useState(false);
     const [samsung, setSamsung] = useState(false);
     const [acer, setAcer] = useState(false);
@@ -30,7 +30,7 @@ const Home = () => {
                 </div>
 
                 <div className='content mt-4'>
-                    <PhoneHome iphone={iphone} samsung={samsung} />
+                    <PhoneHome iphone={iphone} samsung={samsung} handleScrollToTop={handleScrollToTop} />
                 </div>
 
             </div>
@@ -45,7 +45,7 @@ const Home = () => {
                 </div>
 
                 <div className='content mt-4'>
-                    <LaptopHome acer={acer} asus={asus} />
+                    <LaptopHome acer={acer} asus={asus} handleScrollToTop={handleScrollToTop} />
                 </div>
 
             </div>

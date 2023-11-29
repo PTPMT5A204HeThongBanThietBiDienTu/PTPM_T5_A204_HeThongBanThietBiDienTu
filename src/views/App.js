@@ -28,7 +28,28 @@ import ChangePassword from "../routes/ChangePassword";
 
 function App() {
   axios.defaults.withCredentials = true;
+  const [isAtTop, setIsAtTop] = useState(true);
   const [name, setName] = useState('');
+  const handleScrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
+  };
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.pageYOffset > 300) {
+        setIsAtTop(false);
+      } else {
+        setIsAtTop(true);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
   useEffect(() => {
     axios.get('http://localhost:7777/api/v1/auth/getInfo')
       .then(res => {
@@ -53,8 +74,8 @@ function App() {
     <>
       <Navbar name={name} />
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/product/:id" element={<Detail name={name} />} />
+        <Route path="/" element={<Home handleScrollToTop={handleScrollToTop} />} />
+        <Route path="/product/:id" element={<Detail name={name} handleScrollToTop={handleScrollToTop} />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/cart" element={<Cart />} />
@@ -70,6 +91,14 @@ function App() {
         <Route path="/change-password" element={<ChangePassword name={name} />} />
         <Route path='*' element={<PageDoesNotExist />} />
       </Routes>
+      <div className={`scroll-to-top ${isAtTop ? 'hidden' : 'visible'}`} onClick={handleScrollToTop}>
+        <button
+          className={`scroll-to-top-button`}
+
+        >
+          <i className="fa-solid fa-arrow-up"></i>
+        </button>
+      </div>
       <Footer />
       <ToastContainer className='toast-container'
         style={{ marginTop: "5%", position: "fixed" }}

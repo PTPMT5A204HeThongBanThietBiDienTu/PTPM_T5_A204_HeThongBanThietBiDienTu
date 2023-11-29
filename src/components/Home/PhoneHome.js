@@ -5,7 +5,7 @@ import "react-multi-carousel/lib/styles.css";
 import { Link } from 'react-router-dom';
 
 const ProductHome = (props) => {
-    const { iphone, samsung } = props;
+    const { iphone, samsung, handleScrollToTop } = props;
     const Responsive = {
         superLargeDesktop: {
             breakpoint: { max: 4000, min: 3000 },
@@ -87,7 +87,7 @@ const ProductHome = (props) => {
                 product.map((value) => {
                     return (
                         <div className='card-product'>
-                            <Link style={{ textDecoration: "none", color: "#222" }} to={`/product/${value.id}`}>
+                            <Link style={{ textDecoration: "none", color: "#222" }} to={`/product/${value.id}`} onClick={handleScrollToTop}>
                                 <div className='card-image'>
                                     <img src={`http://localhost:7777/${value.img}`} alt='' />
                                 </div>

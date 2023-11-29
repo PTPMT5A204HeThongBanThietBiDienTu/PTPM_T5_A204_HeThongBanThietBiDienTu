@@ -185,4 +185,8 @@
       .wallpaper .top .banner{
         display: none;
       }
+      .wallpaper .top .all-category .category:hover
+        .brand-list{
+        display: none;
+    }
 }

@@ -12,7 +12,7 @@ const SpecificationDetail = ({ id }) => {
             }).catch(err => console.log(err));
     }, [id])
     return (
-        <div className='specifications my-2'>
+        <div className='specifications my-4'>
             <h3>
                 Thông số kĩ thuật
             </h3>

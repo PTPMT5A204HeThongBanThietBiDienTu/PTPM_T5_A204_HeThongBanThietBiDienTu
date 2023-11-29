@@ -196,8 +196,9 @@ const Category = () => {
                 </div>
                 <div className='product'>
                     {catID !== "" ? product.map((data) => (
-                        <div className='card-product'>
-                            <Link style={{ textDecoration: "none", color: "#222" }} to={`/product/${data.id}`}>
+                        <Link style={{ textDecoration: "none", color: "#222" }} to={`/product/${data.id}`}>
+                            <div className='card-product'>
+
                                 <div className='card-image'>
                                     <img src={`http://localhost:7777/${data.img}`} alt='' />
                                 </div>
@@ -216,8 +217,8 @@ const Category = () => {
                                             <img src={sold} alt='' />
                                         </div>
                                 }
-                            </Link>
-                        </div>
+                            </div>
+                        </Link>
                     )) : <div className='all-info d-flex vh-100 justify-content-center align-items-center flex-column'>
                         <h1 className='fw-bold text-danger'>Không có kết quả</h1>
                     </div>

@@ -45,6 +45,7 @@
     <Compile Include="Combo.cs" />
     <Compile Include="PermissionUI.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TotalInDate.cs" />
     <Compile Include="TWU.cs" />
     <Compile Include="ULRow.cs" />
     <Compile Include="UtilityList.cs" />

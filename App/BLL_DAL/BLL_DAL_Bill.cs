@@ -147,5 +147,20 @@ namespace BLL_DAL
 
             return bills.ToList<BillInfo>();
         }
+        public List<Object> getBillBySearching(string text)
+        {
+            if (text != null)
+            {
+                var bills = from b in qlbh.Bills
+                            where b.status == "paid"
+                            join c in qlbh.Customers on b.cusId equals c.id
+                            where c.name.Contains(text) == true || c.phone.Contains(text) == true || b.id.Contains(text) == true
+                            select new { b.id, b.total, b.status, b.createdAt.Value.UtcDateTime, c.name, c.phone };
+                return bills.ToList<Object>();
+            }
+            else
+                return getAllPaid();
+
+        }
     }
 }

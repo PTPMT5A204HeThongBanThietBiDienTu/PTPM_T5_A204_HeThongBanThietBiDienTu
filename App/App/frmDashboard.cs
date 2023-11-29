@@ -787,24 +787,87 @@ namespace App
         {
             AppUI appUI = new AppUI(this);
 
-            appUI.renderLabel("Mã hóa đơn", "lblBillId", 300, 60);
-            appUI.renderTextBox("txtBillId", 410, 450, 55, true);
-            
-            SaleUI abUI = new SaleUI(this);
+            appUI.renderLabel("Tìm kiếm hóa đơn:", "lblSearch", 300, 60);
 
+            SaleUI abUI = new SaleUI(this);
+            abUI.renderTextBoxSearch("txtSearch", 500, 55);
             List<Object> bills = bdb.getAllPaid();
             if (bills.Count == 0)
                 abUI.renderLabelReport("lblReport", 500, 350);
             else
             {
+
                 appUI.renderLabel("Danh sách hóa đơn", "DSHD", 305, 110);
                 abUI.renderDataGridView("dtgvBill", 305, 135);
-                appUI.renderLabel("Danh sách sản phẩm", "DSHD", 305, 340);
+                appUI.renderLabel("Danh sách sản phẩm", "DSSP", 305, 340);
                 abUI.renderDTGVBillProduct("dtgvBillProduct", 305, 375);
-                appUI.renderLabel("Ngày thống kế:", "ngaythongke", 305, 585);
-                abUI.renderDatePicker("startDate", 200, 482, 580);
-                abUI.renderButtonExport("Export",305,620);
+                appUI.renderLabel("Định dạng doanh thu:", "dinhdang", 305, 580);
+                appUI.renderComboBox("typeOfDateExport", new string[] { "Ngày", "Nhiều ngày", "Tháng" }, 555, 580);
+                ComboBox cb = (ComboBox)this.Controls.Find("typeOfDateExport", false)[0];
+                cb.SelectedIndexChanged += cbo_Changed;
+                appUI.renderLabel("Ngày thống kế:", "ngaythongke", 308, 623);
+                abUI.renderDatePicker("startDate", 200, 488, 620);
+                abUI.renderButtonExport("Export", 305, 660);
+
             }
+        }
+        public void cbo_Changed(object sender, EventArgs e)
+        {
+            ComboBox cb = (ComboBox)sender;
+            AppUI appUI = new AppUI(this);
+            SaleUI abUI = new SaleUI(this);
+            if (cb.SelectedItem.ToString() == "Ngày")
+            {
+                appUI.renderLabel("Ngày thống kế:", "ngaythongke", 308, 623);
+                abUI.renderDatePicker("startDate", 200, 488, 620);
+                this.Controls.RemoveByKey("ngaybatdau");
+                this.Controls.RemoveByKey("ngayketthuc");
+                this.Controls.RemoveByKey("begin");
+                this.Controls.RemoveByKey("end");
+                this.Controls.RemoveByKey("thangthongke");
+                this.Controls.RemoveByKey("Month");
+            }
+            else if (cb.SelectedItem.ToString() == "Nhiều ngày")
+            {
+                appUI.renderLabel("Ngày bắt đầu:", "ngaybatdau", 308, 623);
+                abUI.renderDatePickerStart("begin", 200, 488, 620);
+                appUI.renderLabel("Ngày kết thúc:", "ngayketthuc", 708, 623);
+                abUI.renderDatePickerEnd("end", 200, 888, 620);
+                this.Controls.RemoveByKey("ngaythongke");
+                this.Controls.RemoveByKey("startDate");
+                this.Controls.RemoveByKey("thangthongke");
+                this.Controls.RemoveByKey("Month");
+            }
+            else
+            {
+                appUI.renderLabel("Tháng thống kế:", "thangthongke", 308, 623);
+                abUI.renderDatePickerOnlyMonthYear("Month", 200, 492, 620);
+                this.Controls.RemoveByKey("ngaybatdau");
+                this.Controls.RemoveByKey("ngayketthuc");
+                this.Controls.RemoveByKey("begin");
+                this.Controls.RemoveByKey("end");
+                this.Controls.RemoveByKey("ngaythongke");
+                this.Controls.RemoveByKey("startDate");
+
+            }
+        }
+        private void removeFormSale()
+        {
+            this.Controls.RemoveByKey("DSHD");
+            this.Controls.RemoveByKey("DSSP");
+            this.Controls.RemoveByKey("dtgvBill");
+            this.Controls.RemoveByKey("dtgvBillProduct");
+            this.Controls.RemoveByKey("ngaythongke");
+            this.Controls.RemoveByKey("startDate");
+            this.Controls.RemoveByKey("Export");
+            this.Controls.RemoveByKey("ngaybatdau");
+            this.Controls.RemoveByKey("ngayketthuc");
+            this.Controls.RemoveByKey("begin");
+            this.Controls.RemoveByKey("end");
+            this.Controls.RemoveByKey("thangthongke");
+            this.Controls.RemoveByKey("Month");
+            this.Controls.RemoveByKey("ngaythongke");
+            this.Controls.RemoveByKey("startDate");
         }
 
 

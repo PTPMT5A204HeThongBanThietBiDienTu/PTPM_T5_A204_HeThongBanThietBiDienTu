@@ -42,5 +42,21 @@ namespace RenderUI
             txt.ReadOnly = readOnly;
             ctr.Controls.Add(txt);
         }
+        public void renderComboBox(string name, string[] listitems, int leftPos, int topPos)
+        {
+            ComboBox cbo = new ComboBox();
+            foreach (var item in listitems)
+                cbo.Items.Add(item);
+            cbo.Width = 200;
+            cbo.Font = new Font("Arial", 16);
+            cbo.Left = leftPos;
+            cbo.Top = topPos;
+            cbo.DropDownStyle = ComboBoxStyle.DropDownList;
+            cbo.SelectedIndex = 0;
+            cbo.Name = name;
+            ctr.Controls.Add(cbo);
+
+
+        }
     }
 }

@@ -5,11 +5,6 @@
     display: flex;
     position: relative;
 }
-.container-fluid .advance-search{
-  position: absolute;
-  left: 0;
-  top: 0;
-}
 .container-fluid .all-search{
     width: 60%;
     margin-left: auto;
@@ -92,4 +87,13 @@
 }
 .container-fluid .all-search .search .card-product .love:hover i{
     color: red!important;
+}
+@media screen and (max-width: 1205px){
+  .container-fluid .all-search{
+    height: 10000vh;
+  }
+  .container-fluid .all-search .search {
+    margin: 0;
+    padding: 0;
+  }
 }

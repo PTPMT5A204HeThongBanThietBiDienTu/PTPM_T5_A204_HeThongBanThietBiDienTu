@@ -8,6 +8,7 @@ const Search = () => {
     const location = useLocation();
     const { search } = location.state || {};
     const [product, setProduct] = useState([])
+
     useEffect(() => {
         if (search !== '') {
             const handleSearch = () => {
@@ -24,7 +25,6 @@ const Search = () => {
             handleSearch();
         }
     }, [search]);
-
     function formatCurrency(amount) {
         const formatter = new Intl.NumberFormat('vi-VN', {
             style: 'currency',
@@ -33,7 +33,7 @@ const Search = () => {
         return formatter.format(amount);
     }
     return (
-        <div className='container-fluid'>
+        <div className='container-fluid fluid-search'>
             <div className='all-search'>
                 {
                     product.length > 0 ?

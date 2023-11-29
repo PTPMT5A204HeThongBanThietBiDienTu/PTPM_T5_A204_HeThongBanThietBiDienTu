@@ -19,3 +19,21 @@
     border-radius: 20px;
     overflow: hidden;
 }
+@media screen and (max-width:787px) {
+    .register-wrapper{
+        height: 90%;
+    }
+    .all-register .registerTitle{
+        display: none;
+    }
+    .all-register .register-wrapper form .row {
+        flex-direction: column!important;
+    }
+    .all-register .register-wrapper form .mb-3{
+        width: 100%!important;
+    }
+    .all-register .register-wrapper form .mb-3 .row .col-6 select,
+    .all-register .register-wrapper form .mb-3 .row .col-6 input{
+        width: 200%!important;
+    }
+}

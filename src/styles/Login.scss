@@ -91,3 +91,13 @@
     color: #fff;
     margin-top: 1rem;
 }
+@media screen and (max-width: 973px) {
+    .wrapper .right button{
+        width: 75%!important;
+    }
+    .wrapper .left,
+    .wrapper .center,
+    .all-login .loginTitle{
+        display: none;
+    }
+}

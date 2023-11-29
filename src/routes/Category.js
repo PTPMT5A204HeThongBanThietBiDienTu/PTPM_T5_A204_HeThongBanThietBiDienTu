@@ -123,8 +123,8 @@ const Category = () => {
     return (
         <div className='container-fluid'>
             <div className='all-product'>
-                <div className='action flex my-4 mx-2'>
-                    <select id="mySelect" value={selectedOption} onChange={handleChange} className='form-control mx-2'>
+                <div className='all-action flex mx-2'>
+                    <select id="mySelect" value={selectedOption} onChange={handleChange} className='form-control '>
                         <option value="" >-- Chọn --</option>
                         {
                             brand.map((data) => (
@@ -132,11 +132,11 @@ const Category = () => {
                             ))
                         }
                     </select>
-                    <button className={`btn btn-light mx-2`} onClick={viewAllData}>
+                    <button className={`btn btn-light`} onClick={viewAllData}>
                         Xem tất cả
                     </button>
                     <div className='search-price'>
-                        <button className={`search-price btn mx-2 ${searchPrice === true ? 'btn-danger' : 'btn-light border'}`} onClick={() => setSearchPrice(searchPrice === true ? false : true)}>
+                        <button className={`search-price btn ${searchPrice === true ? 'btn-danger' : 'btn-light border'}`} onClick={() => setSearchPrice(searchPrice === true ? false : true)}>
                             Giá
                         </button>
                         {searchPrice && (
@@ -185,7 +185,7 @@ const Category = () => {
                                         <button className='close-btn' onClick={() => setSearchPrice(false)}>
                                             Đóng
                                         </button>
-                                        <button className='search-btn mx-2' onClick={() => resultSearchPrice()}>
+                                        <button className='search-btn' onClick={() => resultSearchPrice()}>
                                             Xem kết quả
                                         </button>
                                     </div>

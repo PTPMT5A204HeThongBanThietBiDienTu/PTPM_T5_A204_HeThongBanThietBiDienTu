@@ -38,6 +38,8 @@
     bottom: 0.5rem;
     right: 0.5rem;
     display: block;
+    display: flex;
+    width: fit-content;
   }
   .close-btn {
     background-color: #222;
@@ -58,10 +60,19 @@
     margin-top: 0.5rem;
   }
   
-.all-product .action select{
+.all-product .all-action select{
     width: 20rem;
+    margin-right: 1rem;
 }
-.all-product .action .search-price{
+.container-fluid .all-product .all-action{
+    width: 100%;
+    margin-top: 1rem;
+}
+
+.all-product .all-action button{
+    margin-right: 1rem;
+}
+.all-product .all-action .search-price{
     position: relative;
 }
 .product {
@@ -238,10 +249,6 @@
       }
 }
 @media screen and (max-width:836px) {
-    .search-price-content .action{
-        display: block;
-        display: flex;
-    }
     .search-price-content .price-from{
         justify-content: space-between;
         width: 100%;
@@ -254,23 +261,41 @@
         width: 100%;
         height: 100%;
         background-color: #222;
-        padding: 20px; /* Thêm padding cho đẹp hơn */
-        border-radius: 8px; /* Rounded corners */
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Shadow for a better visual effect */
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
         z-index: 1000;
       }
       
-      /* Cân giữa nội dung trong modal */
+
       .search-price-content {
         display: flex;
         flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        height: 10rem; /* Đảm bảo nội dung chiếm toàn bộ chiều cao */
+        height: 15rem; 
+      }
+      .search-price-content .action{
+        height: 4rem;
+        width: fit-content;
       }
 }
 @media screen and (max-width:765px) {
     .product .card-product {
         flex: 0 1 calc(100% - 2.5rem);
+      }
+}
+@media screen and (max-width:645px) {
+    .container-fluid .all-product .all-action{
+        flex-direction: column;
+        width: 100%;
+        margin-top: 1rem;
+    }
+    .all-product .all-action select,
+    .all-product .all-action button{
+        width: 100%;
+        margin-bottom: 1rem;
+    }
+    .search-price-content .action{
+        height: fit-content;
+        width: fit-content;
       }
 }

@@ -38,7 +38,7 @@ const OrderHistory = ({ name }) => {
     return (
         name !== '' ?
             <div className='all-manage d-flex vh-100 bg-white align-items-center flex-column'>
-                <div className='manage w-75 border mt-5'>
+                <div className='manage w-75 mt-5'>
                     <div className='title d-flex flex-column'>
                         <p className='title-item text-center'>LỊCH SỬ MUA HÀNG</p>
                         <div className='parameter d-flex justify-content-center'>

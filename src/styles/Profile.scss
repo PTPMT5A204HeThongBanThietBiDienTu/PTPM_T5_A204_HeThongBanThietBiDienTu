@@ -27,3 +27,29 @@ background-color: #fff;
     transform: translate(-50%);
     margin-top: 2rem;
 }
+@media screen and (max-width: 1021px){
+    .all-info .info form .title p.text-center{
+        font-size: 1rem;
+    }
+}
+@media screen and (max-width: 675px){
+    .all-info .info form .title p.text-center{
+        text-align: right!important;
+    }
+}
+@media screen and (max-width: 537px){
+    .all-info .info form .title p.text-center{
+        font-size: 0.8rem;
+    }
+}
+@media screen and (max-width: 465px){
+    .all-info .info form .title p.text-center{
+        font-size: 0.5rem;
+    }
+}
+@media screen and (max-width: 455px){
+    .all-info .info form label{
+        margin-top: 2rem;
+        font-size: 0.8rem;
+    }
+}

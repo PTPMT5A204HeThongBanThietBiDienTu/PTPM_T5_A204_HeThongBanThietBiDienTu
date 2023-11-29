@@ -137,6 +137,11 @@
     color: #fff;
     font-size: 1.5rem;
 }
+@media screen and (max-width: 1205px) {
+    .all-payment .payment .payment-content .content .payment .button-payment button{
+        display: block;
+    }
+}
 @media screen and (max-width: 850px) {
     .all-payment .payment{
         width: auto;

@@ -49,3 +49,21 @@
 .all-manage .manage .list-order table tbody:hover{
     color: red;
 }
+@media screen and (max-width: 541px){
+    .all-manage .manage{
+        width: 100%!important;
+    }
+    .all-manage .manage .list-order{
+        width: 100%;
+    }
+    .all-manage .manage .list-order .table{
+        width: auto;
+        height: auto;
+        border: 2px solid red;
+    }
+}
+@media screen and (max-width: 327px){
+    .all-manage .manage .title .title-item{
+        font-size: 1rem;
+    }
+}

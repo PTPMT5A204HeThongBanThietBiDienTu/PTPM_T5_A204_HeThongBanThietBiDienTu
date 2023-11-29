@@ -138,6 +138,12 @@
     right: 0;
     bottom: 0;
 }
+@media screen and (max-width: 1205px) {
+    .all-order .order .order-content .center .payment .button-payment button,
+.all-order .order .order-content .center .payment .button-buy button{
+    display: block;
+}
+}
 @media screen and (max-width: 850px) {
     .all-order .order{
         width: auto;

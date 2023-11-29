@@ -186,7 +186,12 @@
     margin-bottom   : 1rem;
     background-color: white;
 }
-
+@media screen and (max-width:1205px) {
+    .all-cart .cart .payment .button-payment button,
+    .all-cart .cart .payment .button-buy button{
+        display: block;
+    }
+}
 @media screen and (max-width:850px) {
     .all-cart .cart {
         width: auto;

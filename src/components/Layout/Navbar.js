@@ -14,9 +14,13 @@ import Dropdown from 'react-bootstrap/Dropdown';
 
 const Navbar = ({ name }) => {
     const navigate = useNavigate();
+    const [clicked, setClicked] = useState(false);
     const [search, setSearch] = useState('');
     const [resultSearch, setResultSearch] = useState([]);
     const [showModalContact, setShowModalContact] = useState(false);
+    const handleClick = () => {
+        setClicked(!clicked);
+    };
     const handleClose = () => {
         setShowModalContact(false);
     }
@@ -83,6 +87,9 @@ const Navbar = ({ name }) => {
             <div className='bottom'>
                 <nav className='NavbarItems'>
                     <Link to={'/'} className='decoration-transparent'><h3 className='navbar-logo'>TS Mobile</h3></Link>
+                    <div className='menu-icons' onClick={handleClick}>
+                        <i className={clicked ? 'fa-solid fa-times fa-beat' : 'fa-solid fa-bars fa-beat'}></i>
+                    </div>
                     <OutsideClickHandler onOutsideClick={() => closeSearch()} >
                         <div className='all-search d-flex flex-column'>
                             <div className='search-form w-100 d-flex'>
@@ -123,7 +130,7 @@ const Navbar = ({ name }) => {
                         </div>
 
                     </OutsideClickHandler>
-                    <ul className='nav-menu'>
+                    <ul className={clicked ? 'nav-menu active' : 'nav-menu'}>
                         {MenuItems.map((item, index) => {
                             if (item.title !== "Liên hệ") {
                                 return (
@@ -147,7 +154,7 @@ const Navbar = ({ name }) => {
                         })}
                         {name !== '' ? (
                             <>
-                                <Dropdown className='d-flex dropdown nav-links'>
+                                <Dropdown className=' dropdown nav-links'>
                                     <Dropdown.Toggle variant="default" id="dropdown-menu">
                                         <span className='nav-links-user'>
                                             <i class="fa-solid fa-user"></i>

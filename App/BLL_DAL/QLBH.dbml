@@ -131,6 +131,7 @@
       <Association Name="Product_OrderDetail" Member="OrderDetails" ThisKey="id" OtherKey="proId" Type="OrderDetail" />
       <Association Name="Product_ReceiptDetail" Member="ReceiptDetails" ThisKey="id" OtherKey="proId" Type="ReceiptDetail" />
       <Association Name="Product_Specification" Member="Specifications" ThisKey="id" OtherKey="proId" Type="Specification" />
+      <Association Name="Product_Recommend" Member="Recommends" ThisKey="id" OtherKey="proId" Type="Recommend" />
       <Association Name="Brand_Product" Member="Brand" ThisKey="braId" OtherKey="id" Type="Brand" IsForeignKey="true" />
       <Association Name="Category_Product" Member="Category" ThisKey="catId" OtherKey="id" Type="Category" IsForeignKey="true" />
     </Type>
@@ -188,6 +189,14 @@
       <Column Name="braId" Type="System.String" DbType="Char(36) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
       <Association Name="Brand_Category_Brand" Member="Brand" ThisKey="braId" OtherKey="id" Type="Brand" IsForeignKey="true" />
       <Association Name="Category_Category_Brand" Member="Category" ThisKey="catId" OtherKey="id" Type="Category" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Recommends" Member="Recommends">
+    <Type Name="Recommend">
+      <Column Name="id" Type="System.String" DbType="Char(36) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="proId" Type="System.String" DbType="Char(36) NOT NULL" CanBeNull="false" />
+      <Column Name="accompany" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Association Name="Product_Recommend" Member="Product" ThisKey="proId" OtherKey="id" Type="Product" IsForeignKey="true" />
     </Type>
   </Table>
 </Database>

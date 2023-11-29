@@ -84,6 +84,9 @@ namespace BLL_DAL
     partial void InsertCategory_Brand(Category_Brand instance);
     partial void UpdateCategory_Brand(Category_Brand instance);
     partial void DeleteCategory_Brand(Category_Brand instance);
+    partial void InsertRecommend(Recommend instance);
+    partial void UpdateRecommend(Recommend instance);
+    partial void DeleteRecommend(Recommend instance);
     #endregion
 		
 		public QLBHDataContext() : 
@@ -257,6 +260,14 @@ namespace BLL_DAL
 			get
 			{
 				return this.GetTable<Category_Brand>();
+			}
+		}
+		
+		public System.Data.Linq.Table<Recommend> Recommends
+		{
+			get
+			{
+				return this.GetTable<Recommend>();
 			}
 		}
 	}
@@ -2686,6 +2697,8 @@ namespace BLL_DAL
 		
 		private EntitySet<Specification> _Specifications;
 		
+		private EntitySet<Recommend> _Recommends;
+		
 		private EntityRef<Brand> _Brand;
 		
 		private EntityRef<Category> _Category;
@@ -2720,6 +2733,7 @@ namespace BLL_DAL
 			this._OrderDetails = new EntitySet<OrderDetail>(new Action<OrderDetail>(this.attach_OrderDetails), new Action<OrderDetail>(this.detach_OrderDetails));
 			this._ReceiptDetails = new EntitySet<ReceiptDetail>(new Action<ReceiptDetail>(this.attach_ReceiptDetails), new Action<ReceiptDetail>(this.detach_ReceiptDetails));
 			this._Specifications = new EntitySet<Specification>(new Action<Specification>(this.attach_Specifications), new Action<Specification>(this.detach_Specifications));
+			this._Recommends = new EntitySet<Recommend>(new Action<Recommend>(this.attach_Recommends), new Action<Recommend>(this.detach_Recommends));
 			this._Brand = default(EntityRef<Brand>);
 			this._Category = default(EntityRef<Category>);
 			OnCreated();
@@ -2971,6 +2985,19 @@ namespace BLL_DAL
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Product_Recommend", Storage="_Recommends", ThisKey="id", OtherKey="proId")]
+		public EntitySet<Recommend> Recommends
+		{
+			get
+			{
+				return this._Recommends;
+			}
+			set
+			{
+				this._Recommends.Assign(value);
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Brand_Product", Storage="_Brand", ThisKey="braId", OtherKey="id", IsForeignKey=true)]
 		public Brand Brand
 		{
@@ -3126,6 +3153,18 @@ namespace BLL_DAL
 		}
 		
 		private void detach_Specifications(Specification entity)
+		{
+			this.SendPropertyChanging();
+			entity.Product = null;
+		}
+		
+		private void attach_Recommends(Recommend entity)
+		{
+			this.SendPropertyChanging();
+			entity.Product = this;
+		}
+		
+		private void detach_Recommends(Recommend entity)
 		{
 			this.SendPropertyChanging();
 			entity.Product = null;
@@ -4214,6 +4253,157 @@ namespace BLL_DAL
 						this._catId = default(string);
 					}
 					this.SendPropertyChanged("Category");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Recommends")]
+	public partial class Recommend : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private string _id;
+		
+		private string _proId;
+		
+		private string _accompany;
+		
+		private EntityRef<Product> _Product;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnidChanging(string value);
+    partial void OnidChanged();
+    partial void OnproIdChanging(string value);
+    partial void OnproIdChanged();
+    partial void OnaccompanyChanging(string value);
+    partial void OnaccompanyChanged();
+    #endregion
+		
+		public Recommend()
+		{
+			this._Product = default(EntityRef<Product>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", DbType="Char(36) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
+		public string id
+		{
+			get
+			{
+				return this._id;
+			}
+			set
+			{
+				if ((this._id != value))
+				{
+					this.OnidChanging(value);
+					this.SendPropertyChanging();
+					this._id = value;
+					this.SendPropertyChanged("id");
+					this.OnidChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_proId", DbType="Char(36) NOT NULL", CanBeNull=false)]
+		public string proId
+		{
+			get
+			{
+				return this._proId;
+			}
+			set
+			{
+				if ((this._proId != value))
+				{
+					if (this._Product.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnproIdChanging(value);
+					this.SendPropertyChanging();
+					this._proId = value;
+					this.SendPropertyChanged("proId");
+					this.OnproIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_accompany", DbType="NVarChar(MAX) NOT NULL", CanBeNull=false)]
+		public string accompany
+		{
+			get
+			{
+				return this._accompany;
+			}
+			set
+			{
+				if ((this._accompany != value))
+				{
+					this.OnaccompanyChanging(value);
+					this.SendPropertyChanging();
+					this._accompany = value;
+					this.SendPropertyChanged("accompany");
+					this.OnaccompanyChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Product_Recommend", Storage="_Product", ThisKey="proId", OtherKey="id", IsForeignKey=true)]
+		public Product Product
+		{
+			get
+			{
+				return this._Product.Entity;
+			}
+			set
+			{
+				Product previousValue = this._Product.Entity;
+				if (((previousValue != value) 
+							|| (this._Product.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Product.Entity = null;
+						previousValue.Recommends.Remove(this);
+					}
+					this._Product.Entity = value;
+					if ((value != null))
+					{
+						value.Recommends.Add(this);
+						this._proId = value.id;
+					}
+					else
+					{
+						this._proId = default(string);
+					}
+					this.SendPropertyChanged("Product");
 				}
 			}
 		}

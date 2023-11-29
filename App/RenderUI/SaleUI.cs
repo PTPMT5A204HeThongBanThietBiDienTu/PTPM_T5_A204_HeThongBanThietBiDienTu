@@ -177,6 +177,9 @@ namespace RenderUI
             if(picker.Value==null)
                 MessageBox.Show("Vui lòng chọn một ngày để thống kê doanh thu!");
             exportExcel("ngày",picker.Text);
+
+            BLL_DAL_Recommend bdr = new BLL_DAL_Recommend();
+            bdr.runAlgorithm();
         }
         private void exportExcel(string datetype,string date)
         {

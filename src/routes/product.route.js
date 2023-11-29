@@ -6,6 +6,7 @@ const {
   getAllByPrice,
   getAllByCatIdAndBraId,
   getById,
+  getAllAccompany,
   create,
   update,
   remove,
@@ -24,6 +25,7 @@ router.get('/getAllByCatIdAndBraId', asyncHandle(getAllByCatIdAndBraId))
 router.get('/:id', asyncHandle(getById))
 router.get('/getByCatId/:id', asyncHandle(getAllByCatId))
 router.get('/getByBraId/:id', asyncHandle(getAllByBraId))
+router.get('/getAllAccompany/:id', asyncHandle(getAllAccompany))
 router.post('/create', validateUpload, validateBody(validateProduct), asyncHandle(create))
 router.patch('/:id', validateBody(validateProduct), asyncHandle(update))
 router.delete('/:id', asyncHandle(remove))

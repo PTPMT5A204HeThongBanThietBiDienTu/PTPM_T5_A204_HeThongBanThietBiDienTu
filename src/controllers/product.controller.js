@@ -1,6 +1,6 @@
 const fs = require("fs")
-const { QueryTypes, Op } = require('sequelize')
-const { Product, Category, Brand, Image } = require("../models/index")
+const { Op } = require('sequelize')
+const { Product, Category, Brand, Image, Recommend } = require("../models/index")
 const PAGE_SIZE = 8
 
 const getAll = async (req, res, next) => {
@@ -653,6 +653,27 @@ const search = async (req, res, next) => {
     })
 }
 
+const getAllAccompany = async (req, res, next) => {
+    const product = await Product.findByPk(req.params.id)
+
+    if (!product) {
+        return res.status(400).json({
+            success: false,
+            message: 'Invalid ID'
+        })
+    }
+
+
+    const accompanys = await Recommend.findAll({
+        where: { proId: req.params.id }
+    })
+
+    return res.status(200).json({
+        success: true,
+        data: accompanys
+    })
+}
+
 module.exports = {
     getAll,
     getAllByCatId,
@@ -660,6 +681,7 @@ module.exports = {
     getAllByPrice,
     getAllByCatIdAndBraId,
     getById,
+    getAllAccompany,
     create,
     update,
     remove,

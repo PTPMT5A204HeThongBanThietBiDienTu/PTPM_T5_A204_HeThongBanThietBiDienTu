@@ -17,6 +17,7 @@ const Receipt = require("./receipt.model")
 const ReceiptDetail = require('./receiptdetail.model')
 const Customer = require('./customer.model')
 const Category_Brand = require('./category_brand.model')
+const Recommend = require('./recommend.model')
 
 //--------------------------------- FOREIGN KEY ON TABLE USER -------------------------------------//
 //--relationship between Role and User--//
@@ -295,6 +296,19 @@ Category_Brand.belongsTo(Brand, {
     as: 'brand'
 })
 
+//--------------------------------- FOREIGN KEY ON TABLE RECOMMEND -------------------------------------//
+//--relationship between Product and ReceiptDetail--//
+Product.hasOne(Recommend, {
+    foreignKey: 'proId',
+    as: 'recommend',
+    onDelete: 'NO ACTION'
+})
+
+Recommend.belongsTo(Product, {
+    foreignKey: 'proId',
+    as: 'product'
+})
+
 //====================//====================//====================//====================//====================
 
 const createAllTable = () => {
@@ -320,5 +334,6 @@ module.exports = {
     BillProduct,
     Customer,
     Category_Brand,
+    Recommend,
     createAllTable
 }

@@ -178,6 +178,7 @@ namespace App
             removeFormStaff();
             removeFormApproveBill();
             removeFormInfomation();
+            removeFormSale();
         }
 
         private void activeLabel(string lblName)
@@ -868,6 +869,10 @@ namespace App
             this.Controls.RemoveByKey("Month");
             this.Controls.RemoveByKey("ngaythongke");
             this.Controls.RemoveByKey("startDate");
+            this.Controls.RemoveByKey("dinhdang");
+            this.Controls.RemoveByKey("typeOfDateExport");
+            this.Controls.RemoveByKey("lblSearch");
+            this.Controls.RemoveByKey("txtSearch");
         }
 
 

@@ -244,6 +244,9 @@ namespace RenderUI
                 picker1 = (DateTimePicker)ctr.Controls.Find("Month", false)[0];
             }
             exportExcel(dinhdang, picker1.Value.Date, picker2.Value.Date);
+            BLL_DAL_Recommend bdr = new BLL_DAL_Recommend();
+            bdr.runAlgorithm();
+
         }
         private void exportExcel(string datetype, DateTime date, DateTime date2)
         {

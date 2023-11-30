@@ -4,11 +4,13 @@
     background-color: white;
 }
 .all-product{
-    width: 80%;
+    width: 70%;
     margin-left: auto;
     margin-right: auto;
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 .search-price-modal {
     position: absolute;

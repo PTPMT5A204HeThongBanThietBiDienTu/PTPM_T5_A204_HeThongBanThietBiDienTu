@@ -66,12 +66,14 @@
     <Compile Include="BLL_DAL_Cart.cs" />
     <Compile Include="BLL_DAL_Category.cs" />
     <Compile Include="BLL_DAL_Customer.cs" />
+    <Compile Include="BLL_DAL_OrderDetails.cs" />
     <Compile Include="BLL_DAL_Permission.cs" />
     <Compile Include="BLL_DAL_Product.cs" />
     <Compile Include="BLL_DAL_Recommend.cs" />
     <Compile Include="BLL_DAL_Role.cs" />
     <Compile Include="BLL_DAL_Screen.cs" />
     <Compile Include="BLL_DAL_User.cs" />
+    <Compile Include="BLL_DAL_Order.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>

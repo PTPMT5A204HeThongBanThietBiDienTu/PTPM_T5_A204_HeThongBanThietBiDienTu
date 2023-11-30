@@ -156,7 +156,7 @@ namespace RenderUI
         {
             Label lbl = new Label();
             lbl.Name = name;
-            lbl.Text = "Không có hóa đơn nào cần duyệt";
+            lbl.Text = "Không có hóa đơn nào đã được thanh toán!";
             lbl.Left = leftPos;
             lbl.Top = topPos;
 

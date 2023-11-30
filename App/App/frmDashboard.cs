@@ -20,8 +20,11 @@ namespace App
         BLL_DAL_Cart bdc = new BLL_DAL_Cart();
         BLL_DAL_BillProduct bdbP = new BLL_DAL_BillProduct();
         BLL_DAL_Bill bdb = new BLL_DAL_Bill();
+        BLL_DAL_Order bdo = new BLL_DAL_Order();
+        BLL_DAL_OrderDetails bdod = new BLL_DAL_OrderDetails();
         List<object> pers;
         string billId;
+        BLL_DAL_User bdu = new BLL_DAL_User();
 
         public frmDashboard()
         {
@@ -179,6 +182,7 @@ namespace App
             removeFormApproveBill();
             removeFormInfomation();
             removeFormSale();
+            removeFormOrder();
         }
 
         private void activeLabel(string lblName)
@@ -854,6 +858,7 @@ namespace App
         }
         private void removeFormSale()
         {
+            this.Controls.RemoveByKey("lblReport");
             this.Controls.RemoveByKey("DSHD");
             this.Controls.RemoveByKey("DSSP");
             this.Controls.RemoveByKey("dtgvBill");
@@ -875,6 +880,88 @@ namespace App
             this.Controls.RemoveByKey("txtSearch");
         }
 
+        /*********************************************************************/
+        /*                                 ORDER                             */
+        /*********************************************************************/
+        private void renderFormOrder()
+        {
+            AppUI appUI = new AppUI(this);
+            string idorder = bdo.getIdOrderInPending();
+            
+            appUI.renderLabel("Tìm kiếm hóa đơn:", "lblSearch", 300, 60);
+
+            OrderUI abUI = new OrderUI(this,Program.currentUser);
+
+            abUI.renderTextBoxSearch("txtSearch", 500, 55);
+            BLL_DAL_Product bdpt = new BLL_DAL_Product();
+            List<Object> products = bdpt.getAllDataGridView();
+            if (products.Count == 0)
+                abUI.renderLabelReport("lblReport", 500, 400);
+            else
+            {
+
+                appUI.renderLabel("Danh sách sản phẩm", "DSSP", 305, 110);
+                abUI.renderDataGridView("dtgvProduct", 305, 135);
+            }
+            appUI.renderLabel("Tạo đơn đặt hàng:", "lbltao",300 , 320);
+            appUI.renderTextBox("txtIdOrder",300, 500, 320,true);
+           
+            appUI.renderLabel("Mã sản phẩm:","lblMa", 300, 365);
+            appUI.renderTextBox("txtMa",200, 470, 360, true);
+            appUI.renderLabel("Tên sản phẩm:", "lblTen", 680, 365);
+            appUI.renderTextBox("txtTen", 200, 850, 360, true);
+
+            appUI.renderLabel("Hãng:", "lblHang", 300, 405);
+            abUI.renderCBoBrand("cboBrand", 200, 470, 400);
+            appUI.renderLabel("Loai:", "lbLoai", 680, 405);
+            abUI.renderCBoCategory("cboCategory", 200, 850, 400);
+
+
+            appUI.renderLabel("Giá:", "lblGia", 300, 445);
+            appUI.renderTextBoxNumberOnly("txtGia", 200, 470, 440,true);
+            appUI.renderLabel("Số lượng:", "lblSL", 680, 445);
+            appUI.renderTextBoxNumberOnly("txtSoLuong", 200, 850, 440,true);
+            TextBox IdOrder = (TextBox)this.Controls.Find("txtIdOrder", false)[0];
+            if (idorder != "")
+            {
+                IdOrder.Text = idorder;
+                abUI.renderDetailsDataGridView("dtgvOrderDetails", 300, 520);
+            }
+            else
+            {
+                IdOrder.Text = Guid.NewGuid().ToString();
+            }    
+           
+            
+            Receipt r = new Receipt();
+           
+            abUI.renderButtonAddToOrder("btnThemSP", "Add", 300, 480);
+            abUI.renderButtonFinishOrder("btnHoanThanhOrder", "Finish", 400, 480);
+        }
+        private void removeFormOrder()
+        {
+            this.Controls.RemoveByKey("DSSP");
+            this.Controls.RemoveByKey("dtgvProduct");
+            this.Controls.RemoveByKey("lblReport");
+            this.Controls.RemoveByKey("lblSearch");
+
+            this.Controls.RemoveByKey("lbltao");
+            this.Controls.RemoveByKey("lblMa");
+            this.Controls.RemoveByKey("txtMa");
+            this.Controls.RemoveByKey("lblTen");
+            this.Controls.RemoveByKey("txtTen");
+            this.Controls.RemoveByKey("lblHang");
+            this.Controls.RemoveByKey("cboBrand");
+            this.Controls.RemoveByKey("lbLoai");
+            this.Controls.RemoveByKey("cboCategory");
+            this.Controls.RemoveByKey("lblGia");
+            this.Controls.RemoveByKey("txtGia");
+            this.Controls.RemoveByKey("lblSL");
+            this.Controls.RemoveByKey("txtSoLuong");
+            this.Controls.RemoveByKey("btnHoanThanhOrder");
+            this.Controls.RemoveByKey("dtgvOrderDetails");
+            this.Controls.RemoveByKey("btnThemSP");
+        }
 
         /*********************************************************************/
         private void pnlLogout_MouseClick(object sender, MouseEventArgs e)
@@ -898,7 +985,9 @@ namespace App
 
         private void SR005_Click(object sender, EventArgs e)
         {
-            
+            removeAllForm();
+            renderFormOrder();
+
         }
     }
 }

@@ -89,5 +89,28 @@ namespace BLL_DAL
                 return 0;
             }
         }
+        public List<Object> getAllDataGridView()
+        {
+            var products = from p in qlbh.Products
+                        join b in qlbh.Brands on p.braId equals b.id
+                        join c in qlbh.Categories on p.catId equals c.id
+                        select new { proId=p.id, proName = p.name, catName =c.name, braName=b.name, Quantity =p.quantity, Price= p.price };
+            return products.ToList<Object>();
+        }
+        public List<Object> getProductsBySearching(string text)
+        {
+            if (text != null)
+            {
+                var products = from p in qlbh.Products
+                               join b in qlbh.Brands on p.braId equals b.id
+                               join c in qlbh.Categories on p.catId equals c.id
+                               where p.name.Contains(text) ||b.name.Contains(text)||c.name.Contains(text)
+                               select new { proId = p.id,proName =p.name, catName = c.name, braName = b.name, Quantity = p.quantity, Price = p.price };
+                return products.ToList<Object>();
+            }
+            else
+                return getAllDataGridView();
+
+        }
     }
 }

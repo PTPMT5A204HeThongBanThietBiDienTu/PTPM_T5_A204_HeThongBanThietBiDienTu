@@ -58,5 +58,23 @@ namespace RenderUI
 
 
         }
+        public void renderTextBoxNumberOnly(string name, int width, int leftPos, int topPos, bool readOnly = false)
+        {
+            TextBox txt = new TextBox();
+            txt.Name = name;
+            txt.Left = leftPos;
+            txt.Top = topPos;
+
+            txt.Width = width;
+            txt.Font = new Font("Arial", 16);
+            txt.ReadOnly = readOnly;
+            txt.KeyPress += textBox_KeyPress;
+            ctr.Controls.Add(txt);
+        }
+        private void textBox_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && (e.KeyChar != '.'))
+                e.Handled = true;
+        }
     }
 }

@@ -53,6 +53,7 @@
     <Compile Include="CartUI.cs" />
     <Compile Include="CategoryUI.cs" />
     <Compile Include="InfomationUI.cs" />
+    <Compile Include="OrderUI.cs" />
     <Compile Include="PermissionUI.cs" />
     <Compile Include="ProductSaleUI.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

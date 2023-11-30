@@ -29,7 +29,6 @@ const RecommendDetail = (props) => {
         }
     };
     const [product, setProduct] = useState([]);
-    const [recommend, setRecommend] = useState(false)
     const [proById, setProById] = useState([])
     const getAllAccompany = useCallback(() => {
         axios.get(`http://localhost:7777/api/v1/product/getAllAccompany/${productByID.id}`).then(res => {
@@ -97,32 +96,29 @@ const RecommendDetail = (props) => {
     return (
         proById.length > 0 &&
         <div className='similar-product my-4'>
-            <button className={`btn btn-${recommend === false ? 'success' : 'danger'}`} onClick={() => setRecommend(recommend === false ? true : false)}>
+            <h3>
                 Mua kèm giá sốc
-            </button>
-            {
-                recommend === true &&
-                <Carousel responsive={responsive} autoPlay={true} infinite={true}>
-                    {
-                        proById.map((value) => (
-                            <div className='card-product' key={value.id} >
-                                <Link style={{ textDecoration: "none", color: "#222" }} to={`/product/${value.id}`} onClick={handleScrollToTop}>
-                                    <div className='card-image'>
-                                        <img src={`http://localhost:7777/${value.img}`} alt='' />
-                                    </div>
-                                    <div className='card-name'>
-                                        <b>{value.name}</b>
-                                    </div>
-                                    <div className='price-cost'>
-                                        <div className='price'>{formatCurrency(value.price)}</div>
-                                    </div>
-                                </Link>
-                                <button className='add-to-cart-recommend btn btn-danger' onClick={() => handleAddtoCart(value.id)}>Thêm vào giỏ hàng</button>
-                            </div>
-                        ))
-                    }
-                </Carousel>
-            }
+            </h3>
+            <Carousel responsive={responsive} autoPlay={true} infinite={true}>
+                {
+                    proById.map((value) => (
+                        <div className='card-product' key={value.id} >
+                            <Link style={{ textDecoration: "none", color: "#222" }} to={`/product/${value.id}`} onClick={handleScrollToTop}>
+                                <div className='card-image'>
+                                    <img src={`http://localhost:7777/${value.img}`} alt='' />
+                                </div>
+                                <div className='card-name'>
+                                    <b>{value.name}</b>
+                                </div>
+                                <div className='price-cost'>
+                                    <div className='price'>{formatCurrency(value.price)}</div>
+                                </div>
+                            </Link>
+                            <button className='add-to-cart-recommend btn btn-danger' onClick={() => handleAddtoCart(value.id)}>Thêm vào giỏ hàng</button>
+                        </div>
+                    ))
+                }
+            </Carousel>
         </div>
     )
 }

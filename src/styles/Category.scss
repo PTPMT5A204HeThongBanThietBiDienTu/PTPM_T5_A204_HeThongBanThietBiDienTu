@@ -75,19 +75,19 @@
 .all-product .all-action .search-price{
     position: relative;
 }
-.product {
+.container-fluid .all-product .product {
     display: flex;
     flex-wrap: wrap;
     justify-content: flex-start;
     width: 100%;
     padding-bottom: 5rem;
-    margin-left: auto;
-    margin-right: auto;
+    align-items: center;
     margin-top: 2rem;
 }
 
-.product .card-product {
+.container-fluid .all-product .product .card-product {
     flex: 0 1 calc(25% - 2.5rem);
+    width: 20rem;
     height: 25rem;
     padding-top: 2rem;
     box-shadow: 0 5px 15px 0 rgba(0, 0, 0, 0.25);
@@ -99,16 +99,13 @@
     overflow: hidden;
 }
 
-  
-//   .product .card-product:nth-child(4n) {
-//     margin-right: 0;
-//   }
-  
-  .product .card-product:not(:nth-last-child(-n + 4)) {
+.container-fluid .all-product .product .card-product:not(:nth-last-child(-n + 4)) {
     margin-bottom: 2.5rem;
   }
+
+
   
-.product .card-product .card-image {
+  .container-fluid .all-product .product .card-product .card-image {
   max-width: 10rem;
   max-height: 10rem;
   margin-left: auto;

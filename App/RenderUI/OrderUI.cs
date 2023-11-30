@@ -121,7 +121,7 @@ namespace RenderUI
             txtGia.ReadOnly = true;
             txtSL.ReadOnly = false;
         }
-            public void renderLabelReport(string name, int leftPos, int topPos)
+        public void renderLabelReport(string name, int leftPos, int topPos)
         {
             Label lbl = new Label();
             lbl.Name = name;
@@ -313,6 +313,7 @@ namespace RenderUI
             btn.Top = topPos;
             btn.Left = leftPos;
             btn.Height = 30;
+            btn.Width = 150;
             ctr.Controls.Add(btn);
         }
         private void ButtonFinishOrder_Click(object sender, EventArgs e)
@@ -325,7 +326,7 @@ namespace RenderUI
                     return;
                 }    
                 TextBox IdOrder = (TextBox)ctr.Controls.Find("txtIdOrder", false)[0];
-                bdo.update(IdOrder.Text.Trim(), "finished");
+                bdo.update(IdOrder.Text.Trim(), "proccessing");
                 IdOrder.Text= Guid.NewGuid().ToString();
                 loadDetailData(dtgvOrderDetail);
                 MessageBox.Show("Đã hoàn thành việc đặt hàng!");
@@ -336,7 +337,7 @@ namespace RenderUI
             }
            
         }
-            public void searchTextBoxChanged(object sender, EventArgs e)
+        public void searchTextBoxChanged(object sender, EventArgs e)
         {
             TextBox txt = (TextBox)sender;
             DataGridView dtgvProduct = (DataGridView)ctr.Controls.Find("dtgvProduct", false)[0];

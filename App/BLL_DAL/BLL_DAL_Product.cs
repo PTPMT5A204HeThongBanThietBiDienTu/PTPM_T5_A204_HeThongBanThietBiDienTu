@@ -51,6 +51,11 @@ namespace BLL_DAL
             Product product = qlbh.Products.Where(p => p.id == id).FirstOrDefault();
             return product.quantity;
         }
+        public double getPriceOfProduct(string id)
+        {
+            Product product = qlbh.Products.Where(p => p.id == id).FirstOrDefault();
+            return product.price;
+        }
 
         public Product getByProId(string id)
         {

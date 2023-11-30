@@ -50,5 +50,14 @@ namespace BLL_DAL
                 return order.id ;
             return "";
         }
+        public List<Object> getAllOrders()
+        {
+            var orders =( from o in qlbh.Orders
+                         join u in qlbh.Users on o.userId equals u.id
+                         join d in qlbh.OrderDetails on o.id equals d.orderId
+                         where o.status== "proccessing"
+                         select new { id = o.id,userid=u.id,Name = u.name, Created=o.createdAt });
+            return orders.ToList<Object>();
+        }
     }
 }

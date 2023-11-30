@@ -69,6 +69,8 @@
     <Compile Include="BLL_DAL_OrderDetails.cs" />
     <Compile Include="BLL_DAL_Permission.cs" />
     <Compile Include="BLL_DAL_Product.cs" />
+    <Compile Include="BLL_DAL_ReceiptDetails.cs" />
+    <Compile Include="BLL_DAL_Receipt.cs" />
     <Compile Include="BLL_DAL_Recommend.cs" />
     <Compile Include="BLL_DAL_Role.cs" />
     <Compile Include="BLL_DAL_Screen.cs" />

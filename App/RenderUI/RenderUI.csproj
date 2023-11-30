@@ -57,6 +57,7 @@
     <Compile Include="PermissionUI.cs" />
     <Compile Include="ProductSaleUI.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ReceiptUI.cs" />
     <Compile Include="RoleUI.cs" />
     <Compile Include="SaleUI.cs" />
     <Compile Include="ScreenUI.cs" />

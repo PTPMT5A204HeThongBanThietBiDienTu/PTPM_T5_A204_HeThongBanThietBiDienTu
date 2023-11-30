@@ -76,5 +76,16 @@ namespace RenderUI
             if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && (e.KeyChar != '.'))
                 e.Handled = true;
         }
+        public void renderButton(string name,string text, int leftPos, int topPos)
+        {
+            Button btn = new Button();
+            btn.Text = text;
+            btn.Name = name;
+            btn.Top = topPos;
+            btn.Left = leftPos;
+            btn.Height = 30;
+            btn.Width = 150;
+            ctr.Controls.Add(btn);
+        }
     }
 }

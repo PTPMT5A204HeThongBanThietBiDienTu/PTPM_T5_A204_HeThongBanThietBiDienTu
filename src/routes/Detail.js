@@ -9,7 +9,7 @@ import SimilarProductDetail from '../components/Detail/SimilarProductDetail';
 import sold from '../assets/icons/sold.png';
 import RecommendDetail from '../components/Detail/RecommendDetail';
 
-const Detail = ({ name, handleScrollToTop }) => {
+const Detail = ({ name, handleScrollToTop, addToCart }) => {
     const { id } = useParams();
     const [productByID, setProductByID] = useState([]);
     const [slideImage, setSlideImage] = useState([]);
@@ -79,7 +79,7 @@ const Detail = ({ name, handleScrollToTop }) => {
                             <InfoDetail />
                         </div>
                         <div className='detail-right mt-2'>
-                            <PaymentDetail quantity={productByID.quantity} name={name} productByID={productByID} />
+                            <PaymentDetail quantity={productByID.quantity} name={name} productByID={productByID} addToCart={addToCart} />
                         </div>
                     </div>
                     {

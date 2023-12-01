@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from 'react'
-import Google from '../assets/images/google.png';
-import Github from '../assets/images/github.png';
-import Facebook from '../assets/images/facebook.png';
+// import Google from '../assets/images/google.png';
+// import Github from '../assets/images/github.png';
+// import Facebook from '../assets/images/facebook.png';
 import '../styles/Login.scss';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import swal from 'sweetalert';
+import { FacebookLoginButton, GoogleLoginButton } from 'react-social-login-buttons'
+import { LoginSocialFacebook, LoginSocialGoogle } from 'reactjs-social-login'
 const Login = () => {
-    // axios.defaults.withCredentials = true;
     const navigate = useNavigate();
     const [values, setValues] = useState({
         email: '',
@@ -56,7 +57,6 @@ const Login = () => {
             });
     };
 
-
     useEffect(() => {
         const verify = () => {
             axios.get('http://localhost:7777/api/v1/auth/getInfo')
@@ -85,22 +85,23 @@ const Login = () => {
 
     return (
         <div className='all-login'>
-            <h1 className='loginTitle'>Chọn phương thức đăng nhập</h1>
+            <h1 className='loginTitle'>Đăng nhập</h1>
             <div className='wrapper'>
                 <div className='left'>
-                    {/* onClick={google} */}
-                    <div className='loginButton google'>
-                        <img src={Google} alt='' className='icon' />
-                        Google
-                    </div>
-                    <div className='loginButton facebook'>
-                        <img src={Facebook} alt='' className='icon' />
-                        Facebook
-                    </div>
-                    <div className='loginButton github'>
-                        <img src={Github} alt='' className='icon' />
-                        Github
-                    </div>
+                    <LoginSocialGoogle
+                        className=' my-2 loginButton'
+                        client_id='13368831754-tc34kj15re3bu6bk9ue2kn3s4ff1ip58.apps.googleusercontent.com'
+                        onResolve={res => console.log(res)}
+                        onReject={err => console.log(err)}>
+                        <GoogleLoginButton className='google' />
+                    </LoginSocialGoogle>
+                    <LoginSocialFacebook
+                        className='my-2 loginButton'
+                        appId='184455970114805'
+                        onResolve={res => console.log(res)}
+                        onReject={err => console.log(err)}>
+                        <FacebookLoginButton className='facebook' />
+                    </LoginSocialFacebook>
                 </div>
                 <div className='center'>
                     <div className='or'>Hoặc</div>
@@ -116,7 +117,7 @@ const Login = () => {
                             <input type="password" className="form-control" id="password" name='password' onChange={handleInputChange} required />
                         </div>
                         <div className='d-flex justify-content-center'>
-                            <button type="submit" class="btn btn-dark btn-lg w-50">Đăng nhập</button>
+                            <button type="submit" class="btn btn-dark btn-lg w-full">Đăng nhập</button>
                         </div>
                     </form>
                     <a href='/register' className='new-account btn btn-success'>Đăng ký tài khoản mới</a>

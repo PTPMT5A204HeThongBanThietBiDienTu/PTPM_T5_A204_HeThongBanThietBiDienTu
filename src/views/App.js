@@ -25,9 +25,11 @@ import OrderHistory from "../routes/OrderHistory";
 import OrderDetail from "../routes/OrderDetail";
 import Profile from "../routes/Profile";
 import ChangePassword from "../routes/ChangePassword";
+import Cookies from "js-cookie";
 
 function App() {
   axios.defaults.withCredentials = true;
+  const [cartCookie, setCartCookie] = useState([])
   const [isAtTop, setIsAtTop] = useState(true);
   const [name, setName] = useState('');
   const handleScrollToTop = () => {
@@ -69,16 +71,51 @@ function App() {
         }
       });
   }, [])
+  const addToCart = async (proId) => {
+    const currentCartCookie = Cookies.get('CartCookie');
+    const cartCookieArray = currentCartCookie ? JSON.parse(currentCartCookie) : [];
 
+    const existingItemIndex = cartCookieArray.findIndex(item => item.proId === proId);
+
+    try {
+      axios.get(`http://localhost:7777/api/v1/product/${proId}`)
+        .then(res => {
+          if (res && res.data.success === true) {
+            const productInfo = res.data.data;
+
+            if (existingItemIndex !== -1) {
+              const newQuantity = Number(cartCookieArray[existingItemIndex].quantity) + 1;
+              const maxProductQuantity = productInfo.quantity;
+              cartCookieArray[existingItemIndex].quantity = newQuantity > maxProductQuantity ? maxProductQuantity : newQuantity;
+            } else {
+              cartCookieArray.push({
+                proId,
+                quantity: 1,
+                product: productInfo,
+              });
+            }
+            setCartCookie(cartCookieArray);
+            Cookies.set('CartCookie', JSON.stringify(cartCookieArray), { expires: 7 });
+          }
+        })
+    } catch (error) {
+      console.error('Error fetching product information:', error);
+    }
+  };
+  useEffect(() => {
+    const savedCartCookie = Cookies.get('CartCookie') || '[]';
+    const parsedCart = JSON.parse(savedCartCookie);
+    setCartCookie(parsedCart);
+  }, []);
   return (
     <>
       <Navbar name={name} />
       <Routes>
         <Route path="/" element={<Home handleScrollToTop={handleScrollToTop} />} />
-        <Route path="/product/:id" element={<Detail name={name} handleScrollToTop={handleScrollToTop} />} />
+        <Route path="/product/:id" element={<Detail name={name} handleScrollToTop={handleScrollToTop} addToCart={addToCart} />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/cart" element={<Cart />} />
+        <Route path="/cart" element={<Cart name={name} cartCookie={cartCookie} setCartCookie={setCartCookie} />} />
         <Route path="/order-information" element={<OrderInformation />} />
         <Route path="/order-complete" element={<OrderComplete />} />
         <Route path="/category/:catID" element={<Category />} />
@@ -94,12 +131,12 @@ function App() {
       <div className={`scroll-to-top ${isAtTop ? 'hidden' : 'visible'}`} onClick={handleScrollToTop}>
         <button
           className={`scroll-to-top-button`}
-
         >
           <i className="fa-solid fa-arrow-up"></i>
         </button>
       </div>
       <Footer />
+
       <ToastContainer className='toast-container'
         style={{ marginTop: "5%", position: "fixed" }}
         position="top-center"

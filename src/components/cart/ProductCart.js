@@ -3,8 +3,9 @@ import React, { useState } from 'react'
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import classNames from 'classnames';
+import Cookies from 'js-cookie';
 const ProductCart = (props) => {
-    const { cart, loadCart, formatCurrency } = props;
+    const { cart, loadCart, formatCurrency, name, setCart, setCartCookie } = props;
     const [hoveredItems, setHoveredItems] = useState('');
     const handleIconHover = (index) => {
         setHoveredItems((prevHoveredItems) => {
@@ -21,6 +22,16 @@ const ProductCart = (props) => {
             return updatedHoveredItems;
         });
     };
+
+    const handleDeleteCartCookie = (proId) => {
+        const currentCartCookie = Cookies.get('CartCookie');
+        const cartCookieArray = currentCartCookie ? JSON.parse(currentCartCookie) : [];
+        const updatedCart = cartCookieArray.filter(item => item.proId !== proId);
+        setCartCookie(updatedCart)
+        setCart(updatedCart);
+        Cookies.set('CartCookie', JSON.stringify(updatedCart), { expires: 7 });
+        toast.success('Đã xóa sản phẩm ra khỏi giỏ hàng');
+    }
     const handleDeleteCart = async (cartId) => {
         axios.delete(`http://localhost:7777/api/v1/cart/${cartId}`)
             .then(res => {
@@ -30,6 +41,33 @@ const ProductCart = (props) => {
                 }
             }).catch(err => console.log(err));
     }
+    const handleQuantityChangeCartCookie = (event, data) => {
+        const newQuantity = Number(event.target.value);
+        const currentCartCookie = Cookies.get('CartCookie');
+        const cartCookieArray = currentCartCookie ? JSON.parse(currentCartCookie) : [];
+        const existingItemIndex = cartCookieArray.findIndex(item => item.proId === data.proId);
+
+        if (existingItemIndex !== -1) {
+            const maxProductQuantity = data.product.quantity;
+            const limitedQuantity = Math.min(newQuantity, maxProductQuantity);
+
+            if (limitedQuantity <= 0) {
+                handleDeleteCartCookie(data.proId);
+            } else {
+                setCart(prevCart => {
+                    const updatedCart = [...prevCart];
+                    updatedCart[existingItemIndex].quantity = limitedQuantity;
+                    return updatedCart;
+                });
+
+                cartCookieArray[existingItemIndex].quantity = limitedQuantity;
+                Cookies.set('CartCookie', JSON.stringify(cartCookieArray), { expires: 7 });
+            }
+        }
+    };
+
+
+
     const handleQuantityChange = (event, data) => {
         const newQuantity = Math.max(parseInt(event.target.value, 10), 0);
         updateQuantityCart(newQuantity, data.id);
@@ -76,7 +114,13 @@ const ProductCart = (props) => {
                                 </div>
                             </div>
                             <div className='card-action'>
-                                <div className='trash' onClick={() => handleDeleteCart(`${data.id}`)}>
+                                <div className='trash' onClick={() => {
+                                    if (name !== '') {
+                                        handleDeleteCart(`${data.id}`)
+                                    } else {
+                                        handleDeleteCartCookie(data.proId)
+                                    }
+                                }}>
                                     <i
                                         className={classNames('fa-solid', 'fa-trash', { 'fa-shake': hoveredItems[data.productid] })}
                                         onMouseEnter={() => handleIconHover(data.productid)}
@@ -84,7 +128,18 @@ const ProductCart = (props) => {
                                     ></i>
                                 </div>
                                 <div className='quantity'>
-                                    <input type="number" min={'0'} className='form-control' value={data.quantity} onChange={(e) => handleQuantityChange(e, data)} />
+                                    <input
+                                        type="number"
+                                        min={'0'}
+                                        className='form-control'
+                                        value={data.quantity}
+                                        onChange={(e) => {
+                                            if (name !== '') {
+                                                handleQuantityChange(e, data)
+                                            } else {
+                                                handleQuantityChangeCartCookie(e, data)
+                                            }
+                                        }} />
                                 </div>
                             </div>
                             <div className='subtotal'><b>Tổng: {formatCurrency(subTotal)}</b></div>

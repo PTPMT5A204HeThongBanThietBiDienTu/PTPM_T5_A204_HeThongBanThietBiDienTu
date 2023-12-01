@@ -56,7 +56,6 @@ const OrderHistory = ({ name }) => {
                         <table className={`table table-light text-xl`}>
                             <thead>
                                 <tr className='text-center'>
-                                    <th>Mã đơn hàng</th>
                                     <th>Ngày đặt hàng</th>
                                     <th>Trạng thái</th>
                                     <th>Tổng tiền</th>
@@ -66,7 +65,6 @@ const OrderHistory = ({ name }) => {
                             {
                                 allOrder.length > 0 && allOrder.map((data) => (
                                     <tbody className='text-center my-28' key={data.id} onClick={() => handleShowDetailOrder(data.id)}>
-                                        <td>{data.id}</td>
                                         <td>{format(new Date(data.createdAt), 'dd/MM/yyyy HH:mm:ss')}</td>
                                         <td>{data.status}</td>
                                         <td>{formatCurrency(data.total)}</td>

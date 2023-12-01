@@ -4,15 +4,18 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 const PaymentDetail = (props) => {
-    const { quantity, name, productByID } = props;
+    const { quantity, name, productByID, addToCart } = props;
     const navigate = useNavigate();
+
+
     const handleSoldOut = () => {
         toast.warn(`Phonenumber: 058 792 8264 - Email: 0995086534ts@gmail.com`);
     }
 
     const handleBuyNow = async () => {
         if (name === '') {
-            toast.error('Bạn phải đăng nhập mới được thêm sản phẩm vào giỏ hàng !!!');
+            addToCart(productByID.id)
+            navigate('/cart')
         } else {
             try {
                 const dataCart = {
@@ -44,7 +47,8 @@ const PaymentDetail = (props) => {
     }
     const handleAddtoCart = async () => {
         if (name === '') {
-            toast.error('Bạn phải đăng nhập mới được thêm sản phẩm vào giỏ hàng !!!');
+            addToCart(productByID.id)
+            toast.success('Đã thêm sản phẩm vào giỏ hàng');
         } else {
             try {
                 const dataCart = {

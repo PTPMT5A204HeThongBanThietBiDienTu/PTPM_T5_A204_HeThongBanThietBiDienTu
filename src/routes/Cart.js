@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import '../styles/Cart.scss';
 import ProductCart from '../components/cart/ProductCart';
 import EmptyCart from '../components/cart/EmptyCart';
-const Cart = () => {
+const Cart = ({ name, cartCookie, setCartCookie }) => {
     const navigate = useNavigate();
     const [cart, setCart] = useState([]);
     const loadCart = useCallback(() => {
@@ -15,9 +15,16 @@ const Cart = () => {
                 }
             }).catch(err => console.log(err));
     }, []);
+    const callBackCartCookie = useCallback(() => {
+        setCart(cartCookie);
+    }, [cartCookie])
     useEffect(() => {
-        loadCart();
-    }, [loadCart]);
+        if (name !== '') {
+            loadCart();
+        } else {
+            callBackCartCookie()
+        }
+    }, [loadCart, name, callBackCartCookie]);
     let totalPrice = 0;
     function formatCurrency(amount) {
         const formatter = new Intl.NumberFormat('vi-VN', {
@@ -32,7 +39,6 @@ const Cart = () => {
             return (<></>);
         })
     }
-
     return (
         <>
             {
@@ -44,7 +50,7 @@ const Cart = () => {
                                 <h3 className='giohang'>Giỏ hàng</h3>
                             </div>
                             <hr />
-                            <ProductCart cart={cart} loadCart={loadCart} formatCurrency={formatCurrency} />
+                            <ProductCart cart={cart} loadCart={loadCart} formatCurrency={formatCurrency} name={name} setCart={setCart} setCartCookie={setCartCookie} />
                             <div className='payment'>
                                 <div className='total'>
                                     <div className='title'><b>Tổng tiền:</b></div>

@@ -21,10 +21,11 @@
 }
 @media screen and (max-width:787px) {
     .register-wrapper{
-        height: 90%;
+        height: 100%;
+        width: 100%;
     }
     .all-register .registerTitle{
-        display: none;
+        top: 100px;
     }
     .all-register .register-wrapper form .row {
         flex-direction: column!important;

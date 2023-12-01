@@ -207,7 +207,7 @@ const Register = () => {
                             </div>
                         </div>
                         <div className="d-flex justify-content-center mt-4">
-                            <button type="submit" className="btn btn-dark btn-lg w-25">Đăng ký</button>
+                            <button type="submit" className="btn btn-dark btn-lg w-full">Đăng ký</button>
                         </div>
                     </form>
                     <a href='/login' className='mt-2'>Đã có tài khoản?</a>

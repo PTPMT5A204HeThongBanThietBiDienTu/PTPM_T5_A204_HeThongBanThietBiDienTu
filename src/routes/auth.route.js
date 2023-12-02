@@ -1,6 +1,7 @@
 const { Router } = require("express")
 const {
     login,
+    loginExpress,
     logout,
     refreshToken,
     register,
@@ -13,7 +14,8 @@ const {
     validateRegister,
     validateLogin,
     validateUpdateInfo,
-    validateChangePass
+    validateChangePass,
+    validateLoginExpress
 } = require("../utils/validations")
 const { asyncHandle } = require("../middlewares/errorHandle.middleware")
 const authenticate = require("../middlewares/auth.middleware")
@@ -22,6 +24,7 @@ const router = Router()
 
 router.post('/register', validateBody(validateRegister), asyncHandle(register))
 router.post('/login', validateBody(validateLogin), asyncHandle(login))
+router.post('/loginExpress', validateBody(validateLoginExpress), asyncHandle(loginExpress))
 router.post('/logout', authenticate, asyncHandle(logout))
 router.post('/refreshToken', asyncHandle(refreshToken))
 router.get('/getInfo', authenticate, asyncHandle(getInfo))

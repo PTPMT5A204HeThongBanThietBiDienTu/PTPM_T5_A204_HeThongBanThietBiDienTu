@@ -64,6 +64,14 @@ const validateLogin = (data) => {
     return dataSchema.validate(data)
 }
 
+const validateLoginExpress = (data) => {
+    const dataSchema = joi.object({
+        email: joi.string().email().required(),
+        name: joi.string().required()
+    })
+    return dataSchema.validate(data)
+}
+
 const validateSpecification = (data) => {
     const dataSchema = joi.object({
         proId: joi.string().required(),
@@ -134,5 +142,6 @@ module.exports = {
     validateUpdateCart,
     validateBill,
     validateUpdateInfo,
-    validateChangePass
+    validateChangePass,
+    validateLoginExpress
 }

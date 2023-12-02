@@ -50,7 +50,7 @@ const login = async (req, res, next) => {
     const userToken = {
         accessToken: JWTService.generateAccessToken({
             id: user.id,
-            role: user.role.name
+            role: user.role.roleName
         }),
         refreshToken: JWTService.generateRefreshToken(user.id)
     }
@@ -162,9 +162,55 @@ const changePass = async (req, res, next) => {
     })
 }
 
+const loginExpress = async (req, res, next) => {
+    const role = await Role.findOne({ where: { roleName: 'user' } })
+
+    const user = await User.findOne({
+        where: { email: req.body.email },
+        include: [{
+            model: Role,
+            as: 'role',
+            attributes: ['id', 'roleName']
+        }]
+    })
+
+    if (!user) {
+        const userNew = await User.create({
+            name: req.body.name,
+            email: req.body.email,
+            password: '',
+            roleId: role.id
+        })
+    }
+    else {
+        if (!user.is_Active) {
+            return res.status(404).json({
+                success: false,
+                message: 'Your account is locked'
+            })
+        }
+    }
+
+    const userToken = {
+        accessToken: JWTService.generateAccessToken({
+            id: user.id,
+            role: user.role.roleName
+        }),
+        refreshToken: JWTService.generateRefreshToken(user.id)
+    }
+
+    req.session.userToken = userToken
+
+    return res.status(200).json({
+        success: true,
+        message: 'Login success'
+    })
+}
+
 module.exports = {
     register,
     login,
+    loginExpress,
     logout,
     refreshToken,
     getInfo,

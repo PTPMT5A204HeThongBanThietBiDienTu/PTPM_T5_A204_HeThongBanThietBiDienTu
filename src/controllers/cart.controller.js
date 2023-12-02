@@ -26,6 +26,7 @@ const getById = async (req, res, next) => {
 const getAllByUserId = async (req, res, next) => {
     const { data } = JWTService.decodeAccessToken(req.session.userToken.accessToken)
 
+    console.log(data)
     const cart = await Cart.findAll({
         where: { userId: data.id },
         include: [{
@@ -73,19 +74,6 @@ const create = async (req, res, next) => {
         })
     }
     else {
-        if (product.quantity - proInCart.quantity - 1 <= 0) {
-            return res.status(400).json({
-                success: false,
-                message: 'The product is out of stock'
-            })
-        }
-
-        if (proInCart.quantity == 3) {
-            return res.status(400).json({
-                success: false,
-                message: 'Quantity has reached the limit'
-            })
-        }
         await Cart.update(
             { quantity: proInCart.quantity + 1 },
             {
@@ -118,22 +106,6 @@ const update = async (req, res, next) => {
         return res.status(400).json({
             success: false,
             message: 'Invalid cartId'
-        })
-    }
-
-    if (req.body.quantity > 3) {
-        return res.status(400).json({
-            success: false,
-            message: 'Quantity has reached the limit'
-        })
-    }
-
-    const product = await Product.findByPk(cart.proId)
-    let restQuantity = product.quantity - req.body.quantity
-    if (restQuantity < 0) {
-        return res.status(400).json({
-            success: false,
-            message: 'The rest quantity of product is not enough'
         })
     }
 

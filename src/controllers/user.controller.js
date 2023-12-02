@@ -5,7 +5,7 @@ const getAll = async (req, res, next) => {
         include: [{
             model: Role,
             as: 'role',
-            attributes: ['id', 'name']
+            attributes: ['id', 'roleName']
         }]
     })
 
@@ -31,7 +31,7 @@ const create = async (req, res, next) => {
         include: [{
             model: Role,
             as: 'role',
-            attributes: ['id', 'name']
+            attributes: ['id', 'roleName']
         }]
     })
     return res.status(201).json({

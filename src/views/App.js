@@ -116,11 +116,11 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/cart" element={<Cart name={name} cartCookie={cartCookie} setCartCookie={setCartCookie} />} />
-        <Route path="/order-information" element={<OrderInformation />} />
-        <Route path="/order-complete" element={<OrderComplete />} />
+        <Route path="/order-information" element={<OrderInformation name={name} cartCookie={cartCookie} />} />
+        <Route path="/order-complete" element={<OrderComplete name={name} />} />
         <Route path="/category/:catID" element={<Category />} />
         <Route path="/category/:catID/:braId" element={<Category />} />
-        <Route path="/payment" element={<Payment />} />
+        <Route path="/payment" element={<Payment name={name} setCartCookie={setCartCookie} />} />
         <Route path="/search" element={<Search />} />
         <Route path="/order-history" element={<OrderHistory name={name} />} />
         <Route path="/order-detail" element={<OrderDetail name={name} />} />

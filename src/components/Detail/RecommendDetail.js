@@ -1,11 +1,11 @@
 import axios from 'axios';
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Carousel from 'react-multi-carousel';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 const RecommendDetail = (props) => {
-    const { formatCurrency, handleScrollToTop, productByID, name } = props
+    const { formatCurrency, handleScrollToTop, productByID, name, addToCart } = props
     const responsive = {
         superLargeDesktop: {
             breakpoint: { max: 4000, min: 3000 },
@@ -29,8 +29,8 @@ const RecommendDetail = (props) => {
         }
     };
     const [product, setProduct] = useState([]);
-    const [proById, setProById] = useState([])
-    const getAllAccompany = useCallback(() => {
+    const [proById, setProById] = useState([]);
+    useEffect(() => {
         axios.get(`http://localhost:7777/api/v1/product/getAllAccompany/${productByID.id}`).then(res => {
             if (res && res.data.success === true) {
                 const accompany = res.data.data[0].accompany;
@@ -38,14 +38,15 @@ const RecommendDetail = (props) => {
                 accompanyArray.pop();
                 setProduct(accompanyArray);
             }
-        }).catch(err => console.log(err));
+        }).catch(err => {
+            console.log(err)
+            setProById([])
+        });
     }, [productByID.id])
-    useEffect(() => {
-        getAllAccompany()
-    }, [getAllAccompany])
     const handleAddtoCart = async (proId) => {
         if (name === '') {
-            toast.error('Bạn phải đăng nhập mới được thêm sản phẩm vào giỏ hàng !!!');
+            addToCart(proId)
+            toast.success('Đã thêm sản phẩm vào giỏ hàng');
         } else {
             try {
                 const dataCart = {
@@ -73,53 +74,58 @@ const RecommendDetail = (props) => {
 
         }
     };
-    const getProductDetails = useCallback(async () => {
-        try {
-            const promises = product.map(productId =>
-                axios.get(`http://localhost:7777/api/v1/product/${productId}`)
-            );
 
-            const results = await Promise.all(promises);
-
-            const productDetails = results.map(res => res.data.data);
-
-            setProById(productDetails);
-        } catch (error) {
-            console.error('Error fetching product details:', error);
-        }
-    }, [product])
     useEffect(() => {
-        if (product.length > 0) {
-            getProductDetails();
-        }
-    }, [product, getProductDetails]);
-    return (
-        proById.length > 0 &&
-        <div className='similar-product my-4'>
-            <h3>
-                Mua kèm giá sốc
-            </h3>
-            <Carousel responsive={responsive} autoPlay={true} infinite={true}>
-                {
-                    proById.map((value) => (
-                        <div className='card-product' key={value.id} >
-                            <Link style={{ textDecoration: "none", color: "#222" }} to={`/product/${value.id}`} onClick={handleScrollToTop}>
-                                <div className='card-image'>
-                                    <img src={`http://localhost:7777/${value.img}`} alt='' />
-                                </div>
-                                <div className='card-name'>
-                                    <b>{value.name}</b>
-                                </div>
-                                <div className='price-cost'>
-                                    <div className='price'>{formatCurrency(value.price)}</div>
-                                </div>
-                            </Link>
-                            <button className='add-to-cart-recommend btn btn-danger' onClick={() => handleAddtoCart(value.id)}>Thêm vào giỏ hàng</button>
-                        </div>
-                    ))
+        const fetchProductDetails = async () => {
+            if (product.length > 0) {
+                try {
+                    const promises = product.map(productId =>
+                        axios.get(`http://localhost:7777/api/v1/product/${productId}`)
+                    );
+
+                    const results = await Promise.all(promises);
+
+                    const productDetails = results.map(res => res.data.data);
+
+                    setProById(productDetails);
+                } catch (error) {
+                    console.error('Error fetching product details:', error);
                 }
-            </Carousel>
-        </div>
+            }
+        };
+
+        fetchProductDetails();
+    }, [product]);
+    return (
+        proById.length > 0 && proById.some(item => item.quantity > 0) && (
+            <div className='similar-product my-4'>
+                <h3>
+                    Mua kèm giá sốc
+                </h3>
+                <Carousel responsive={responsive} autoPlay={true} infinite={true}>
+                    {
+                        proById.map((value) => {
+                            return value.quantity > 0 && (
+                                <div className='card-product' key={value.id} >
+                                    <Link style={{ textDecoration: "none", color: "#222" }} to={`/product/${value.id}`} onClick={handleScrollToTop}>
+                                        <div className='card-image'>
+                                            <img src={`http://localhost:7777/${value.img}`} alt='' />
+                                        </div>
+                                        <div className='card-name'>
+                                            <b>{value.name}</b>
+                                        </div>
+                                        <div className='price-cost'>
+                                            <div className='price'>{formatCurrency(value.price)}</div>
+                                        </div>
+                                    </Link>
+                                    <button className='add-to-cart-recommend btn btn-danger' onClick={() => handleAddtoCart(value.id)}>Thêm vào giỏ hàng</button>
+                                </div>
+                            )
+                        })
+                    }
+                </Carousel>
+            </div>
+        )
     )
 }
 

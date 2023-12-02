@@ -1,7 +1,4 @@
 import React, { useEffect, useState } from 'react'
-// import Google from '../assets/images/google.png';
-// import Github from '../assets/images/github.png';
-// import Facebook from '../assets/images/facebook.png';
 import '../styles/Login.scss';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
@@ -44,9 +41,9 @@ const Login = () => {
                         case 'Incorrect password':
                             toast.error('Sai mật khẩu !!!');
                             break;
-                        // case '"password" length must be 5 characters long':
-                        //     toast.error('Mật khẩu chỉ được tối đa 5 kí tự !!!');
-                        //     break;
+                        case '"password" length must be 5 characters long':
+                            toast.error('Mật khẩu chỉ được tối đa 5 kí tự !!!');
+                            break;
                         default:
                             toast.error('Sai mật khẩu hoặc tài khoản !!!');
                     }

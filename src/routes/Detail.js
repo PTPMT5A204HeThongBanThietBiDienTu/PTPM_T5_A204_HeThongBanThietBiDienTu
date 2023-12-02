@@ -84,7 +84,7 @@ const Detail = ({ name, handleScrollToTop, addToCart }) => {
                     </div>
                     {
                         categoryName !== "Phụ kiện" && categoryName !== "Chuột" && categoryName !== "Bàn phím" &&
-                        <RecommendDetail handleScrollToTop={handleScrollToTop} productByID={productByID} name={name} formatCurrency={formatCurrency} />
+                        <RecommendDetail handleScrollToTop={handleScrollToTop} productByID={productByID} name={name} formatCurrency={formatCurrency} addToCart={addToCart} />
                     }
                     <SpecificationDetail id={id} />
                     <SimilarProductDetail catId={productByID.catId} braId={productByID.braId} handleScrollToTop={handleScrollToTop} />

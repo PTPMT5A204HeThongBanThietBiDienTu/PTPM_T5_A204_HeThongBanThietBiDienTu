@@ -6,8 +6,9 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import InforCustomer from '../components/OrderInfomation/InfoCustomer';
 import PaymentOrderInfo from '../components/OrderInfomation/PaymentOrderInfo';
-const OrderInformation = () => {
+const OrderInformation = (props) => {
     const navigate = useNavigate();
+    const { name, cartCookie } = props
     const [housenumber, setHousenumber] = useState('');
     const [wardname, setWardname] = useState('');
     const [districtname, setDistrictname] = useState('');
@@ -31,7 +32,58 @@ const OrderInformation = () => {
     };
     const handleSubmit = async (event) => {
         event.preventDefault();
-        if (selectedOption === "2") {
+        if (name !== '') {
+            if (selectedOption === "2") {
+                if (values.name === '' || values.phonenumber === '' || housenumber === '' || wardname === '' || districtname === '' || cityname === '') {
+                    toast.error('Vui lòng điền đầy đủ thông tin để đặt hàng !!!');
+                } else {
+                    const address = `${housenumber}, ${wardname}, ${districtname}, ${cityname}`;
+                    let total = 0
+                    const dataOrderInfo = {
+                        name: values.name,
+                        phone: values.phonenumber,
+                        address: address,
+                        products: cart.map((item) => {
+                            total += item.product.price * item.quantity
+                            return {
+                                proId: item.product.id,
+                                price: item.product.price,
+                                quantity: item.quantity
+                            };
+                        })
+                    }
+                    navigate('/payment', { state: { dataOrderInfo: dataOrderInfo, total: total } });
+                }
+            } else if (selectedOption === "1") {
+                let total = 0
+                axios.get(`http://localhost:7777/api/v1/auth/getInfo`)
+                    .then(res => {
+                        if (res && res.data.success === true) {
+                            if (res.data.data.name && res.data.data.phone && res.data.data.address) {
+                                const dataOrderInfo = {
+                                    name: res.data.data.name,
+                                    phone: res.data.data.phone,
+                                    address: res.data.data.address,
+                                    products: cart.map((item) => {
+                                        total += item.product.price * item.quantity
+                                        return {
+                                            proId: item.product.id,
+                                            price: item.product.price,
+                                            quantity: item.quantity
+                                        };
+                                    })
+                                }
+                                navigate('/payment', { state: { dataOrderInfo: dataOrderInfo, total: total } });
+                            }
+                            else {
+                                toast.error(`Vui lòng cập nhật đầy đủ thông tin tài khoản !!!`)
+                            }
+                        }
+                    })
+            } else {
+                toast.error(`Vui lòng chọn phương thức nhập thông tin người nhân !!!`)
+            }
+        } else {
             if (values.name === '' || values.phonenumber === '' || housenumber === '' || wardname === '' || districtname === '' || cityname === '') {
                 toast.error('Vui lòng điền đầy đủ thông tin để đặt hàng !!!');
             } else {
@@ -52,44 +104,21 @@ const OrderInformation = () => {
                 }
                 navigate('/payment', { state: { dataOrderInfo: dataOrderInfo, total: total } });
             }
-        } else if (selectedOption === "1") {
-            let total = 0
-            axios.get(`http://localhost:7777/api/v1/auth/getInfo`)
-                .then(res => {
-                    if (res && res.data.success === true) {
-                        if (res.data.data.name && res.data.data.phone && res.data.data.address) {
-                            const dataOrderInfo = {
-                                name: res.data.data.name,
-                                phone: res.data.data.phone,
-                                address: res.data.data.address,
-                                products: cart.map((item) => {
-                                    total += item.product.price * item.quantity
-                                    return {
-                                        proId: item.product.id,
-                                        price: item.product.price,
-                                        quantity: item.quantity
-                                    };
-                                })
-                            }
-                            navigate('/payment', { state: { dataOrderInfo: dataOrderInfo, total: total } });
-                        }
-                        else {
-                            toast.error(`Vui lòng cập nhật đầy đủ thông tin tài khoản !!!`)
-                        }
-                    }
-                })
-        } else {
-            toast.error(`Vui lòng chọn phương thức nhập thông tin người nhân !!!`)
         }
     }
     const loadCart = useCallback(() => {
-        axios.get(`http://localhost:7777/api/v1/cart/`)
-            .then(res => {
-                if (res && res.data) {
-                    setCart(res.data.data);
-                }
-            }).catch(err => console.log(err));
-    }, []);
+        if (name !== '') {
+            axios.get(`http://localhost:7777/api/v1/cart/`)
+                .then(res => {
+                    if (res && res.data) {
+                        setCart(res.data.data);
+                    }
+                }).catch(err => console.log(err));
+        }
+        else {
+            setCart(cartCookie)
+        }
+    }, [name, cartCookie]);
     const handleHousenumberChange = (event) => {
         setHousenumber(event.target.value);
     };
@@ -155,7 +184,6 @@ const OrderInformation = () => {
         });
         return formatter.format(amount);
     }
-    console.log(cart);
     return (
         <div className='all-order py-4'>
             <div className='order'>
@@ -168,16 +196,37 @@ const OrderInformation = () => {
                     <div className='content'>
                         <TopOrderInfo />
                         <div className='center'>
-                            <h5 className='my-2 text-left w-full'>Thông tin người nhận</h5>
-                            <select id="mySelect" value={selectedOption} onChange={handleChange} className='form-control my-2'>
-                                <option value="" >-- Chọn --</option>
-                                <option value={1}>Thông tin người nhận mặc định</option>
-                                <option value={2}>Thông tin người nhận mới</option>
-                            </select>
+                            {
+                                name !== '' &&
+                                <>
+                                    <h5 className='my-2 text-left w-full'>Thông tin người nhận</h5>
+                                    <select id="mySelect" value={selectedOption} onChange={handleChange} className='form-control my-2'>
+                                        <option value="" >-- Chọn --</option>
+                                        <option value={1}>Thông tin người nhận mặc định</option>
+                                        <option value={2}>Thông tin người nhận mới</option>
+                                    </select>
+                                </>
+                            }
 
                             <form className='form w-100 d-flex flex-column' onSubmit={handleSubmit}>
                                 {
-                                    selectedOption === "2" && (
+                                    selectedOption === "2" && name !== '' ? (
+                                        <>
+                                            <div className='title w-100 my-2'><b>Thông tin khách hàng</b></div>
+                                            <input type='text' value={values.name} name='name' id='name' placeholder='Tên người nhận (*)' className='form-control my-2' onChange={handleInputChange} />
+                                            <input type='number' value={values.phonenumber} name='phonenumber' id='phonenumber' placeholder='Số điện thoại người nhận (*)' onChange={handleInputChange} className='form-control my-2' />
+                                            <InforCustomer
+                                                city={city}
+                                                provinceid={provinceid}
+                                                district={district}
+                                                ward={ward}
+                                                handleCityChange={handleCityChange}
+                                                handleDistrictChange={handleDistrictChange}
+                                                handleWardChange={handleWardChange}
+                                                handleHousenumberChange={handleHousenumberChange}
+                                            />
+                                        </>
+                                    ) : name === '' && (
                                         <>
                                             <div className='title w-100 my-2'><b>Thông tin khách hàng</b></div>
                                             <input type='text' value={values.name} name='name' id='name' placeholder='Tên người nhận (*)' className='form-control my-2' onChange={handleInputChange} />

@@ -5,7 +5,7 @@ import TopOrderComplete from '../components/OrderComplete/TopOrderComplete';
 import InfoOrderComplete from '../components/OrderComplete/InfoOrderComplete';
 import ProductOrderComplete from '../components/OrderComplete/ProductOrderComplete';
 import ActionOrderComplete from '../components/OrderComplete/ActionOrderComplete';
-const OrderComplete = () => {
+const OrderComplete = ({ name }) => {
     const location = useLocation();
     const { billId } = location.state || "";
 
@@ -28,7 +28,7 @@ const OrderComplete = () => {
                         <TopOrderComplete />
                         <InfoOrderComplete billId={billId} formatCurrency={formatCurrency} />
                         <ProductOrderComplete billId={billId} formatCurrency={formatCurrency} />
-                        <ActionOrderComplete />
+                        <ActionOrderComplete name={name} />
                     </div>
                 </div>
             </div>

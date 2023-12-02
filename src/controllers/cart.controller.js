@@ -26,7 +26,6 @@ const getById = async (req, res, next) => {
 const getAllByUserId = async (req, res, next) => {
     const { data } = JWTService.decodeAccessToken(req.session.userToken.accessToken)
 
-    console.log(data)
     const cart = await Cart.findAll({
         where: { userId: data.id },
         include: [{

@@ -30,6 +30,7 @@ namespace RenderUI
             txt.Top = topPos;
             txt.Width = 410;
             txt.Font = new Font("Arial", 16);
+            txt.Anchor = AnchorStyles.None;
             ctr.Controls.Add(txt);
         }
 

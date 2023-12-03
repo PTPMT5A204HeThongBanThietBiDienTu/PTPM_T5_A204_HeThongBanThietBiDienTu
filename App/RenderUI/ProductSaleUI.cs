@@ -226,22 +226,7 @@ namespace RenderUI
             if (result == 0)
                 MessageBox.Show("Thất bại");
             else
-            {
-                bdp.updateDecreaseQuantity(btn.Name);
                 MessageBox.Show("Thành công");
-
-                Product product = bdp.getByProId(btn.Name);
-                if(product.quantity <= 3 && product.quantity > 0)
-                    MessageBox.Show("Sản phẩm sắp hết. Vui lòng nhập hàng");
-
-                ComboBox cboBrand = (ComboBox)ctr.Controls.Find("cboBrand", false)[0];
-                ComboBox cboCategory = (ComboBox)ctr.Controls.Find("cboCategory", false)[0];
-
-                string catId = cboCategory.SelectedValue.ToString();
-                string braId = cboBrand.SelectedValue.ToString();
-
-                renderProductList(catId, braId, page);
-            }
         }
 
         private void renderLabelQuantity(Control ctr, int quantity)

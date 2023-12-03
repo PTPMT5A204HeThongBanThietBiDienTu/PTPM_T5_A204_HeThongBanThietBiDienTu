@@ -86,6 +86,7 @@ namespace App
             Label lbl = new Label();
             lbl.Width = 272;
             lbl.Height = 50;
+            lbl.Left = -1;
             lbl.Text = text;
             lbl.Top = top;
             lbl.TextAlign = ContentAlignment.MiddleCenter;
@@ -485,7 +486,6 @@ namespace App
             DialogResult dialogResult = MessageBox.Show("Bạn có chắc là muốn hủy giỏ hàng ?", "Thông báo", MessageBoxButtons.YesNo);
             if (dialogResult == DialogResult.Yes)
             {
-                updateQuantity();
                 int result = bdc.deleteAll(Program.currentUser.id);
                 if (result == 1)
                 {
@@ -495,18 +495,6 @@ namespace App
                 }
                 else
                     MessageBox.Show("Hủy thất bại");
-            }
-        }
-
-        private void updateQuantity()
-        {
-            BLL_DAL_Product bdPro = new BLL_DAL_Product();
-            List<Object> carts = bdc.getAllByUserId(Program.currentUser.id);
-            foreach (var c in carts)
-            {
-                string proId = c.GetType().GetProperty("id").GetValue(c).ToString();
-                int quantity = int.Parse(c.GetType().GetProperty("quantity").GetValue(c).ToString());
-                bdPro.updateIncreaseQuantity(proId, quantity);
             }
         }
 
@@ -787,6 +775,7 @@ namespace App
             frmChangePassWord frm = new frmChangePassWord();
             frm.ShowDialog();
         }
+
         /*********************************************************************/
         /*                                 SALE                              */
         /*********************************************************************/
@@ -1078,7 +1067,6 @@ namespace App
             DialogResult dialogResult = MessageBox.Show("Bạn có chắc chắn là muốn thoát ?", "Thông báo", MessageBoxButtons.YesNo);
             if (dialogResult == DialogResult.Yes)
             {
-                updateQuantity();
                 bdc.deleteAll(Program.currentUser.id);
                 frmLogin frm = new frmLogin();
                 this.Close();

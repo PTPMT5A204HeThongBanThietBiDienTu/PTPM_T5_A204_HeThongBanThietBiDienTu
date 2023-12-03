@@ -121,7 +121,7 @@
   <data name="panel2.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAkEAAAB8CAYAAABuf2T3AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        wwAADsMBx2+oZAAAfjBJREFUeF7tXQV4Vce6fe/eXmvv7QUi5+RIPFCX2/bdGu7Bobh7oVhxLVbctQal
+        wQAADsEBuJFr7QAAfjBJREFUeF7tXQV4Vce6fe/eXmvv7QUi5+RIPFCX2/bdGu7Bobh7oVhxLVbctQal
         BUrR4g5BggWLewga3KFYgHn/mr3/ZOcQOUACgc76vvXN1tnjs/bo/ygoKCgoKCgoKCgoKCgoKCgoKCgo
         KCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgo
         KCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgo
@@ -738,7 +738,4 @@
         DBvwsuaRg6QAAAAASUVORK5CYII=
 </value>
   </data>
-  <metadata name="contextMenuStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>219, 17</value>
-  </metadata>
 </root>

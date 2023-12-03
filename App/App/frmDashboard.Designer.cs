@@ -43,7 +43,6 @@ namespace App
             this.btnCancelCart = new System.Windows.Forms.Button();
             this.btnExportBill = new System.Windows.Forms.Button();
             this.btnCancelBill = new System.Windows.Forms.Button();
-            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.btnChangePassword = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.subMenuProduct.SuspendLayout();
@@ -53,9 +52,10 @@ namespace App
             // 
             this.panel1.BackColor = System.Drawing.Color.Black;
             this.panel1.Controls.Add(this.panel2);
-            this.panel1.Location = new System.Drawing.Point(-1, -1);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Left;
+            this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(270, 728);
+            this.panel1.Size = new System.Drawing.Size(270, 729);
             this.panel1.TabIndex = 0;
             // 
             // panel2
@@ -105,9 +105,10 @@ namespace App
             // 
             // pnlLogout
             // 
+            this.pnlLogout.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.pnlLogout.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pnlLogout.BackgroundImage")));
             this.pnlLogout.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.pnlLogout.Location = new System.Drawing.Point(1254, -3);
+            this.pnlLogout.Location = new System.Drawing.Point(1258, -3);
             this.pnlLogout.Name = "pnlLogout";
             this.pnlLogout.Size = new System.Drawing.Size(27, 29);
             this.pnlLogout.TabIndex = 3;
@@ -193,12 +194,6 @@ namespace App
             this.btnCancelBill.Visible = false;
             this.btnCancelBill.Click += new System.EventHandler(this.btnCancelBill_Click);
             // 
-            // contextMenuStrip1
-            // 
-            this.contextMenuStrip1.ImageScalingSize = new System.Drawing.Size(24, 24);
-            this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
-            // 
             // btnChangePassword
             // 
             this.btnChangePassword.Font = new System.Drawing.Font("Arial", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -217,7 +212,7 @@ namespace App
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.ClientSize = new System.Drawing.Size(1282, 726);
+            this.ClientSize = new System.Drawing.Size(1285, 729);
             this.Controls.Add(this.btnChangePassword);
             this.Controls.Add(this.btnCancelBill);
             this.Controls.Add(this.btnExportBill);
@@ -257,7 +252,6 @@ namespace App
         private System.Windows.Forms.Button btnCancelCart;
         private System.Windows.Forms.Button btnExportBill;
         private System.Windows.Forms.Button btnCancelBill;
-        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
         private System.Windows.Forms.Button btnChangePassword;
     }
 }

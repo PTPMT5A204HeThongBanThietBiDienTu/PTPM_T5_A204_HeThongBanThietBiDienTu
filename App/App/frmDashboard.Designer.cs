@@ -108,7 +108,7 @@ namespace App
             this.pnlLogout.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.pnlLogout.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pnlLogout.BackgroundImage")));
             this.pnlLogout.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.pnlLogout.Location = new System.Drawing.Point(1258, -3);
+            this.pnlLogout.Location = new System.Drawing.Point(1256, -3);
             this.pnlLogout.Name = "pnlLogout";
             this.pnlLogout.Size = new System.Drawing.Size(27, 29);
             this.pnlLogout.TabIndex = 3;
@@ -212,7 +212,7 @@ namespace App
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.ClientSize = new System.Drawing.Size(1285, 729);
+            this.ClientSize = new System.Drawing.Size(1283, 729);
             this.Controls.Add(this.btnChangePassword);
             this.Controls.Add(this.btnCancelBill);
             this.Controls.Add(this.btnExportBill);

@@ -20,76 +20,100 @@ namespace RenderUI
             this.ctr = ctr;
         }
 
-        public void renderCheckBox(string name, int leftPos, int topPos)
-        {
-            CheckBox cb = new CheckBox();
-            cb.Name = name;
-            cb.Left = leftPos;
-            cb.Top = topPos;
-            cb.Text = "Đã thanh toán";
-            cb.Font = new Font("Arial", 16);
-            cb.Width = 180;
-            cb.Height = 40;
-            cb.CheckedChanged += cb_CheckedChanged;
-            ctr.Controls.Add(cb);
-        }
-
-        private void cb_CheckedChanged(object sender, EventArgs e)
-        {
-            CheckBox cb = (CheckBox)sender;
-            Button btn = (Button)ctr.Controls.Find("btnSave", false)[0];
-            if (cb.Checked)
-                btn.Enabled = true;
-            else
-                btn.Enabled = false;
-        }
-
-        public void renderButton(string name, int leftPos, int topPos)
+        public void renderButton(string text, string name, int leftPos, int topPos)
         {
             Button btn = new Button();
-            btn.Text = "Lưu";
+            btn.Text = text;
             btn.Name = name;
             btn.Left = leftPos;
             btn.Top = topPos;
             btn.Font = new Font("Arial", 16);
-            btn.Width = 100;
+            btn.Width = 50 + text.Length * 10;
             btn.Height = 40;
             btn.Click += btn_Click;
-            btn.Enabled = false;
             ctr.Controls.Add(btn);
         }
 
         private void btn_Click(object sender, EventArgs e)
         {
             Button btn = (Button)sender;
-            CheckBox cb = (CheckBox)ctr.Controls.Find("cbIsPayment", false)[0];
+            
+            switch (btn.Name)
+            {
+                case "btnPaid":
+                    {
+                        handlePayment();
+                    }break;
+                case "btnCancel":
+                    {
+                        handleCancel();
+                    }
+                    break;
+            }
+        }
+
+        private void handlePayment()
+        {
             DataGridView dtgvBill = (DataGridView)ctr.Controls.Find("dtgvBill", false)[0];
             DataGridView dtgvBillProduct = (DataGridView)ctr.Controls.Find("dtgvBillProduct", false)[0];
             TextBox txt = (TextBox)ctr.Controls.Find("txtBillId", false)[0];
 
-            if(txt.Text == string.Empty)
+            if (txt.Text == string.Empty)
             {
                 MessageBox.Show("Vui lòng chọn hóa đơn cần thanh toán");
                 return;
             }
 
-            string billId = dtgvBill.CurrentRow.Cells[0].Value.ToString();
-            string status = "unpaid";
-            if (cb.Checked)
-                status = "paid";
-
-            int result = bdb.updateStatus(billId, status);
-            if (result == 1)
+            DialogResult dialogResult = MessageBox.Show("Bạn có chắc là muốn thanh toán hóa đơn này ?", "Thông báo", MessageBoxButtons.YesNo);
+            if(dialogResult == DialogResult.Yes)
             {
-                MessageBox.Show("Thanh toán thành công");
-                loadDataBill(dtgvBill);
+                string billId = dtgvBill.CurrentRow.Cells[0].Value.ToString();
+                string status = "paid";
 
-                txt.Text = string.Empty;
-                cb.Checked = false;
-                dtgvBillProduct.Visible = false;
+                int result = bdb.updateStatus(billId, status);
+                if (result == 1)
+                {
+                    MessageBox.Show("Thanh toán thành công");
+                    loadDataBill(dtgvBill);
+
+                    txt.Text = string.Empty;
+                    dtgvBillProduct.Visible = false;
+                }
+                else
+                    MessageBox.Show("Thanh toán thất bại");
             }
-            else
-                MessageBox.Show("Thanh toán thất bại");
+        }
+
+        private void handleCancel()
+        {
+            DataGridView dtgvBill = (DataGridView)ctr.Controls.Find("dtgvBill", false)[0];
+            DataGridView dtgvBillProduct = (DataGridView)ctr.Controls.Find("dtgvBillProduct", false)[0];
+            TextBox txt = (TextBox)ctr.Controls.Find("txtBillId", false)[0];
+
+            if (txt.Text == string.Empty)
+            {
+                MessageBox.Show("Vui lòng chọn hóa đơn cần hủy");
+                return;
+            }
+
+            DialogResult dialogResult = MessageBox.Show("Bạn có chắc là muốn hủy hóa đơn này ?", "Thông báo", MessageBoxButtons.YesNo);
+            if (dialogResult == DialogResult.Yes)
+            {
+                string billId = dtgvBill.CurrentRow.Cells[0].Value.ToString();
+                int result = bdbP.deleteAll(billId);
+
+                if (result == 1)
+                {
+                    bdb.delete(billId);
+                    MessageBox.Show("Hủy hóa đơn thành công");
+                    loadDataBill(dtgvBill);
+
+                    txt.Text = string.Empty;
+                    dtgvBillProduct.Visible = false;
+                }
+                else
+                    MessageBox.Show("Hủy thất bại");
+            }
         }
 
         public void renderDTGVBill(string name, int leftPos, int topPos)

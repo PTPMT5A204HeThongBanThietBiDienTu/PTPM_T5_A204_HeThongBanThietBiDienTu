@@ -107,6 +107,7 @@ namespace BLL_DAL
         public List<Object> getAllUnpaid()
         {
             var bills = from b in qlbh.Bills
+                        orderby b.createdAt descending
                         where b.status == "unpaid"
                         join c in qlbh.Customers on b.cusId equals c.id
                         select new { b.id, b.total, b.status, b.createdAt, c.name, c.phone };

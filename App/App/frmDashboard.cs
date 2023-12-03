@@ -623,8 +623,8 @@ namespace App
 
             ApproveBillUI abUI = new ApproveBillUI(this);
 
-            abUI.renderCheckBox("cbIsPayment", 920, 55);
-            abUI.renderButton("btnSave", 1140, 50);
+            abUI.renderButton("Đã thanh toán", "btnPaid", 920, 50);
+            abUI.renderButton("Hủy", "btnCancel", 1160, 50);
 
             List<Object> bills = bdb.getAllUnpaid();
             if (bills.Count == 0)
@@ -640,8 +640,8 @@ namespace App
         {
             this.Controls.RemoveByKey("lblBillId");
             this.Controls.RemoveByKey("txtBillId");
-            this.Controls.RemoveByKey("cbIsPayment");
-            this.Controls.RemoveByKey("btnSave");
+            this.Controls.RemoveByKey("btnPaid");
+            this.Controls.RemoveByKey("btnCancel");
             this.Controls.RemoveByKey("lblReport");
             this.Controls.RemoveByKey("dtgvBill");
             this.Controls.RemoveByKey("dtgvBillProduct");

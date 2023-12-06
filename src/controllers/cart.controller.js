@@ -108,6 +108,9 @@ const update = async (req, res, next) => {
         })
     }
 
+    if (req.body.quantity > 1000)
+        req.body.quantity = 1000
+
     const result = await Cart.update(req.body, { where: { id: req.params.id } })
     return getById(req, res, next)
 }

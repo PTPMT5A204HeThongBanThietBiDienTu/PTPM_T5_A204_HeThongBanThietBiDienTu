@@ -649,7 +649,8 @@ const search = async (req, res, next) => {
     return res.status(200).json({
         success: true,
         data: products,
-        totalPages: totalPages
+        totalPages: totalPages,
+        totalCount: totalCount
     })
 }
 

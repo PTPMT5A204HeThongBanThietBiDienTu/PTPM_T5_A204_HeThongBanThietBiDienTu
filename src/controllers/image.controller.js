@@ -54,7 +54,16 @@ const uploadGallery = async (req, res, next) => {
     })
 }
 
+const uploadImage = async (req, res, next) => {
+    const path = `/images/${req.files[0].filename}`
+    return res.status(200).json({
+        success: true,
+        path: path
+    })
+}
+
 module.exports = {
     getAllByProId,
-    uploadGallery
+    uploadGallery,
+    uploadImage
 }

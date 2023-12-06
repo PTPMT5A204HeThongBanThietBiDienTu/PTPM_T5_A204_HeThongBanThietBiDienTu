@@ -542,78 +542,55 @@ const search = async (req, res, next) => {
     const content = `%${req.body.content}%`
     let page = req.query.page
     let products = []
+    let totalCount = 0;
+    let totalPages = 0;
 
-    const totalCount = await Product.count({
-        include: [
+    const whereConditions = {
+        [Op.or]: [
             {
-                model: Category,
-                as: 'category'
+                name: {
+                    [Op.like]: content
+                }
             },
             {
-                model: Brand,
-                as: 'brand'
+                '$category.name$': {
+                    [Op.like]: content
+                }
+            },
+            {
+                '$brand.name$': {
+                    [Op.like]: content
+                }
+            }
+        ]
+    }
+
+    const whereConditionsPrice = {
+        [Op.or]: [
+            {
+                name: {
+                    [Op.like]: content
+                }
+            },
+            {
+                '$category.name$': {
+                    [Op.like]: content
+                }
+            },
+            {
+                '$brand.name$': {
+                    [Op.like]: content
+                }
             }
         ],
-        where: {
-            [Op.or]: [
-                {
-                    name: {
-                        [Op.like]: content
-                    }
-                },
-                {
-                    '$category.name$': {
-                        [Op.like]: content
-                    }
-                },
-                {
-                    '$brand.name$': {
-                        [Op.like]: content
-                    }
-                }
-            ]
+        price: {
+            [Op.gt]: req.body.minPrice,
+            [Op.lt]: req.body.maxPrice
         }
-    })
-    const totalPages = Math.ceil(totalCount / PAGE_SIZE)
-
-    if (page) {
-        page = parseInt(page)
-        products = await Product.findAll({
-            include: [
-                {
-                    model: Category,
-                    as: 'category'
-                },
-                {
-                    model: Brand,
-                    as: 'brand'
-                }
-            ],
-            where: {
-                [Op.or]: [
-                    {
-                        name: {
-                            [Op.like]: content
-                        }
-                    },
-                    {
-                        '$category.name$': {
-                            [Op.like]: content
-                        }
-                    },
-                    {
-                        '$brand.name$': {
-                            [Op.like]: content
-                        }
-                    }
-                ]
-            },
-            offset: (page - 1) * PAGE_SIZE,
-            limit: PAGE_SIZE
-        })
     }
-    else {
-        products = await Product.findAll({
+
+    if (req.body.content && req.body.minPrice && req.body.maxPrice) {
+        totalCount = await Product.count({
             include: [
                 {
                     model: Category,
@@ -624,26 +601,92 @@ const search = async (req, res, next) => {
                     as: 'brand'
                 }
             ],
-            where: {
-                [Op.or]: [
-                    {
-                        name: {
-                            [Op.like]: content
-                        }
-                    },
-                    {
-                        '$category.name$': {
-                            [Op.like]: content
-                        }
-                    },
-                    {
-                        '$brand.name$': {
-                            [Op.like]: content
-                        }
-                    }
-                ]
-            }
+            where: whereConditionsPrice
         })
+        totalPages = Math.ceil(totalCount / PAGE_SIZE)
+
+        if (page) {
+            page = parseInt(page)
+            products = await Product.findAll({
+                include: [
+                    {
+                        model: Category,
+                        as: 'category'
+                    },
+                    {
+                        model: Brand,
+                        as: 'brand'
+                    }
+                ],
+                where: whereConditionsPrice,
+                offset: (page - 1) * PAGE_SIZE,
+                limit: PAGE_SIZE
+            })
+        }
+        else {
+            products = await Product.findAll({
+                include: [
+                    {
+                        model: Category,
+                        as: 'category'
+                    },
+                    {
+                        model: Brand,
+                        as: 'brand'
+                    }
+                ],
+                where: whereConditionsPrice
+            })
+        }
+    } else {
+        totalCount = await Product.count({
+            include: [
+                {
+                    model: Category,
+                    as: 'category'
+                },
+                {
+                    model: Brand,
+                    as: 'brand'
+                }
+            ],
+            where: whereConditions
+        })
+        totalPages = Math.ceil(totalCount / PAGE_SIZE)
+
+        if (page) {
+            page = parseInt(page)
+            products = await Product.findAll({
+                include: [
+                    {
+                        model: Category,
+                        as: 'category'
+                    },
+                    {
+                        model: Brand,
+                        as: 'brand'
+                    }
+                ],
+                where: whereConditions,
+                offset: (page - 1) * PAGE_SIZE,
+                limit: PAGE_SIZE
+            })
+        }
+        else {
+            products = await Product.findAll({
+                include: [
+                    {
+                        model: Category,
+                        as: 'category'
+                    },
+                    {
+                        model: Brand,
+                        as: 'brand'
+                    }
+                ],
+                where: whereConditions
+            })
+        }
     }
 
     return res.status(200).json({

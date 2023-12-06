@@ -73,15 +73,27 @@ const create = async (req, res, next) => {
         })
     }
     else {
-        await Cart.update(
-            { quantity: proInCart.quantity + 1 },
-            {
-                where: {
-                    id: proInCart.id,
-                    userId: user.id
+        if (proInCart.quantity < 1000) {
+            await Cart.update(
+                { quantity: proInCart.quantity + 1 },
+                {
+                    where: {
+                        id: proInCart.id,
+                        userId: user.id
+                    }
                 }
-            }
-        )
+            )
+        } else {
+            await Cart.update(
+                { quantity: 1000 },
+                {
+                    where: {
+                        id: proInCart.id,
+                        userId: user.id
+                    }
+                }
+            )
+        }
     }
 
     const newCart = await Cart.findOne({

@@ -542,8 +542,8 @@ const search = async (req, res, next) => {
     const content = `%${req.body.content}%`
     let page = req.query.page
     let products = []
-    let totalCount = 0;
-    let totalPages = 0;
+    let totalCount = 0
+    let totalPages = 0
 
     const whereConditions = {
         [Op.or]: [
@@ -564,7 +564,6 @@ const search = async (req, res, next) => {
             }
         ]
     }
-
     const whereConditionsPrice = {
         [Op.or]: [
             {
@@ -589,7 +588,7 @@ const search = async (req, res, next) => {
         }
     }
 
-    if (req.body.content && req.body.minPrice && req.body.maxPrice) {
+    if (req.body.content !== undefined && req.body.minPrice !== undefined && req.body.maxPrice !== undefined) {
         totalCount = await Product.count({
             include: [
                 {
@@ -688,7 +687,6 @@ const search = async (req, res, next) => {
             })
         }
     }
-
     return res.status(200).json({
         success: true,
         data: products,

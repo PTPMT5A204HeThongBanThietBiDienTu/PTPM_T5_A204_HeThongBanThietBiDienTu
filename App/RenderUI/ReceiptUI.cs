@@ -30,7 +30,7 @@ namespace RenderUI
             dtgv.Left = leftPos;
             dtgv.Top = topPos;
 
-            dtgv.Width = ctr.Width - 600;
+            dtgv.Width = 980;
             dtgv.Height = 180;
             dtgv.Font = new Font("Arial", 15);
             dtgv.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
@@ -57,22 +57,23 @@ namespace RenderUI
                 dtgv.Columns[0].HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
                 dtgv.Columns[0].HeaderCell.Style.Font = new Font("Arial", 16, FontStyle.Bold);
                 dtgv.Columns[0].Width = 210;
-                dtgv.Columns[0].HeaderText = "Mã giao dịch";
+                dtgv.Columns[0].HeaderText = "Mã đơn hàng";
+                dtgv.Columns[0].Visible = false;
 
                 dtgv.Columns[1].HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
                 dtgv.Columns[1].HeaderCell.Style.Font = new Font("Arial", 16, FontStyle.Bold);
-                dtgv.Columns[1].Width = 210;
-                dtgv.Columns[1].HeaderText = "Mã nhân viên";
+                dtgv.Columns[1].Width = 400;
+                dtgv.Columns[1].HeaderText = "Ngày tạo";
 
                 dtgv.Columns[2].HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
                 dtgv.Columns[2].HeaderCell.Style.Font = new Font("Arial", 16, FontStyle.Bold);
-                dtgv.Columns[2].Width = 210;
+                dtgv.Columns[2].Width = 250;
                 dtgv.Columns[2].HeaderText = "Tên nhân viên";
 
                 dtgv.Columns[3].HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
                 dtgv.Columns[3].HeaderCell.Style.Font = new Font("Arial", 16, FontStyle.Bold);
-                dtgv.Columns[3].Width = 210;
-                dtgv.Columns[3].HeaderText = "Ngày tạo";
+                dtgv.Columns[3].Width = 300;
+                dtgv.Columns[3].HeaderText = "Số lượng sản phẩm";
             }
         }
         public void renderLabelReport(string name, int leftPos, int topPos)
@@ -113,7 +114,7 @@ namespace RenderUI
             dtgvOrderDetail.Left = leftPos;
             dtgvOrderDetail.Top = topPos;
 
-            dtgvOrderDetail.Width = ctr.Width - 600;
+            dtgvOrderDetail.Width = 980;
             dtgvOrderDetail.Height = 180;
             dtgvOrderDetail.Font = new Font("Arial", 15);
             dtgvOrderDetail.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
@@ -139,21 +140,22 @@ namespace RenderUI
                 dtgv.Columns[0].HeaderCell.Style.Font = new Font("Arial", 16, FontStyle.Bold);
                 dtgv.Columns[0].Width = 220;
                 dtgv.Columns[0].HeaderText = "Mã giao dịch";
+                dtgv.Columns[0].Visible = false;
 
                 dtgv.Columns[1].HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
                 dtgv.Columns[1].HeaderCell.Style.Font = new Font("Arial", 16, FontStyle.Bold);
-                dtgv.Columns[1].Width = 220;
+                dtgv.Columns[1].Width = 250;
                 dtgv.Columns[1].HeaderText = "Mã sản phẩm";
 
 
                 dtgv.Columns[2].HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
                 dtgv.Columns[2].HeaderCell.Style.Font = new Font("Arial", 16, FontStyle.Bold);
-                dtgv.Columns[2].Width = 220;
+                dtgv.Columns[2].Width = 500;
                 dtgv.Columns[2].HeaderText = "Tên sản phẩm";
 
                 dtgv.Columns[3].HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
                 dtgv.Columns[3].HeaderCell.Style.Font = new Font("Arial", 16, FontStyle.Bold);
-                dtgv.Columns[3].Width = 220;
+                dtgv.Columns[3].Width = 200;
                 dtgv.Columns[3].HeaderText = "Số lượng";
             }
         }

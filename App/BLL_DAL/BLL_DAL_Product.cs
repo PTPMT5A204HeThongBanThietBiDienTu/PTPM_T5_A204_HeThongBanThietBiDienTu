@@ -11,7 +11,23 @@ namespace BLL_DAL
         QLBHDataContext qlbh = new QLBHDataContext();
 
         public BLL_DAL_Product() { }
-
+        public int insert(Product product)
+        {
+            try
+            {
+                if (qlbh.Products.FirstOrDefault(t => t.id == product.id) == null)
+                {
+                    qlbh.Products.InsertOnSubmit(product);
+                    qlbh.SubmitChanges();
+                }
+                return 1;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return 0;
+            }
+        }
         public List<Product> getAllByBrandId(string id)
         {
             List<Product> products = qlbh.Products.Where(p => p.braId == id).ToList<Product>();

@@ -52,11 +52,18 @@ namespace BLL_DAL
         }
         public List<Object> getAllOrders()
         {
-            var orders =( from o in qlbh.Orders
-                         join u in qlbh.Users on o.userId equals u.id
-                         join d in qlbh.OrderDetails on o.id equals d.orderId
-                         where o.status== "proccessing"
-                         select new { id = o.id,userid=u.id,Name = u.name, Created=o.createdAt });
+            var orders = (from o in qlbh.Orders
+                          where o.status == "proccessing"
+                          join u in qlbh.Users on o.userId equals u.id
+                          join d in qlbh.OrderDetails on o.id equals d.orderId
+                          group d by new
+                          {
+                              o.id,
+                              u.name,
+                              o.createdAt,
+                          } into grouped
+                          orderby grouped.Key.createdAt descending
+                          select new { id = grouped.Key.id, Created = grouped.Key.createdAt, Name = grouped.Key.name, TotalQuantity = grouped.Sum(d => d.quantity) }); ; ;
             return orders.ToList<Object>();
         }
     }

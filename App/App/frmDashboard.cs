@@ -887,7 +887,7 @@ namespace App
             BLL_DAL_Product bdpt = new BLL_DAL_Product();
             List<Object> products = bdpt.getAllDataGridView();
             if (products.Count == 0)
-                abUI.renderLabelReport("lblReport", 500, 400);
+                abUI.renderLabelReport("lblReport", 500, 200);
             else
             {
 
@@ -912,6 +912,12 @@ namespace App
             appUI.renderTextBoxNumberOnly("txtGia", 200, 470, 440, true);
             appUI.renderLabel("Số lượng:", "lblSL", 680, 445);
             appUI.renderTextBoxNumberOnly("txtSoLuong", 200, 850, 440, true);
+            appUI.renderLabel("Hình ảnh sản phẩm:", "lblImg", 300, 490);
+            abUI.renderPictureBox("pictureBox1", 300, 520);
+            abUI.renderButtonInsertProduct("btnInsert","Lưu", 300, 730);
+            abUI.renderButtonCancelProduct("btnCancel", "Hủy", 390, 730);
+            Label lblImg = (Label)this.Controls.Find("lblImg", false)[0];
+            lblImg.Visible = false;
 
             TextBox IdOrder = (TextBox)this.Controls.Find("txtIdOrder", false)[0];
             if (idorder != "")
@@ -927,9 +933,10 @@ namespace App
 
             Receipt r = new Receipt();
 
-            abUI.renderButtonAddToOrder("btnThemSP", "Add", 300, 480);
-            abUI.renderButtonFinishOrder("btnHoanThanhOrder", "Check out", 400, 480);
+            abUI.renderButtonAddToOrder("btnThemSP", "Thêm", 300, 480);
+            abUI.renderButtonFinishOrder("btnHoanThanhOrder", "Đặt hàng", 400, 480);
             appUI.renderButton("btnReceipt", "Nhận hàng", 580, 480);
+            abUI.renderButtonAddNewProduct("btnAddProduct", "Thêm sản phẩm mới", 750, 480);
             Button btn = (Button)this.Controls.Find("btnReceipt", false)[0];
             btn.Click += ButtonReceipt_Click;
         }
@@ -963,6 +970,11 @@ namespace App
             this.Controls.RemoveByKey("btnThemSP");
             this.Controls.RemoveByKey("txtIdOrder");
             this.Controls.RemoveByKey("btnReceipt");
+            this.Controls.RemoveByKey("btnAddProduct");
+            this.Controls.RemoveByKey("lblImg");
+            this.Controls.RemoveByKey("pictureBox1");
+            this.Controls.RemoveByKey("btnInsert");
+            this.Controls.RemoveByKey("btnCancel");
         }
         /*********************************************************************/
         /*                                 RECEIPT                           */
@@ -972,7 +984,7 @@ namespace App
             AppUI appUI = new AppUI(this);
             string idorder = bdo.getIdOrderInPending();
 
-            appUI.renderLabel("Danh sách giao dịch:", "lblOrder", 300, 60);
+            appUI.renderLabel("Danh sách đơn hàng:", "lblOrder", 300, 60);
 
             ReceiptUI abUI = new ReceiptUI(this, Program.currentUser);
             List<Object> orders = bdo.getAllOrders();
@@ -980,11 +992,13 @@ namespace App
                 abUI.renderLabelReport("lblReport", 500, 400);
             else
             {
-                abUI.renderDataGridView("dtgvOrders", 305, 105);
+                
+                abUI.renderDataGridView("dtgvOrders", 305, 95);
                 appUI.renderLabel("Danh sách chi tiết:", "lblDetails", 300, 310);
                 abUI.renderDetailsDataGridView("dtgvOrderDetails", 305, 335);
-                appUI.renderButton("btnConfirm", "Confirm", 305, 538);
-                appUI.renderButton("btnCancel", "Cancel", 455, 538);
+                appUI.renderLabel("Xác nhận đơn hàng:", "lblConfirm",305,538 );
+                appUI.renderButton("btnConfirm", "Xác nhận", 305, 570);
+                appUI.renderButton("btnCancel", "Hủy", 455, 570);
                 Button btn1 = (Button)this.Controls.Find("btnConfirm", false)[0];
                 Button btn2 = (Button)this.Controls.Find("btnCancel", false)[0];
                 btn1.Click += btnConfirm_Click;

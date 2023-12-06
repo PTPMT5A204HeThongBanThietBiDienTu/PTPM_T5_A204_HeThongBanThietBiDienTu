@@ -48,8 +48,8 @@ const ProductCart = (props) => {
         const existingItemIndex = cartCookieArray.findIndex(item => item.proId === data.proId);
 
         if (existingItemIndex !== -1) {
-            const maxProductQuantity = data.product.quantity;
-            const limitedQuantity = Math.min(newQuantity, maxProductQuantity);
+            // const maxProductQuantity = data.product.quantity;
+            const limitedQuantity = Math.min(newQuantity, 1000);
 
             if (limitedQuantity <= 0) {
                 handleDeleteCartCookie(data.proId);
@@ -73,6 +73,9 @@ const ProductCart = (props) => {
         updateQuantityCart(newQuantity, data.id);
     };
     const updateQuantityCart = (newQuantity, cartId) => {
+        if (newQuantity > 1000) {
+            newQuantity = 1000
+        }
         const dataUpdateCart = {
             id: cartId,
             quantity: newQuantity,

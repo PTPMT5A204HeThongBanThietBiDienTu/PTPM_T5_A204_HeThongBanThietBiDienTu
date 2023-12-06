@@ -35,7 +35,7 @@ const Navbar = ({ name }) => {
             toast.error("Vui lòng nhập sản phẩm cần tìm kiếm !!!");
         }
         else {
-            navigate('/search', { state: { search: search } })
+            navigate(`/search/${search}`)
             setSearch('')
         }
     }

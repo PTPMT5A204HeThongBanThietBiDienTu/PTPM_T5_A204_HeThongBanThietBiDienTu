@@ -78,11 +78,14 @@
     margin-top: 1rem;
 }
 @media screen and (max-width: 973px) {
+    .loginButton{
+        width: 100%;
+    }
     .all-login .loginTitle{
         display: none;
     }
     .wrapper .right button{
-        width: 75%!important;
+        width: 100%!important;
     }
     .wrapper{
         width: 100%;

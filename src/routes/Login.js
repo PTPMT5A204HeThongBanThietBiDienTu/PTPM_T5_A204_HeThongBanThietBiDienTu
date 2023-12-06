@@ -79,7 +79,46 @@ const Login = () => {
         }
         verify();
     }, [navigate])
-
+    const handleLoginSocial = (name, email) => {
+        const dataLoginSocial = {
+            name: name,
+            email: email
+        }
+        axios.post(`http://localhost:7777/api/v1/auth/loginExpress`, dataLoginSocial)
+            .then(res => {
+                if (res && res.data.success === true) {
+                    swal({
+                        title: "Đăng nhập thành công!",
+                        icon: "success",
+                    }).then(() => {
+                        window.location.reload();
+                    });
+                }
+            }).catch(err => {
+                if (err && err.response && err.response.data) {
+                    const { message } = err.response.data.message;
+                    switch (message) {
+                        case 'Your account is locked':
+                            toast.error('Tài khoản của bạn đã bị khóa !!!');
+                            break;
+                        case 'Email not found':
+                            toast.error('Email không tồn tại !!!');
+                            break;
+                        case 'Incorrect password':
+                            toast.error('Sai mật khẩu !!!');
+                            break;
+                        case '"password" length must be 5 characters long':
+                            toast.error('Mật khẩu chỉ được tối đa 5 kí tự !!!');
+                            break;
+                        default:
+                            toast.error('Sai mật khẩu hoặc tài khoản !!!');
+                    }
+                } else {
+                    toast.error('Sai mật khẩu hoặc tài khoản !!!');
+                }
+                console.log(err);
+            })
+    }
     return (
         <div className='all-login'>
             <h1 className='loginTitle'>Đăng nhập</h1>
@@ -88,14 +127,14 @@ const Login = () => {
                     <LoginSocialGoogle
                         className=' my-2 loginButton'
                         client_id='13368831754-tc34kj15re3bu6bk9ue2kn3s4ff1ip58.apps.googleusercontent.com'
-                        onResolve={res => console.log(res)}
+                        onResolve={res => handleLoginSocial(res.data.name, res.data.email)}
                         onReject={err => console.log(err)}>
                         <GoogleLoginButton className='google' />
                     </LoginSocialGoogle>
                     <LoginSocialFacebook
                         className='my-2 loginButton'
                         appId='184455970114805'
-                        onResolve={res => console.log(res)}
+                        onResolve={res => handleLoginSocial(res.data.name, res.data.email)}
                         onReject={err => console.log(err)}>
                         <FacebookLoginButton className='facebook' />
                     </LoginSocialFacebook>
@@ -114,7 +153,7 @@ const Login = () => {
                             <input type="password" className="form-control" id="password" name='password' onChange={handleInputChange} required />
                         </div>
                         <div className='d-flex justify-content-center'>
-                            <button type="submit" class="btn btn-dark btn-lg w-full">Đăng nhập</button>
+                            <button type="submit" class="btn btn-dark btn-lg w-50">Đăng nhập</button>
                         </div>
                     </form>
                     <a href='/register' className='new-account btn btn-success'>Đăng ký tài khoản mới</a>

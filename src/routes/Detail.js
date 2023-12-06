@@ -9,7 +9,8 @@ import SimilarProductDetail from '../components/Detail/SimilarProductDetail';
 import sold from '../assets/icons/sold.png';
 import RecommendDetail from '../components/Detail/RecommendDetail';
 
-const Detail = ({ name, handleScrollToTop, addToCart }) => {
+const Detail = (props) => {
+    const { name, handleScrollToTop, addToCart } = props
     const { id } = useParams();
     const [productByID, setProductByID] = useState([]);
     const [slideImage, setSlideImage] = useState([]);

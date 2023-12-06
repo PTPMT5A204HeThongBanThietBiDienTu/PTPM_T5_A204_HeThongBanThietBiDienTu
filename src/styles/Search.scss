@@ -1,99 +1,106 @@
-.container-fluid{
-    width: 100%;
-    height: auto;
-    background-color: white;
-    display: flex;
-    position: relative;
+.fluid-search{
+  width: 100%;
+  height: auto;
+  // background-color: white;
+  // display: flex;
+  // position: relative;
 }
-.container-fluid .all-search{
-    width: 60%;
-    margin-left: auto;
-    margin-right: auto;
-    display: flex;
-    flex-direction: column;
+.fluid-search .all-search{
+  width: 80%;
+  margin: 0 auto;
+  display: grid;
+  column-gap: 50px;
+  grid-template-columns: 20% 75%;
 }
-.container-fluid .all-search .search {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: flex-start;
-    width: 100%;
-    padding-bottom: 5rem;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 2rem;
+.fluid-search .all-search .right{
+display: flex;
+flex-direction: column;
 }
-.container-fluid .all-search .search .card-product{
-    flex: 0 1 calc(25% - 2.5rem);
-    height: 25rem;
-    padding-top: 2rem;
-    box-shadow: 0 5px 15px 0 rgba(0, 0, 0, 0.25);
-    border-radius: 7px;
-    position: relative;
-    margin-right: 2.5rem; 
-    margin-bottom: 2.5rem;
-    cursor: pointer;
-    overflow: hidden;
+.fluid-search .all-search .left .search-price-modal{
+top:5rem;
 }
-.container-fluid .all-search .search .card-product:not(:nth-last-child(-n + 4)) {
-    margin-bottom: 2.5rem;
-  }
-  .container-fluid .all-search .search .card-product .card-image {
-    max-width: 10rem;
-    max-height: 10rem;
-    margin-left: auto;
-    margin-right: auto;
-  }
-  .container-fluid .all-search .search .card-product .sold-out{
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 100px;
-    height: 100px;
-    scale: 1.2;
+.fluid-search .all-search .right h3{
+width: 100%;
 }
-  .container-fluid .all-search .search .card-product .sold-out img{
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
+.fluid-search .all-search .search {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  width: 100%;
+  padding-bottom: 5rem;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 2rem;
 }
-  .container-fluid .all-search .search .card-product .card-image img{
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+.fluid-search .all-search .search .card-product{
+  flex: 0 1 calc(25% - 2.5rem);
+  height: 25rem;
+  padding-top: 2rem;
+  box-shadow: 0 5px 15px 0 rgba(0, 0, 0, 0.25);
+  border-radius: 7px;
+  position: relative;
+  margin-right: 2.5rem; 
+  margin-bottom: 2.5rem;
+  cursor: pointer;
+  overflow: hidden;
 }
-  .container-fluid .all-search .search .card-product .card-name{
-    margin:0.5rem 0rem 0rem 0.5rem;
-    font-size: 1rem;
-    text-align: center;
+.fluid-search .all-search .search .card-product:not(:nth-last-child(-n + 4)) {
+  margin-bottom: 2.5rem;
 }
-  .container-fluid .all-search .search .card-product .price-cost{
-    display: flex;
-    width: 100%;
-    justify-content: center;
-    margin-top: 1rem;
+.fluid-search .all-search .search .card-product .card-image {
+  max-width: 10rem;
+  max-height: 10rem;
+  margin-left: auto;
+  margin-right: auto;
 }
-  .container-fluid .all-search .search .card-product .price-cost .price{
-    font-size: 1.1rem;
-    font-weight: bold;
-    color: red;
-    margin-right: 0.5rem;
+.fluid-search .all-search .search .card-product .sold-out{
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100px;
+  height: 100px;
+  scale: 1.2;
 }
-.container-fluid .all-search .search .card-product .love{
-    position: absolute;
-    bottom: 1rem;
-    right: 1rem;
-    font-size: 1.2rem;
-    cursor: pointer;
+.fluid-search .all-search .search .card-product .sold-out img{
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
-.container-fluid .all-search .search .card-product .love:hover i{
-    color: red!important;
+.fluid-search .all-search .search .card-product .card-image img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.fluid-search .all-search .search .card-product .card-name{
+  margin:0.5rem 0rem 0rem 0.5rem;
+  font-size: 1rem;
+  text-align: center;
+}
+.fluid-search .all-search .search .card-product .price-cost{
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  margin-top: 1rem;
+}
+.fluid-search .all-search .search .card-product .price-cost .price{
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: red;
+  margin-right: 0.5rem;
+}
+.fluid-search .all-search .search .card-product .love{
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+.fluid-search .all-search .search .card-product .love:hover i{
+  color: red!important;
 }
 @media screen and (max-width: 1205px){
-  .container-fluid .all-search{
-    height: 10000vh;
-  }
-  .container-fluid .all-search .search {
-    margin: 0;
-    padding: 0;
-  }
+.fluid-search .all-search .search {
+  margin: 0;
+  padding: 0;
+}
 }

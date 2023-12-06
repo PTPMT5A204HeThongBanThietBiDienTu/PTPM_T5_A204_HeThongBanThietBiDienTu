@@ -121,7 +121,7 @@ function App() {
         <Route path="/category/:catID" element={<Category />} />
         <Route path="/category/:catID/:braId" element={<Category />} />
         <Route path="/payment" element={<Payment name={name} setCartCookie={setCartCookie} />} />
-        <Route path="/search" element={<Search />} />
+        <Route path="/search/:search" element={<Search />} />
         <Route path="/order-history" element={<OrderHistory name={name} />} />
         <Route path="/order-detail" element={<OrderDetail name={name} />} />
         <Route path="/profile" element={<Profile name={name} />} />

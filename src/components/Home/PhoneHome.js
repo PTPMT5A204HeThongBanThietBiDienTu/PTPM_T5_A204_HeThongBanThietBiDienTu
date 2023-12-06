@@ -85,7 +85,7 @@ const ProductHome = (props) => {
             responsive={Responsive}>
             {
                 product.map((value) => {
-                    return (
+                    return value.quantity > 0 && (
                         <div className='card-product'>
                             <Link style={{ textDecoration: "none", color: "#222" }} to={`/product/${value.id}`} onClick={handleScrollToTop}>
                                 <div className='card-image'>

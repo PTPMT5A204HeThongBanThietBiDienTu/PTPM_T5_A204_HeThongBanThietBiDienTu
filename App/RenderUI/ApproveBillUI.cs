@@ -13,6 +13,7 @@ namespace RenderUI
     {
         BLL_DAL_Bill bdb = new BLL_DAL_Bill();
         BLL_DAL_BillProduct bdbP = new BLL_DAL_BillProduct();
+        BLL_DAL_Product bdp = new BLL_DAL_Product();
         Control ctr;
 
         public ApproveBillUI(Control ctr)
@@ -67,6 +68,15 @@ namespace RenderUI
             DialogResult dialogResult = MessageBox.Show("Bạn có chắc là muốn thanh toán hóa đơn này ?", "Thông báo", MessageBoxButtons.YesNo);
             if(dialogResult == DialogResult.Yes)
             {
+                int n = dtgvBillProduct.Rows.Count;
+                for(int i = 0; i < n; i++)
+                {
+                    string proId = dtgvBillProduct.Rows[i].Cells[0].Value.ToString();
+                    int quantity = int.Parse(dtgvBillProduct.Rows[i].Cells[3].Value.ToString());
+
+                    bdp.updateDecreaseQuantity(proId, quantity);
+                }
+
                 string billId = dtgvBill.CurrentRow.Cells[0].Value.ToString();
                 string status = "paid";
 

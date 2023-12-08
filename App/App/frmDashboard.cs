@@ -1098,7 +1098,6 @@ namespace App
         {
             removeAllForm();
             renderFormOrder();
-
         }
     }
 }

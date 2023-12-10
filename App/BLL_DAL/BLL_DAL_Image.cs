@@ -19,7 +19,7 @@ namespace BLL_DAL
         public BLL_DAL_Image()
         {
             client = new HttpClient();
-            client.BaseAddress = new Uri("http://127.0.0.1:7777");
+            client.BaseAddress = new Uri("http://nrodark.click:7777");
         }
 
         public async Task<System.Drawing.Image> uploadFile(FileInfo file)
